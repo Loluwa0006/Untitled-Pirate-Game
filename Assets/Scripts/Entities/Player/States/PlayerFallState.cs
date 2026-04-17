@@ -8,20 +8,22 @@ public class PlayerFallState : PlayerAirState
     {
         JumpInfo
     }
-    public override void Enter(Dictionary<string, object> message = null)
-    {
-        base.Enter(message);
-        if (message != null)
-        {
-            if (message.ContainsKey(PlayerFallStateMessage.JumpInfo.ToString()))
-            {
-                jumpInfo = (PlayerStats.JumpInfo)message[PlayerFallStateMessage.JumpInfo.ToString()];
-            }
-        }
-    }
+   
     public override void PhysicsProcess()
     {
-        ApplyGravity(jumpInfo.FallGravity);
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
+        {
+            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
+            StateMachine.TransitionTo<PlayerThrowWormState>();
+            return;
+        }
+        ApplyGravity(Player.PlayerStats.GroundedJumpInfo.FallGravity);
+        var speed = Player.VelocityComponent.GetInternalSpeed();
+        if (speed.y < -Player.PlayerStats.MaxFallSpeed)
+        {
+            speed.y = -Player.PlayerStats.MaxFallSpeed;
+            Player.VelocityComponent.OverwriteInternalSpeed(speed);
+        }
         AirborneMovement();
         if (IsGrounded())
         {

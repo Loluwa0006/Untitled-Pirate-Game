@@ -8,28 +8,26 @@ public class PlayerJumpState : PlayerAirState
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
-
-        jumpInfo = Player.PlayerStats.GroundedJumpInfo;
-
-        jumpInfo.JumpGravity =  2.0f * jumpInfo.jumpHeight / (jumpInfo.jumpTimeToPeak * jumpInfo.jumpTimeToPeak);
-        jumpInfo.FallGravity =  2.0f * jumpInfo.jumpHeight / (jumpInfo.jumpTimeToDecent * jumpInfo.jumpTimeToDecent);
-        jumpInfo.JumpVelocity = 2.0f * jumpInfo.jumpHeight;
-
-        fallStateTransitionDictionary[PlayerFallState.PlayerFallStateMessage.JumpInfo.ToString()] = jumpInfo;
-
+        fallStateTransitionDictionary[PlayerFallState.PlayerFallStateMessage.JumpInfo.ToString()] = Player.PlayerStats.GroundedJumpInfo;
     }
 
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
         var currentSpeed = Player.VelocityComponent.GetInternalSpeed();
-        currentSpeed.y = jumpInfo.JumpVelocity;
+        currentSpeed.y = Player.PlayerStats.GroundedJumpInfo.JumpVelocity;
         Player.VelocityComponent.OverwriteInternalSpeed(currentSpeed);
     }
 
     public override void PhysicsProcess()
     {
-        ApplyGravity(jumpInfo.JumpGravity);
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
+        {
+            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
+            StateMachine.TransitionTo<PlayerThrowWormState>();
+            return;
+        }
+        ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
         AirborneMovement();
         var currentSpeed = Player.VelocityComponent.GetInternalSpeed();
         if (currentSpeed.y <= 0.0f)

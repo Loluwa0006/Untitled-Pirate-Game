@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGroundedMovementState : PlayerBaseState
@@ -10,11 +11,26 @@ public class PlayerGroundedMovementState : PlayerBaseState
         base.InitializeState(stateMachine, owner);
         viewCamera = Camera.main;
     }
+
+    public override void Enter(Dictionary<string, object> message = null)
+    {
+        base.Enter(message);
+        var speed = Player.VelocityComponent.GetInternalSpeed();
+        speed.y = 0;
+        Player.VelocityComponent.OverwriteInternalSpeed(speed);
+    }
     protected virtual void GroundedMovement()
     {
         if (!IsGrounded())
         {
             StateMachine.TransitionTo<PlayerFallState>();
+            return;
+        }
+
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
+        {
+            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
+            StateMachine.TransitionTo<PlayerThrowWormState>();
             return;
         }
         if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered)

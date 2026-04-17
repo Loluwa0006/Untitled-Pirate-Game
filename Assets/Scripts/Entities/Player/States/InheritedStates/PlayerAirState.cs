@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class PlayerAirState : PlayerBaseState
 {
-    protected PlayerStats.JumpInfo jumpInfo;
-
     protected void ApplyGravity(float gravity)
     {
         var current = Player.VelocityComponent.GetInternalSpeed();
@@ -22,8 +20,10 @@ public class PlayerAirState : PlayerBaseState
         if (lateralMovement <= Player.PlayerStats.MoveSpeed + 0.001f || Vector3.Angle(movementDirection, newSpeed) > Player.PlayerStats.TurnAngle)
         {
             Vector3 moveDirection = movementDirection.x * Player.transform.right + movementDirection.y * Player.transform.forward;
-            newSpeed += new Vector3(moveDirection.x * Player.PlayerStats.AirAcceleration, 0, moveDirection.z * Player.PlayerStats.AirAcceleration);
-            newSpeed = Vector3.ClampMagnitude(newSpeed, Player.PlayerStats.MoveSpeed);
+            Vector2 lateralAddition = new (moveDirection.x * Player.PlayerStats.AirAcceleration, moveDirection.z * Player.PlayerStats.AirAcceleration);
+            Vector2 newLateral = new (newSpeed.x + lateralAddition.x, newSpeed.z + lateralAddition.y);
+            newLateral = Vector2.ClampMagnitude(newLateral, Player.PlayerStats.MoveSpeed);
+            newSpeed = new Vector3(newLateral.x, newSpeed.y, newLateral.y);
             Player.VelocityComponent.OverwriteInternalSpeed(newSpeed);
         }
     }

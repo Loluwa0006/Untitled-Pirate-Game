@@ -44,4 +44,20 @@ public class PlayerBaseState : BaseState
             );
         return hit;
     }
+
+    public bool AttemptGroundTransition()
+    {
+        if (!IsGrounded()) return false;
+
+        if (Player.PlayerInput.GetMovementDirection().magnitude < MOVEMENT_DEADZONE)
+        {
+            StateMachine.TransitionTo<PlayerIdleState>();
+        }
+        else
+        {
+            StateMachine.TransitionTo<PlayerRunState>();
+        }
+
+            return true;
+    }
 }

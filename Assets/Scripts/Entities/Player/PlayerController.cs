@@ -3,12 +3,15 @@ public class PlayerController : MonoBehaviour
 {
 
     [SerializeField] float moveSpeed;
-    [SerializeField] InputManager _playerInput;
     [SerializeField] EntityStateMachine playerStateMachine;
     [SerializeField] Rigidbody _rb;
-    [SerializeField] VelocityComponent _velocityComponent;
     [SerializeField] PlayerStats _playerStats;
     [SerializeField] Collider _collider;
+
+    [Header("Managers")]
+    [SerializeField] VelocityComponent _velocityComponent;
+    [SerializeField] InputManager _playerInput;
+    [SerializeField] WormManager _wormManager;
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
     public Rigidbody RigidBody { get => _rb; private set => _rb = value; }
@@ -18,6 +21,8 @@ public class PlayerController : MonoBehaviour
     public PlayerStats PlayerStats { get => _playerStats; private set => _playerStats = value; }
 
     public Collider Collider { get => _collider; private set => _collider = value; }
+
+    public WormManager WormManager { get => _wormManager; private set => _wormManager = value; }
 
     void Update()
     {
