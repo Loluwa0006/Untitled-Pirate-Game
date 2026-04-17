@@ -1,21 +1,24 @@
-using NUnit.Framework.Interfaces;
+
+
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerIdleState : PlayerBaseState
+public class PlayerIdleState : PlayerGroundedMovementState
 {
-    [SerializeField] float decelRate;
 
-    [SerializeField] InputActionReference moveReference;
-    Vector3 movementDirection;
-
-    public override void Process()
+    protected override void GroundedMovement()
     {
-        movementDirection = moveReference.action.ReadValue<Vector2>();
-    }
-
-    public override void PhysicsProcess()
-    {
+        if (!IsGrounded())
+        {
+            StateMachine.TransitionTo<PlayerFallState>();
+            return;
+        }
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered)
+        {
+            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Consume();
+            StateMachine.TransitionTo<PlayerJumpState>();
+            return;
+        }
+        Vector2 movementDirection = Player.PlayerInput.GetMovementDirection();
         if (movementDirection.magnitude > 0.1f)
         {
             StateMachine.TransitionTo<PlayerRunState>();
@@ -23,8 +26,8 @@ public class PlayerIdleState : PlayerBaseState
         }
 
         var previous = Player.VelocityComponent.GetInternalSpeed();
-        previous.x *= decelRate;
-        previous.z *= decelRate;
+        previous.x *= Player.PlayerStats.DecelerationRate;
+        previous.z *= Player.PlayerStats.DecelerationRate;
         Player.VelocityComponent.OverwriteInternalSpeed(previous);
     }
 }

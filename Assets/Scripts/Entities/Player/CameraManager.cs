@@ -6,8 +6,7 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] Transform lookTarget;
     [SerializeField] Transform playerTransform;
-    [SerializeField] InputActionReference aim;
-    [SerializeField] float sensitivity;
+    [SerializeField] InputManager inputManager;
 
     Vector2 lookDirection;
 
@@ -17,7 +16,9 @@ public class CameraManager : MonoBehaviour
     }
     private void Update()
     {
-        lookDirection += aim.action.ReadValue<Vector2>();
+        var lookInput = inputManager.GetLookDirection();
+
+        lookDirection += new Vector2(lookInput.x * inputManager.Sensitivity.x, lookInput.y * inputManager.Sensitivity.y);
 
         lookDirection.y = Mathf.Clamp(lookDirection.y, -90, 90);
         playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);

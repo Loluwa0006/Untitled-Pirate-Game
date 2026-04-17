@@ -15,11 +15,6 @@ public class VelocityComponent : MonoBehaviour
 
     public bool AcceptExternalVelocities { set; get; } = true;
 
-    public void AddInternalVelocity(Vector3 speed)
-    {
-        intervalVelocity += speed;
-    }
-
     public void AddExternalSpeed(Vector3 speed, string source)
     {
         externalVelocities[source] = speed;

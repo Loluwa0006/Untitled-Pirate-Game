@@ -42,10 +42,16 @@ public class EntityStateMachine : MonoBehaviour
         if (!stateLookup.ContainsKey(typeof(T)))
         {
             Debug.LogWarning("Could not find object of type " + typeof(T));
+            return;
         }
         
         currentState.Exit();
         currentState = stateLookup[typeof(T)];
         currentState.Enter(message);
+    }
+
+    public BaseState GetCurrentState()
+    {
+        return currentState;
     }
 }
