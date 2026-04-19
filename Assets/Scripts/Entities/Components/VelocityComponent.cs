@@ -39,6 +39,11 @@ public class VelocityComponent : MonoBehaviour
     {
         return intervalVelocity;
     }
+
+    public void AddInternalSpeed(Vector3 vector)
+    {
+        intervalVelocity += vector;
+    }
     public Vector3 GetExternalSpeed(string source)
     {
         if (externalVelocities.ContainsKey(source))

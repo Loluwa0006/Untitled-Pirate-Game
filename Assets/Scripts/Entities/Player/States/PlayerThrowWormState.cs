@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 public class PlayerThrowWormState : PlayerAirState
 {
     [SerializeField] float throwRange = 120;
@@ -13,6 +13,19 @@ public class PlayerThrowWormState : PlayerAirState
     Vector3 middlePointOfViewport = new (0.5f, 0.5f);
 
     int durationTracker = 0;
+
+    public override Type[] statesToAttemptToTransitionToEveryFrame
+    {
+        get => new Type[]
+        {
+            typeof(PlayerSwingState),
+            typeof(PlayerFallState),
+            typeof(PlayerRunState),
+            typeof(PlayerIdleState)
+
+        };
+        protected set => base.statesToAttemptToTransitionToEveryFrame = value;
+    }
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
@@ -22,10 +35,11 @@ public class PlayerThrowWormState : PlayerAirState
     {
         base.Enter(message);
         FireWorm();
-        var currentSpeed = Player.VelocityComponent.GetInternalSpeed();
-        currentSpeed.y = Player.PlayerStats.WormThrowJumpInfo.JumpVelocity;
-        Player.VelocityComponent.OverwriteInternalSpeed(currentSpeed);
+        Vector3 newSpeed = Player.RigidBody.linearVelocity;
+        newSpeed.y = Player.PlayerStats.WormThrowJumpInfo.JumpVelocity;
+        Player.RigidBody.linearVelocity = newSpeed;
         durationTracker = stateDuration;
+        Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
     }
 
     void FireWorm()
@@ -42,14 +56,14 @@ public class PlayerThrowWormState : PlayerAirState
             wormTarget = cameraRay.GetPoint(throwRange);
         }
         WormEntity newWorm = Player.WormManager.GetNewWorm();
-        newWorm.Fire(wormTarget, Player.transform.position);
+        newWorm.Fire(wormTarget, Player.transform.position, Player.RigidBody.linearVelocity);
     }
 
     public override void PhysicsProcess()
     {
+
         base.PhysicsProcess();
-        var currentSpeed = Player.VelocityComponent.GetInternalSpeed().y;
-        if (currentSpeed > 0)
+        if (Player.RigidBody.linearVelocity.y > 0)
         {
             ApplyGravity(Player.PlayerStats.WormThrowJumpInfo.JumpGravity);
         }
@@ -57,14 +71,25 @@ public class PlayerThrowWormState : PlayerAirState
         {
             ApplyGravity(Player.PlayerStats.WormThrowJumpInfo.FallGravity);
         }
+        AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
         durationTracker--;
+    }
+
+    public override void Process()
+    {
         if (durationTracker == 0)
         {
-            if (!AttemptGroundTransition())
-            {
-                StateMachine.TransitionTo<PlayerFallState>();
-                return;
-            }
+            PlayerGrounded = IsGrounded();
+            CheckIfPerFrameStateTransitionRequired();
         }
+    }
+
+    public override bool StateAvailable()
+    {
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
+        {
+            return true;
+        }
+        return false;
     }
 }

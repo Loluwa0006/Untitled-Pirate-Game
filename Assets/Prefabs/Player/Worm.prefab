@@ -59,7 +59,7 @@ GameObject:
   - component: {fileID: 4482398490604426576}
   - component: {fileID: 1895401925792460249}
   - component: {fileID: 6987743295247668556}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Worm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -158,7 +158,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1895401925792460249
 MonoBehaviour:
@@ -172,11 +172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27662fb0e2121884492bf1bd65d7d45c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormEntity
-  gravityFreeTime: 18
+  gravityFreeTime: 180
   distanceWhereTargetConsideredReached: 8
-  flySpeed: 15
-  gravity: 5
-  maxFallSpeed: 3
+  flySpeed: 40
+  gravity: 9
+  maxFallSpeed: 25
   model: {fileID: 4913076193423099044}
   swingbox: {fileID: 4482398490604426576}
   velocityManager: {fileID: 4256996498727238545}

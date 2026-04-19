@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 public class PlayerFallState : PlayerAirState
 {
@@ -8,24 +7,27 @@ public class PlayerFallState : PlayerAirState
     {
         JumpInfo
     }
-   
+    public override Type[] statesToAttemptToTransitionToEveryFrame 
+    {
+        get => new Type[]
+        {
+
+            typeof(PlayerSwingState),
+            typeof(PlayerThrowWormState),
+            typeof(PlayerJumpState),
+            typeof(PlayerRunState),
+            typeof(PlayerIdleState),
+
+        };
+    }
+
     public override void PhysicsProcess()
     {
-        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
-        {
-            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
-            StateMachine.TransitionTo<PlayerThrowWormState>();
-            return;
-        }
+        PlayerGrounded = IsGrounded();
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.FallGravity);
-        var speed = Player.VelocityComponent.GetInternalSpeed();
-        if (speed.y < -Player.PlayerStats.MaxFallSpeed)
-        {
-            speed.y = -Player.PlayerStats.MaxFallSpeed;
-            Player.VelocityComponent.OverwriteInternalSpeed(speed);
-        }
-        AirborneMovement();
-        if (IsGrounded())
+        
+        AirborneMovement(Player.PlayerInput.GetMovementDirection().normalized, Player.PlayerStats.AirAcceleration);
+        if (PlayerGrounded)
         {
             if (Player.PlayerInput.GetMovementDirection().magnitude > MOVEMENT_DEADZONE)
             {
@@ -36,5 +38,10 @@ public class PlayerFallState : PlayerAirState
                 StateMachine.TransitionTo<PlayerIdleState>();
             }
         }
+    }
+
+    public override bool StateAvailable()
+    {
+        return !PlayerGrounded;
     }
 }

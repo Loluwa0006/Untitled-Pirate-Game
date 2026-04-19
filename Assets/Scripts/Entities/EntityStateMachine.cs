@@ -50,8 +50,42 @@ public class EntityStateMachine : MonoBehaviour
         currentState.Enter(message);
     }
 
+    public void TransitionTo(System.Type state, Dictionary<string, object> message = null)
+    {
+        if (!stateLookup.ContainsKey(state))
+        {
+            Debug.LogWarning("Could not find object of type " + state);
+            return;
+        }
+        var newState = stateLookup[state];
+        if (newState == currentState)
+        {
+            return;
+        }
+        currentState.Exit();
+        currentState = newState;
+        currentState.Enter(message);
+    }
     public BaseState GetCurrentState()
     {
         return currentState;
+    }
+
+    public bool IsStateAvailable<T>() where T : BaseState
+    {
+        if (!stateLookup.ContainsKey(typeof(T)))
+        {
+            return false;
+        }
+        return stateLookup[typeof(T)].StateAvailable();
+    }
+
+    public bool IsStateAvailable(System.Type type)
+    {
+        if (!stateLookup.ContainsKey(type))
+        {
+            return false;
+        }
+        return stateLookup[(type)].StateAvailable();
     }
 }

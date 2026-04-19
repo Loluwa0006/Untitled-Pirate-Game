@@ -14,16 +14,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   moveSpeed: 40
   groundAcceleration: 4.4444447
-  decelerationRate: 0.65
+  decelerationDrag: 5.714286
   groundedJumpInfo:
-    jumpHeight: 25
+    jumpHeight: 15
     jumpTimeToPeak: 0.9
     jumpTimeToDecent: 0.7
   airAcceleration: 3.3333333
   angleToBeConsideredTurning: 5
   maxFallSpeed: 90
+  turnAngleToSpeedLost:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.9399986
+      value: -0.0038146973
+      inSlope: -3.0201368
+      outSlope: -3.0201368
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03678354
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   maxWorms: 3
   wormThrowInfo:
-    jumpHeight: 15
+    jumpHeight: 5.5
     jumpTimeToPeak: 1.4
     jumpTimeToDecent: 1.1
+  maxRodRange: 180
+  swingAcceleration: 2.2222223
+  swingJumpInfo:
+    jumpHeight: 35
+    jumpTimeToPeak: 1.2
+    jumpTimeToDecent: 1.05
+  minSwingJumpHeight: 5
+  rodSpring: 4.5
+  rodDamper: 7
+  rodMinDistanceWithNoSpring: 0.25
+  rodMaxDistanceWIthNoSpring: 0.8
+  rodSwingMassScale: 4.5

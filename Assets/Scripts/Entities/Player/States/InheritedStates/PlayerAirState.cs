@@ -2,29 +2,57 @@ using UnityEngine;
 
 public class PlayerAirState : PlayerBaseState
 {
-    protected void ApplyGravity(float gravity)
+    protected virtual void ApplyGravity(float gravity, bool clamp = true)
     {
-        var current = Player.VelocityComponent.GetInternalSpeed();
-        current.y -= gravity * Time.fixedDeltaTime;
-        Player.VelocityComponent.OverwriteInternalSpeed(current);
+        if (clamp)
+        {
+            if (Player.RigidBody.linearVelocity.y < Player.PlayerStats.MaxFallSpeed)
+            {
+                var speedNormalized = Player.RigidBody.linearVelocity.normalized;
+                var extraSpeed = Vector3.Dot(Vector3.down * gravity, speedNormalized);
+                if (extraSpeed > 0)
+                {
+                    gravity = 0.0f;
+                }
+            }
+        }
+        Player.RigidBody.AddForce(gravity * Vector3.down, ForceMode.Acceleration);
+
     }
 
-    protected void AirborneMovement()
+    protected void AirborneMovement(Vector2 movementDirection, float acceleration)
     {
-        Vector2 movementDirection = Player.PlayerInput.GetMovementDirection();
-   
-        movementDirection = movementDirection.normalized;
-        Vector3 newSpeed = Player.VelocityComponent.GetInternalSpeed();
-        float lateralMovement = new Vector2(newSpeed.x, newSpeed.z).magnitude;
+        Vector3 moveDirection = movementDirection.x * Player.transform.right + movementDirection.y * Player.transform.forward;
 
-        if (lateralMovement <= Player.PlayerStats.MoveSpeed + 0.001f || Vector3.Angle(movementDirection, newSpeed) > Player.PlayerStats.TurnAngle)
+        if (moveDirection.magnitude < MOVEMENT_DEADZONE) return;
+
+        Vector2 currentSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z);
+        float lateralSpeed = currentSpeed.magnitude;
+        Vector2 lateralAddition = new(moveDirection.x * acceleration, moveDirection.z * acceleration);
+
+
+        var turnAngle = Vector2.Angle(currentSpeed, currentSpeed + lateralAddition);
+
+        bool turning = (turnAngle <= Player.PlayerStats.TurnAngle);
+
+        if (!turning) //too sharp, decelerating
         {
-            Vector3 moveDirection = movementDirection.x * Player.transform.right + movementDirection.y * Player.transform.forward;
-            Vector2 lateralAddition = new (moveDirection.x * Player.PlayerStats.AirAcceleration, moveDirection.z * Player.PlayerStats.AirAcceleration);
-            Vector2 newLateral = new (newSpeed.x + lateralAddition.x, newSpeed.z + lateralAddition.y);
-            newLateral = Vector2.ClampMagnitude(newLateral, Player.PlayerStats.MoveSpeed);
-            newSpeed = new Vector3(newLateral.x, newSpeed.y, newLateral.y);
-            Player.VelocityComponent.OverwriteInternalSpeed(newSpeed);
+            var value01 = Mathf.InverseLerp(Player.PlayerStats.TurnAngle + 0.001f, 180, turnAngle);
+            var scaler = Player.PlayerStats.TurnAngleSpeedLostCurve.Evaluate(value01);
+            lateralAddition *= scaler;
         }
+
+        if (currentSpeed.magnitude >= Player.PlayerStats.MoveSpeed)
+        {
+            var speedNormalized = currentSpeed.normalized;
+            var extraSpeed = Vector2.Dot(lateralAddition, speedNormalized);
+            if (extraSpeed > 0)
+            {
+                lateralAddition -= extraSpeed * speedNormalized;
+            }
+        }
+
+        Player.RigidBody.AddForce(new Vector3(lateralAddition.x, 0, lateralAddition.y), ForceMode.VelocityChange);
     }
 }
+

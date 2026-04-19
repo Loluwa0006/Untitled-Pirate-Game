@@ -9,20 +9,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Collider _collider;
 
     [Header("Managers")]
-    [SerializeField] VelocityComponent _velocityComponent;
     [SerializeField] InputManager _playerInput;
     [SerializeField] WormManager _wormManager;
+    [SerializeField] RodManager _rodManager;
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
     public Rigidbody RigidBody { get => _rb; private set => _rb = value; }
 
-    public VelocityComponent VelocityComponent { get => _velocityComponent; private set => _velocityComponent = value; }
 
     public PlayerStats PlayerStats { get => _playerStats; private set => _playerStats = value; }
 
     public Collider Collider { get => _collider; private set => _collider = value; }
 
     public WormManager WormManager { get => _wormManager; private set => _wormManager = value; }
+
+    public RodManager RodManager { get => _rodManager; private set => _rodManager = value; }
+
 
     void Update()
     {

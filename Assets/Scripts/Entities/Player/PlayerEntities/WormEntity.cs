@@ -16,14 +16,18 @@ public class WormEntity : MonoBehaviour
     int gravityTracker = 0;
     bool wormActive = false;
     bool reachedTarget = false;
-   public void Fire(Vector3 target, Vector3 startingLocation)
+   public void Fire(Vector3 target, Vector3 startingLocation, Vector3 ownerVelocity)
     {
         this.target = target;
         gravityTracker = gravityFreeTime;
         reachedTarget = false;
         transform.position = startingLocation;
         Vector3 direction = (target - startingLocation).normalized;
-        velocityManager.OverwriteInternalSpeed(direction * flySpeed);
+
+        float velocityToInheritFromOwner = Vector3.Dot(direction, ownerVelocity);
+
+        
+        velocityManager.OverwriteInternalSpeed((direction * flySpeed));
 
         wormActive = true;
         model.enabled = true;

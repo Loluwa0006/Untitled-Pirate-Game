@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,17 @@ public class PlayerJumpState : PlayerAirState
 {
 
     Dictionary<string, object> fallStateTransitionDictionary = new();
+
+    public override Type[] statesToAttemptToTransitionToEveryFrame
+    {
+        get => new Type[]
+        {
+
+            typeof(PlayerSwingState),
+            typeof(PlayerThrowWormState),
+        };
+    }
+
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
@@ -14,29 +26,28 @@ public class PlayerJumpState : PlayerAirState
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
-        var currentSpeed = Player.VelocityComponent.GetInternalSpeed();
-        currentSpeed.y = Player.PlayerStats.GroundedJumpInfo.JumpVelocity;
-        Player.VelocityComponent.OverwriteInternalSpeed(currentSpeed);
+        Player.RigidBody.AddForce(Vector3.up * Player.PlayerStats.GroundedJumpInfo.JumpVelocity, ForceMode.VelocityChange);
+        Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Consume();
     }
 
     public override void PhysicsProcess()
     {
-        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
-        {
-            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
-            StateMachine.TransitionTo<PlayerThrowWormState>();
-            return;
-        }
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
-        AirborneMovement();
-        var currentSpeed = Player.VelocityComponent.GetInternalSpeed();
-        if (currentSpeed.y <= 0.0f)
+        AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
+        if (Player.RigidBody.linearVelocity.y <= 0.0f)
         {
             StateMachine.TransitionTo<PlayerFallState>(fallStateTransitionDictionary);
             return;
         }
     }
 
-    
+    public override bool StateAvailable()
+    {
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered && PlayerGrounded)
+        {
+            return true;
+        }
+        return false;
+    }
 
 }

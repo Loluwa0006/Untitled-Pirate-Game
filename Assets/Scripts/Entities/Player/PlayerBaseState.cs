@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 public class PlayerBaseState : BaseState
 {
@@ -7,57 +6,59 @@ public class PlayerBaseState : BaseState
 
     public const float GROUND_CHECK_SAFE_MARGIN = 0.15f;
 
-    const float BOXCAST_RATIO = 0.8f;
+    const float SHAPECAST_RATIO = 0.8f;
 
    protected static LayerMask groundMask;
+    protected static LayerMask swingMask;
 
     public PlayerController Player { private set; get; }
+
+
+    public virtual System.Type[] statesToAttemptToTransitionToEveryFrame { get; protected set; }
+
+    protected static bool PlayerGrounded;
+
 
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
         Player = owner.GetComponent<PlayerController>();
         groundMask = LayerMask.GetMask("Ground");
+        swingMask = LayerMask.GetMask("Worm");
     }
 
     public bool IsGrounded()
     {
-        float checkLength = GROUND_CHECK_SAFE_MARGIN;
-        Debug.Log("Ground check length " + checkLength);
-        //return Physics.BoxCast(
-        //    Player.Collider.bounds.center, 
-        //    Player.Collider.bounds.extents, 
-        //    Vector3.down, 
-        //    Quaternion.identity,
-        //    checkLength,
-        //    groundMask          
-        //    );
-        float castDistance = (Player.Collider.bounds.size.y / 2.0f) + GROUND_CHECK_SAFE_MARGIN;
-        bool hit = Physics.BoxCast
+
+        var ray = new Ray(Player.Collider.bounds.center, Vector3.down);
+        bool hit = Physics.SphereCast
             (
-            Player.Collider.bounds.center,
-            Player.Collider.bounds.size / 2.0f * BOXCAST_RATIO,
-            Vector3.down,
-            Player.transform.rotation,
-            castDistance,
+            ray, 
+            Player.Collider.bounds.extents.y * SHAPECAST_RATIO,
+            GROUND_CHECK_SAFE_MARGIN,
             groundMask
             );
         return hit;
     }
 
-    public bool AttemptGroundTransition()
+    public override void Process()
     {
-        if (!IsGrounded()) return false;
-
-        if (Player.PlayerInput.GetMovementDirection().magnitude < MOVEMENT_DEADZONE)
-        {
-            StateMachine.TransitionTo<PlayerIdleState>();
-        }
-        else
-        {
-            StateMachine.TransitionTo<PlayerRunState>();
-        }
-
-            return true;
+        base.Process();
+        CheckIfPerFrameStateTransitionRequired();
     }
+
+    protected void CheckIfPerFrameStateTransitionRequired()
+    {
+        for (int i = 0; i < statesToAttemptToTransitionToEveryFrame.Length; i++)
+        {
+            var stateClass = statesToAttemptToTransitionToEveryFrame[i];
+            if (StateMachine.IsStateAvailable(stateClass))
+            {
+                StateMachine.TransitionTo(stateClass, null);
+                return;
+            }
+        }
+    }
+
+    
 }

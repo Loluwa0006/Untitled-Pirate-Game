@@ -1,33 +1,35 @@
 
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedMovementState
 {
+    public override System.Type[] statesToAttemptToTransitionToEveryFrame
+    {
+        get => new System.Type[]
+        {
 
+            typeof(PlayerSwingState),
+            typeof(PlayerThrowWormState),
+            typeof(PlayerJumpState),
+            typeof(PlayerRunState),
+        };
+    }
     protected override void GroundedMovement()
     {
-        if (!IsGrounded())
+        PlayerGrounded = IsGrounded();
+        if (!PlayerGrounded)
         {
             StateMachine.TransitionTo<PlayerFallState>();
             return;
         }
-        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered)
-        {
-            Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Consume();
-            StateMachine.TransitionTo<PlayerJumpState>();
-            return;
-        }
-        Vector2 movementDirection = Player.PlayerInput.GetMovementDirection();
-        if (movementDirection.magnitude > 0.1f)
-        {
-            StateMachine.TransitionTo<PlayerRunState>();
-            return;
-        }
-
-        var previous = Player.VelocityComponent.GetInternalSpeed();
-        previous.x *= Player.PlayerStats.DecelerationRate;
-        previous.z *= Player.PlayerStats.DecelerationRate;
-        Player.VelocityComponent.OverwriteInternalSpeed(previous);
+        Player.RigidBody.linearVelocity = Vector3.MoveTowards(Player.RigidBody.linearVelocity, Vector3.zero, Player.PlayerStats.DecelerationDrag);
     }
+    public override bool StateAvailable()
+    {
+        Vector2 movementDirection = Player.PlayerInput.GetMovementDirection();
+        return PlayerGrounded && movementDirection.magnitude <= MOVEMENT_DEADZONE;
+    }
+
 }

@@ -37,6 +37,11 @@ public class BaseState : MonoBehaviour
 
     }
 
+    public virtual bool StateAvailable()
+    {
+        return false;
+    }
+
     public virtual void Exit()
     {
 
