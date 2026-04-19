@@ -14,7 +14,7 @@ public class PlayerBaseState : BaseState
     public PlayerController Player { private set; get; }
 
 
-    public virtual System.Type[] statesToAttemptToTransitionToEveryFrame { get; protected set; }
+    public virtual System.Type[] statesToAttemptToTransitionTo { get; protected set; }
 
     protected static bool PlayerGrounded;
 
@@ -44,14 +44,14 @@ public class PlayerBaseState : BaseState
     public override void Process()
     {
         base.Process();
-        CheckIfPerFrameStateTransitionRequired();
+        AttemptStateTransition();
     }
 
-    protected void CheckIfPerFrameStateTransitionRequired()
+    protected void AttemptStateTransition()
     {
-        for (int i = 0; i < statesToAttemptToTransitionToEveryFrame.Length; i++)
+        for (int i = 0; i < statesToAttemptToTransitionTo.Length; i++)
         {
-            var stateClass = statesToAttemptToTransitionToEveryFrame[i];
+            var stateClass = statesToAttemptToTransitionTo[i];
             if (StateMachine.IsStateAvailable(stateClass))
             {
                 StateMachine.TransitionTo(stateClass, null);

@@ -14,7 +14,7 @@ public class PlayerThrowWormState : PlayerAirState
 
     int durationTracker = 0;
 
-    public override Type[] statesToAttemptToTransitionToEveryFrame
+    public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
         {
@@ -24,7 +24,7 @@ public class PlayerThrowWormState : PlayerAirState
             typeof(PlayerIdleState)
 
         };
-        protected set => base.statesToAttemptToTransitionToEveryFrame = value;
+        protected set => base.statesToAttemptToTransitionTo = value;
     }
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
@@ -36,7 +36,7 @@ public class PlayerThrowWormState : PlayerAirState
         base.Enter(message);
         FireWorm();
         Vector3 newSpeed = Player.RigidBody.linearVelocity;
-        newSpeed.y = Player.PlayerStats.WormThrowJumpInfo.JumpVelocity;
+        Player.RigidBody.AddForce(Vector3.up * Player.PlayerStats.WormThrowJumpInfo.JumpVelocity);
         Player.RigidBody.linearVelocity = newSpeed;
         durationTracker = stateDuration;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
@@ -80,7 +80,7 @@ public class PlayerThrowWormState : PlayerAirState
         if (durationTracker == 0)
         {
             PlayerGrounded = IsGrounded();
-            CheckIfPerFrameStateTransitionRequired();
+            AttemptStateTransition();
         }
     }
 

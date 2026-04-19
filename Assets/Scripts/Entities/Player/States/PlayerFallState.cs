@@ -7,11 +7,11 @@ public class PlayerFallState : PlayerAirState
     {
         JumpInfo
     }
-    public override Type[] statesToAttemptToTransitionToEveryFrame 
+    public override Type[] statesToAttemptToTransitionTo 
     {
         get => new Type[]
         {
-
+            typeof(PlayerDashState),
             typeof(PlayerSwingState),
             typeof(PlayerThrowWormState),
             typeof(PlayerJumpState),

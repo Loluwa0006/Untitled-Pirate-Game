@@ -7,11 +7,11 @@ public class PlayerJumpState : PlayerAirState
 
     Dictionary<string, object> fallStateTransitionDictionary = new();
 
-    public override Type[] statesToAttemptToTransitionToEveryFrame
+    public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
         {
-
+            typeof(PlayerDashState),
             typeof(PlayerSwingState),
             typeof(PlayerThrowWormState),
         };

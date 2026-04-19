@@ -34,26 +34,21 @@ public class RodManager : MonoBehaviour
     private void Start()
     {
         gameCamera = Camera.main;
-        EndSwing();
+        RetractRod();
     }
 
-    public void FireRod()
+    public void StartSwing()
     {
-        var cameraRay = gameCamera.ViewportPointToRay(middlePointOfViewport);
-        var raycast = Physics.Raycast(cameraRay, out var hitInfo, player.PlayerStats.MaxRodRange, swingMask, QueryTriggerInteraction.Collide);
-        if (raycast)
+        if (WormStateUtilities.raycastResult.collider != null)
         {
-            grappleInfo.collider = hitInfo.collider;
-            grappleInfo.offset = hitInfo.point - hitInfo.collider.bounds.center;
+            grappleInfo.collider = WormStateUtilities.raycastResult.collider;
+            grappleInfo.offset = Vector3.zero;
 
             grappleJoint = player.gameObject.AddComponent<SpringJoint>();
             grappleJoint.autoConfigureConnectedAnchor = false;
             grappleJoint.connectedAnchor = grappleInfo.GrapplePosition;
 
             grappleJoint.massScale = player.PlayerStats.RodSwingMassScale;
-
-
-
             grappleJoint.spring = player.PlayerStats.RodSpring;
             grappleJoint.damper = player.PlayerStats.RodDamper;
 
@@ -67,8 +62,27 @@ public class RodManager : MonoBehaviour
         }
     }
 
+    public void EnableRod()
+    {
+        if (WormStateUtilities.raycastResult.collider != null)
+        {
+            grappleActive = true;
+            rodLine.enabled = true;
 
-    public void EndSwing()
+            grappleInfo.collider = WormStateUtilities.raycastResult.collider;
+            grappleInfo.offset = Vector3.zero;
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (grappleJoint != null)
+        {
+            grappleJoint.connectedAnchor = GrappleInfo.GrapplePosition;
+        }
+    }
+
+
+    public void RetractRod()
     {
         grappleActive = false;
         rodLine.enabled = false;

@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedMovementState
 {
-    public override System.Type[] statesToAttemptToTransitionToEveryFrame
+    public override System.Type[] statesToAttemptToTransitionTo
     {
         get => new System.Type[]
         {
-
+            typeof(PlayerDashState),
             typeof(PlayerSwingState),
             typeof(PlayerThrowWormState),
             typeof(PlayerJumpState),

@@ -7,7 +7,7 @@ public class PlayerGroundedMovementState : PlayerBaseState
 
     Camera viewCamera;
 
-    public override Type[] statesToAttemptToTransitionToEveryFrame
+    public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
         {

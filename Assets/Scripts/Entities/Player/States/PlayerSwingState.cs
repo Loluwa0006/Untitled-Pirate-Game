@@ -4,37 +4,25 @@ using UnityEngine;
 
 public class PlayerSwingState : PlayerAirState
 {
-    float maxGrappleDistance;
 
-    public override Type[] statesToAttemptToTransitionToEveryFrame
+    public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
         {
-
+            typeof(PlayerThrowWormState),
+            typeof(PlayerDashState),
         };
-        protected set => base.statesToAttemptToTransitionToEveryFrame = value;
+        protected set => base.statesToAttemptToTransitionTo = value;
     }
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
-        Player.RodManager.FireRod();
-        maxGrappleDistance = Vector3.Distance(Player.Collider.bounds.center, Player.RodManager.GrappleInfo.GrapplePosition);
-        Player.RigidBody.AddForce(Player.RigidBody.linearVelocity.normalized * Player.PlayerStats.SwingJumpInfo.JumpVelocity, ForceMode.VelocityChange);
+        Player.RodManager.StartSwing();
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Consume();
     }
 
     public override void Process()
     {
-        if (StateMachine.IsStateAvailable<PlayerThrowWormState>())
-        {
-            StateMachine.TransitionTo<PlayerThrowWormState>();
-            return;
-        }
-        if (!Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
-        {
-            StateMachine.TransitionTo<PlayerFallState>();
-            return;
-        }
         if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered)
         {
             var jumpVelocity = Player.RigidBody.linearVelocity.normalized * Player.PlayerStats.SwingJumpInfo.JumpVelocity;
@@ -44,7 +32,18 @@ public class PlayerSwingState : PlayerAirState
             StateMachine.TransitionTo<PlayerFallState>();
             return;
         }
-
+        if (StateMachine.IsStateAvailable<PlayerDashState>())
+        {
+            StateMachine.TransitionTo<PlayerDashState>();
+            return;
+        }
+        if (!Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
+        {
+            StateMachine.TransitionTo<PlayerFallState>();
+            return;
+        }
+        
+        AttemptStateTransition();
     }
     public override void PhysicsProcess()
     {
@@ -61,23 +60,16 @@ public class PlayerSwingState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        Player.RodManager.EndSwing();
+        Player.RodManager.RetractRod();
     }
 
     public override bool StateAvailable()
     {
-        if (AimingAtWorm() && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
+        if (WormStateUtilities.AimingAtWorm(Player, swingMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
         {
             return true;
         }
         return false;
-    }
-
-    public bool AimingAtWorm()
-    {
-        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
-        bool hit = Physics.Raycast(ray, Player.PlayerStats.MaxRodRange, swingMask, QueryTriggerInteraction.Collide);
-        return hit;
     }
 }
 

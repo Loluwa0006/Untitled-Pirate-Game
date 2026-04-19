@@ -16,7 +16,7 @@ MonoBehaviour:
   groundAcceleration: 4.4444447
   decelerationDrag: 5.714286
   groundedJumpInfo:
-    jumpHeight: 15
+    jumpHeight: 10
     jumpTimeToPeak: 0.9
     jumpTimeToDecent: 0.7
   airAcceleration: 3.3333333
@@ -50,16 +50,19 @@ MonoBehaviour:
   wormThrowInfo:
     jumpHeight: 5.5
     jumpTimeToPeak: 1.4
-    jumpTimeToDecent: 1.1
+    jumpTimeToDecent: 1
   maxRodRange: 180
-  swingAcceleration: 2.2222223
+  swingAcceleration: 6.6666665
   swingJumpInfo:
-    jumpHeight: 35
-    jumpTimeToPeak: 1.2
-    jumpTimeToDecent: 1.05
+    jumpHeight: 5
+    jumpTimeToPeak: 1.1
+    jumpTimeToDecent: 0.9
   minSwingJumpHeight: 5
-  rodSpring: 4.5
-  rodDamper: 7
-  rodMinDistanceWithNoSpring: 0.25
-  rodMaxDistanceWIthNoSpring: 0.8
+  rodSpring: 525
+  rodDamper: 15
+  rodMinDistanceWithNoSpring: 0
+  rodMaxDistanceWIthNoSpring: 1
   rodSwingMassScale: 4.5
+  dashGravity: 8
+  dashPower: 1.75
+  dashLateralAcceleration: 3.3333333

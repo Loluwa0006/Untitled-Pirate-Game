@@ -27,7 +27,7 @@ public class WormEntity : MonoBehaviour
         float velocityToInheritFromOwner = Vector3.Dot(direction, ownerVelocity);
 
         
-        velocityManager.OverwriteInternalSpeed((direction * flySpeed));
+        velocityManager.OverwriteInternalSpeed((direction * flySpeed) + ownerVelocity);
 
         wormActive = true;
         model.enabled = true;

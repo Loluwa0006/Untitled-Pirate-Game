@@ -134,6 +134,7 @@ Transform:
   - {fileID: 378174818477778609}
   - {fileID: 5706041689673412875}
   - {fileID: 7431743368645410915}
+  - {fileID: 3184677362814718927}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -243,6 +244,53 @@ MonoBehaviour:
   actionReference: {fileID: -3922688528445652463, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 1
   bufferDuration: 2
+--- !u!1 &5006247246180266122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3184677362814718927}
+  - component: {fileID: 4405916050608446467}
+  m_Layer: 3
+  m_Name: Dash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3184677362814718927
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006247246180266122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4405916050608446467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5006247246180266122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db07ffce2c142be448c8ee1c00c44a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDashState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
+  distanceToExitStateAt: 5
 --- !u!1 &5355215119351398126
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,9 +432,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a990c9e1b135e40888653fbef9da3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
-  actionReference: {fileID: 0}
-  isHoldable: 0
-  bufferDuration: 8
+  actionReference: {fileID: -8998899159709361953, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
+  isHoldable: 1
+  bufferDuration: 2
 --- !u!1 &5788771417373805492
 GameObject:
   m_ObjectHideFlags: 0

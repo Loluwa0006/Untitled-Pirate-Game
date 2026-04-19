@@ -59,6 +59,8 @@ public class PlayerStats : ScriptableObject
     [Header("Rod")]
     [SerializeField] float maxRodRange = 120;
     public float MaxRodRange { get => maxRodRange; private set => maxRodRange = value; }
+
+    #region SwingInfo
     [SerializeField] float swingAcceleration = 8.0f;
     public float SwingAcceleration { get => swingAcceleration; private set => swingAcceleration = value; }
 
@@ -87,7 +89,24 @@ public class PlayerStats : ScriptableObject
     [SerializeField] float rodSwingMassScale = 4.5f;
 
     public float RodSwingMassScale { get => rodSwingMassScale; }
-   
+    #endregion
+
+    #region Dash
+
+    [SerializeField] float dashGravity = 8.0f;
+
+    public float DashGravity { get => dashGravity; }
+
+    [SerializeField] float dashPower = 30.0f;
+
+    public float DashPower { get => dashPower; }
+
+    [SerializeField] float dashLateralAcceleration;
+
+    public float DashLateralAcceleration { get => dashLateralAcceleration; }
+
+    #endregion
+
 }
 
 

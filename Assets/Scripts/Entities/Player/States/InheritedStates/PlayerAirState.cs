@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAirState : PlayerBaseState
@@ -53,6 +54,21 @@ public class PlayerAirState : PlayerBaseState
         }
 
         Player.RigidBody.AddForce(new Vector3(lateralAddition.x, 0, lateralAddition.y), ForceMode.VelocityChange);
+    }
+}
+public static class WormStateUtilities
+{
+
+    public static RaycastHit raycastResult;
+    public static bool AimingAtWorm(PlayerController Player, LayerMask swingMask)
+    {
+        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
+        if (Physics.Raycast(ray, out RaycastHit hitInfo, Player.PlayerStats.MaxRodRange, swingMask, QueryTriggerInteraction.Collide))
+        {
+            raycastResult = hitInfo;
+            return true;
+        }
+        return false;
     }
 }
 
