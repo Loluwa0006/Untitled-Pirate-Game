@@ -59,7 +59,7 @@ public class PlayerAirState : PlayerBaseState
 public static class WormStateUtilities
 {
 
-    public static RaycastHit raycastResult;
+    static RaycastHit raycastResult;
 
     public static RaycastHit RaycastResult { get => raycastResult; private set => raycastResult = value; }
 

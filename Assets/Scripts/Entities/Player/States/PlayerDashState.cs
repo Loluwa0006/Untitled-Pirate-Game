@@ -23,13 +23,14 @@ public class PlayerDashState : PlayerAirState
     {
         var dashDirection = Player.PlayerInput.GetMovementDirection().y;
 
-        var dashDirectionCorrected = ( (dashDirection + 1) / 2.0f); //converts range from (-1,1) to (1,0)
+        var dashDirectionCorrected = (dashDirection + 1) / 2.0f; //converts range from (-1,1) to (0,1)
 
         base.PhysicsProcess();
         float gravity = Player.PlayerStats.DashGravity * (1.0f - dashDirectionCorrected);
 
         ApplyGravity(gravity);
-        AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.DashLateralAcceleration);
+        var movementCorrected = new Vector2(Player.PlayerInput.GetMovementDirection().x, 0); //force 0 because forward/backward movement is completely handled by dash functionality
+        AirborneMovement(movementCorrected, Player.PlayerStats.DashLateralAcceleration);
 
         var directionToGrapple = (Player.RodManager.GrappleInfo.GrapplePosition - Player.Collider.bounds.center).normalized;
 
@@ -40,7 +41,7 @@ public class PlayerDashState : PlayerAirState
         }
         var speedToAdd = GetSpeedToAdd(directionToGrapple);
         Player.RigidBody.AddForce(speedToAdd, ForceMode.VelocityChange);
-        var strippedLateral = StripLateralMovementBasedOnInput(directionToGrapple, dashDirection);
+        var strippedLateral = StripLateralMovementBasedOnInput(directionToGrapple, dashDirectionCorrected);
         Player.RigidBody.AddForce(strippedLateral, ForceMode.VelocityChange);
     }
 
@@ -64,7 +65,6 @@ public class PlayerDashState : PlayerAirState
     {
         var velocityProjected = Vector3.Dot(Player.RigidBody.linearVelocity, directionToGrapple) * directionToGrapple;
         var lateralMovement = Player.RigidBody.linearVelocity - velocityProjected; //subtract aligned velocity
-
         return -lateralMovement * yAxis;
     }
     public override void Process()
@@ -84,7 +84,10 @@ public class PlayerDashState : PlayerAirState
     {
         if (WormStateUtilities.AimingAtWorm(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Dash].Buffered)
         {
-            return true;
+            if (Vector3.Distance(WormStateUtilities.RaycastResult.point, Player.Collider.bounds.center) >= Player.PlayerStats.MinDistanceBeforeDashCancelled)
+            {
+                return true;
+            }
         }
         return false;
     }
