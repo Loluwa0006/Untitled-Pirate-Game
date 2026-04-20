@@ -8,6 +8,8 @@ public class PlayerParryState : PlayerAirState
     [SerializeField] LayerMask parryMask;
     int durationTracker = 0;
 
+    float startingSpeed = 0.0f;
+
     public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
@@ -18,6 +20,8 @@ public class PlayerParryState : PlayerAirState
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
+        startingSpeed = Player.RigidBody.linearVelocity.magnitude;
+        Player.playerCollision.AddListener(OnPlayerCollision);
         durationTracker = 0;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].Consume();
     }
@@ -36,7 +40,6 @@ public class PlayerParryState : PlayerAirState
         ApplyGravity(gravity);
         Vector3 movementDirection = Player.PlayerInput.GetMovementDirection();
         AirborneMovement(movementDirection, Player.PlayerStats.ParryStrafeSpeed);
-        CheckForWall(movementDirection);
         durationTracker++;
 
         if (durationTracker == Player.PlayerStats.ProperParryDuration + Player.PlayerStats.PartialParryDuration)
@@ -45,31 +48,28 @@ public class PlayerParryState : PlayerAirState
         }
     }
 
-    void CheckForWall(Vector3 movementDirection)
+  
+    void OnPlayerCollision(Collision collision)
     {
-        var raycastLength = Player.PlayerStats.MinParryRange + (Player.PlayerStats.ParryRangeIncreaseWithSpeedRatio * Player.RigidBody.linearVelocity.magnitude);
-        Ray ray = new (Player.Collider.bounds.center, Player.RigidBody.linearVelocity.normalized);
-        if (Physics.Raycast(ray, out RaycastHit hitInfo, raycastLength, parryMask, QueryTriggerInteraction.Collide))
-        {
-            Player.RigidBody.MovePosition(hitInfo.point);
-            PerformParry(movementDirection, hitInfo.normal);
-            StateMachine.TransitionTo<PlayerFallState>();
-        }
+        PerformParry(Player.PlayerInput.GetMovementDirection(), collision.GetContact(0).normal);
     }
-
     void PerformParry(Vector3 movementDirection, Vector3 normal)
     {
-        float bounceVelocity = Player.RigidBody.linearVelocity.magnitude + (Player.RigidBody.linearVelocity.magnitude * Player.PlayerStats.ParrySpeedIncrease);
+        float bounceVelocity = startingSpeed + (startingSpeed * Player.PlayerStats.ParrySpeedIncrease);
         if (durationTracker > Player.PlayerStats.ProperParryDuration)
         {
             bounceVelocity *= Player.PlayerStats.PartialParrySpeedPenalty;
         }
-        Vector3 velocityReflected = Vector3.Reflect(Player.RigidBody.linearVelocity, normal).normalized;
+        Vector3 velocityReflected = Vector3.Reflect(Player.RigidBody.linearVelocity.normalized, normal).normalized;
         Vector3 velocityRotated = Vector3.Lerp(velocityReflected, movementDirection.normalized, Player.PlayerStats.ParryBounceControl);
 
         Player.RigidBody.linearVelocity = velocityRotated * bounceVelocity;
     }
-
+    public override void Exit()
+    {
+        base.Exit();
+        Player.playerCollision.RemoveListener(OnPlayerCollision);
+    }
     public override bool StateAvailable()
     {
         return Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].Buffered && !Player.PlayerGrounded;

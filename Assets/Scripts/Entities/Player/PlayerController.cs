@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
 
@@ -27,8 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public bool PlayerGrounded { get; set; }
 
-
-
+    public UnityEvent<Collision> playerCollision = new();
     void Update()
     {
         playerStateMachine.Process();
@@ -37,5 +37,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         playerStateMachine.PhysicsProcess();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        playerCollision.Invoke(collision);
     }
 }
