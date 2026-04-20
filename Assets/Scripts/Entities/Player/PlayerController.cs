@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] WormManager _wormManager;
     [SerializeField] RodManager _rodManager;
     [SerializeField] AnarchyManager _anarchyManager;
+    [SerializeField] SquashbucklerManager _squashbucklerManager;
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
     public Rigidbody RigidBody { get => _rb; private set => _rb = value; }
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public RodManager RodManager { get => _rodManager; private set => _rodManager = value; }
 
     public AnarchyManager AnarchyManager { get => _anarchyManager; private set => _anarchyManager = value; }
+
+    public SquashbucklerManager SquashbucklerManager { get => _squashbucklerManager; }
 
     public bool PlayerGrounded { get; set; }
 

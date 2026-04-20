@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AnarchyManager : MonoBehaviour
 {
@@ -26,6 +27,10 @@ public class AnarchyManager : MonoBehaviour
 
     [SerializeField] int baseDecayRate = 150;
     [SerializeField] int minDecayRate = 30;
+    /// <summary>
+    /// Passes the number of charges gained.
+    /// </summary>
+    public UnityEvent<int> anarchyGained = new();
 
     public int DecayRate { get => Mathf.RoundToInt(Mathf.Lerp(baseDecayRate, minDecayRate, CurrentAnarchy / MAX_ANARCHY)); }
 
@@ -37,7 +42,7 @@ public class AnarchyManager : MonoBehaviour
     public float ProgressToAnarchy { set => progressToAnarchy = value; get => progressToAnarchy; }
 
 
-
+    
     Dictionary<AnarchyGenerationMethod, float> generationScaling = new();
 
     private void Start()
@@ -66,8 +71,10 @@ public class AnarchyManager : MonoBehaviour
         currentAnarchy += increasesToAnarchy;
         player.WormManager.WormsRemaining += increasesToAnarchy;
         ProgressToAnarchy -= increasesToAnarchy * 100;
+        if (increasesToAnarchy > 0) anarchyGained.Invoke(increasesToAnarchy);
         decayTracker = DecayRate;
         UpdateAnarchyDisplays();
+       
     }
 
     void UpdateAnarchyDisplays()

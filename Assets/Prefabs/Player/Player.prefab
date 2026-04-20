@@ -48,7 +48,7 @@ MonoBehaviour:
   hasInactivePhysicsProcess: 0
   parryMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 832
 --- !u!1 &1169385189053670155
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +294,58 @@ MonoBehaviour:
   actionReference: {fileID: -3922688528445652463, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 1
   bufferDuration: 2
+--- !u!1 &4681069711837776597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3127645413297380931}
+  - component: {fileID: 5114671140808074405}
+  m_Layer: 0
+  m_Name: AnarchyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3127645413297380931
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681069711837776597}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 272.40436, y: 145.69174, z: 385.4511}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3340420948024593123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5114671140808074405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4681069711837776597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee775ecfd076fe748abd03a54805b38e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnarchyManager
+  player: {fileID: 1870535501843506831}
+  anarchyDisplay: {fileID: 0}
+  anarchyProgressDisplay: {fileID: 0}
+  numberOfOptionsToUseToReduceScaling: 2
+  scalingGenerationReductionAmount: 0.1
+  generationPerOption: 30
+  baseDecayRate: 50
+  minDecayRate: 30
 --- !u!1 &5006247246180266122
 GameObject:
   m_ObjectHideFlags: 0
@@ -575,7 +627,7 @@ MonoBehaviour:
   dashBuffer: {fileID: 5506414441952474501}
   movementAxis: {fileID: 3833152164696439778, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   lookAxis: {fileID: -8909627186484831652, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
-  sensitivity: {x: 1.75, y: 0.6}
+  sensitivity: {x: 2.25, y: 1}
 --- !u!1 &5834537706312432830
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,6 +668,7 @@ Transform:
   - {fileID: 6071449120060975319}
   - {fileID: 3834760931267974327}
   - {fileID: 7435467149138354754}
+  - {fileID: 3127645413297380931}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8369251970190751333
@@ -716,6 +769,10 @@ MonoBehaviour:
   _playerInput: {fileID: 7156764095087575519}
   _wormManager: {fileID: 6021299679631168183}
   _rodManager: {fileID: 8445331606179173087}
+  _anarchyManager: {fileID: 5114671140808074405}
+  playerCollision:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!54 &4316075470623054589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -880,7 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a990c9e1b135e40888653fbef9da3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
-  actionReference: {fileID: 0}
+  actionReference: {fileID: -5179591509420885385, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 0
   bufferDuration: 8
 --- !u!1 &6480708021282751330
@@ -1148,6 +1205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WormManager
   wormPrefab: {fileID: 1895401925792460249, guid: b0e3f6ed5e41de34b9024fcb4d1d2f4d, type: 3}
   player: {fileID: 1870535501843506831}
+  wormDisplay: {fileID: 0}
 --- !u!1 &8743300953651785316
 GameObject:
   m_ObjectHideFlags: 0

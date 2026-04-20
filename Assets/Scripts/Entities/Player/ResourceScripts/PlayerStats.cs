@@ -157,4 +157,10 @@ public class PlayerStats : ScriptableObject
     [SerializeField, Range(0, 1)] float parryBounceControl;
     public float ParryBounceControl { get => parryBounceControl; }
     #endregion
+
+    #region Squashbuckler
+    [SerializeField] int chargesToEnterSquashbucklerMode = 3;
+
+    public int ChargesToEnterSquashbucklerMode { get => chargesToEnterSquashbucklerMode; }
+    #endregion
 }
