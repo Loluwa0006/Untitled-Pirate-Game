@@ -64,12 +64,12 @@ public class PlayerParryState : PlayerAirState
         Vector3 velocityRotated = Vector3.Lerp(velocityReflected, movementDirection.normalized, Player.PlayerStats.ParryBounceControl);
 
         Player.RigidBody.linearVelocity = velocityRotated * bounceVelocity;
+        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Parry);
     }
     public override void Exit()
     {
         base.Exit();
         Player.playerCollision.RemoveListener(OnPlayerCollision);
-        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Parry);
     }
     public override bool StateAvailable()
     {
