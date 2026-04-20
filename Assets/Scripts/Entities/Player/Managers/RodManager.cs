@@ -1,20 +1,10 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TerrainUtils;
 
 public class RodManager : MonoBehaviour
 {
     [SerializeField] LineRenderer rodLine;
     [SerializeField] LayerMask swingMask;
     [SerializeField] PlayerController player;
-
-
-   
-
-    Camera gameCamera;
-
-    Vector3 middlePointOfViewport = new(0.5f, 0.5f);
-
 
     bool grappleActive = true;
 
@@ -31,9 +21,9 @@ public class RodManager : MonoBehaviour
     GrappleData grappleInfo;
 
     public GrappleData GrappleInfo { set => grappleInfo = value; get => grappleInfo; }
+    public LayerMask GrappleMask { get => swingMask; }
     private void Start()
     {
-        gameCamera = Camera.main;
         RetractRod();
     }
 
@@ -42,7 +32,7 @@ public class RodManager : MonoBehaviour
         if (WormStateUtilities.raycastResult.collider != null)
         {
             grappleInfo.collider = WormStateUtilities.raycastResult.collider;
-            grappleInfo.offset = Vector3.zero;
+            grappleInfo.offset = WormStateUtilities.raycastResult.point - grappleInfo.collider.bounds.center;
 
             grappleJoint = player.gameObject.AddComponent<SpringJoint>();
             grappleJoint.autoConfigureConnectedAnchor = false;
@@ -62,7 +52,7 @@ public class RodManager : MonoBehaviour
         }
     }
 
-    public void EnableRod()
+    public void StartDash()
     {
         if (WormStateUtilities.raycastResult.collider != null)
         {
@@ -70,7 +60,7 @@ public class RodManager : MonoBehaviour
             rodLine.enabled = true;
 
             grappleInfo.collider = WormStateUtilities.raycastResult.collider;
-            grappleInfo.offset = Vector3.zero;
+            grappleInfo.offset = WormStateUtilities.raycastResult.point - grappleInfo.collider.bounds.center;
         }
     }
     private void FixedUpdate()

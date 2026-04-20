@@ -16,6 +16,8 @@ public class BufferHelper : MonoBehaviour
     int window = 0;
     public bool Buffered => window > 0;
 
+    public bool ActionPressed => actionReference.action.IsPressed();
+
 
     private void Update()
     {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerGroundedMovementState : PlayerBaseState
 {
 
-    Camera viewCamera;
 
     public override Type[] statesToAttemptToTransitionTo
     {
@@ -19,16 +18,10 @@ public class PlayerGroundedMovementState : PlayerBaseState
             typeof(PlayerIdleState),
         };
     }
-    public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
-    {
-        base.InitializeState(stateMachine, owner);
-        viewCamera = Camera.main;
-    }
-
  
     protected virtual void GroundedMovement()
     {
-        if (!PlayerGrounded)
+        if (!Player.PlayerGrounded)
         {
             StateMachine.TransitionTo<PlayerFallState>();
             return;
@@ -55,7 +48,7 @@ public class PlayerGroundedMovementState : PlayerBaseState
     }
     public override void PhysicsProcess()
     {
-        PlayerGrounded = IsGrounded();
+        Player.PlayerGrounded = IsGrounded();
         GroundedMovement();
     }
 

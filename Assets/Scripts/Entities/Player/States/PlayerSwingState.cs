@@ -9,10 +9,10 @@ public class PlayerSwingState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerParryState),
             typeof(PlayerThrowWormState),
             typeof(PlayerDashState),
         };
-        protected set => base.statesToAttemptToTransitionTo = value;
     }
     public override void Enter(Dictionary<string, object> message = null)
     {
@@ -25,7 +25,7 @@ public class PlayerSwingState : PlayerAirState
     {
         if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered)
         {
-            var jumpVelocity = Player.RigidBody.linearVelocity.normalized * Player.PlayerStats.SwingJumpInfo.JumpVelocity;
+            var jumpVelocity = Player.RigidBody.linearVelocity.normalized * (Player.PlayerStats.SwingJumpInfo.JumpVelocity + (Player.PlayerStats.SwingSpeedToJumpPowerRatio * Player.RigidBody.linearVelocity.magnitude));
             if (jumpVelocity.y < Player.PlayerStats.MinSwingJumpHeight) jumpVelocity.y = Player.PlayerStats.MinSwingJumpHeight;
             Player.RigidBody.AddForce(jumpVelocity, ForceMode.VelocityChange);
             Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Consume();
@@ -65,7 +65,7 @@ public class PlayerSwingState : PlayerAirState
 
     public override bool StateAvailable()
     {
-        if (WormStateUtilities.AimingAtWorm(Player, swingMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
+        if (WormStateUtilities.AimingAtWorm(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
         {
             return true;
         }

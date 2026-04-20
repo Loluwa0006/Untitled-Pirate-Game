@@ -28,13 +28,21 @@ public class EntityStateMachine : MonoBehaviour
     public void Process()
     {
         if (currentState != null) currentState.Process();
-        foreach (var state in statesWithInactiveProcess) state.InactiveProcess();
+        foreach (var state in statesWithInactiveProcess)
+        {
+            if (state == GetCurrentState()) continue;
+            state.InactiveProcess();
+        }
     }
 
     public void PhysicsProcess()
     {
         if (currentState != null) currentState.PhysicsProcess();
-        foreach (var state in statesWithInactivePhysicsProcess) state.InactivePhysicsProcess();
+        foreach (var state in statesWithInactivePhysicsProcess)
+        {
+            if (state == GetCurrentState()) continue;
+            state.InactivePhysicsProcess();
+        }
     }
 
     public void TransitionTo<T>(Dictionary<string, object> message = null) where T : BaseState

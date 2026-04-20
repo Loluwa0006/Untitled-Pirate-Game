@@ -23,7 +23,7 @@ public class PlayerAirState : PlayerBaseState
 
     protected void AirborneMovement(Vector2 movementDirection, float acceleration)
     {
-        Vector3 moveDirection = movementDirection.x * Player.transform.right + movementDirection.y * Player.transform.forward;
+        Vector3 moveDirection = movementDirection.x * viewCamera.transform.right + movementDirection.y * viewCamera.transform.forward;
 
         if (moveDirection.magnitude < MOVEMENT_DEADZONE) return;
 
@@ -59,7 +59,7 @@ public class PlayerAirState : PlayerBaseState
 public static class WormStateUtilities
 {
 
-    public static RaycastHit raycastResult;
+    public static RaycastHit raycastResult { get; private set; }
     public static bool AimingAtWorm(PlayerController Player, LayerMask swingMask)
     {
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));

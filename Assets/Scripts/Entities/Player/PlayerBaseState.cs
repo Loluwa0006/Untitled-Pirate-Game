@@ -9,22 +9,21 @@ public class PlayerBaseState : BaseState
     const float SHAPECAST_RATIO = 0.8f;
 
    protected static LayerMask groundMask;
-    protected static LayerMask swingMask;
 
     public PlayerController Player { private set; get; }
 
 
     public virtual System.Type[] statesToAttemptToTransitionTo { get; protected set; }
 
-    protected static bool PlayerGrounded;
 
+    protected static Camera viewCamera;
 
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
         Player = owner.GetComponent<PlayerController>();
         groundMask = LayerMask.GetMask("Ground");
-        swingMask = LayerMask.GetMask("Worm");
+        if (viewCamera == null ) viewCamera = Camera.main;
     }
 
     public bool IsGrounded()

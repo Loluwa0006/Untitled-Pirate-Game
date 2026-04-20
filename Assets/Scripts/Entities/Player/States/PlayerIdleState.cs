@@ -18,8 +18,8 @@ public class PlayerIdleState : PlayerGroundedMovementState
     }
     protected override void GroundedMovement()
     {
-        PlayerGrounded = IsGrounded();
-        if (!PlayerGrounded)
+        Player.PlayerGrounded = IsGrounded();
+        if (!Player.PlayerGrounded)
         {
             StateMachine.TransitionTo<PlayerFallState>();
             return;
@@ -29,7 +29,7 @@ public class PlayerIdleState : PlayerGroundedMovementState
     public override bool StateAvailable()
     {
         Vector2 movementDirection = Player.PlayerInput.GetMovementDirection();
-        return PlayerGrounded && movementDirection.magnitude <= MOVEMENT_DEADZONE;
+        return Player.PlayerGrounded && movementDirection.magnitude <= MOVEMENT_DEADZONE;
     }
 
 }

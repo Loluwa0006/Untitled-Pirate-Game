@@ -58,11 +58,13 @@ MonoBehaviour:
     jumpTimeToPeak: 1.1
     jumpTimeToDecent: 0.9
   minSwingJumpHeight: 5
+  swingSpeedToJumpPowerRatio: 0.1
   rodSpring: 525
   rodDamper: 15
   rodMinDistanceWithNoSpring: 0
   rodMaxDistanceWIthNoSpring: 1
   rodSwingMassScale: 4.5
   dashGravity: 8
-  dashPower: 1.75
+  dashPower: 2.25
   dashLateralAcceleration: 3.3333333
+  maxDashSpeed: 100

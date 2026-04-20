@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerParryState),
             typeof(PlayerDashState),
             typeof(PlayerSwingState),
             typeof(PlayerThrowWormState),
@@ -23,11 +24,11 @@ public class PlayerFallState : PlayerAirState
 
     public override void PhysicsProcess()
     {
-        PlayerGrounded = IsGrounded();
+        Player.PlayerGrounded = IsGrounded();
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.FallGravity);
         
         AirborneMovement(Player.PlayerInput.GetMovementDirection().normalized, Player.PlayerStats.AirAcceleration);
-        if (PlayerGrounded)
+        if (Player.PlayerGrounded)
         {
             if (Player.PlayerInput.GetMovementDirection().magnitude > MOVEMENT_DEADZONE)
             {
@@ -42,6 +43,6 @@ public class PlayerFallState : PlayerAirState
 
     public override bool StateAvailable()
     {
-        return !PlayerGrounded;
+        return !Player.PlayerGrounded;
     }
 }

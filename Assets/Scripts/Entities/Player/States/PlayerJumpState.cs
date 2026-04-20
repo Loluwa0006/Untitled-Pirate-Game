@@ -11,6 +11,7 @@ public class PlayerJumpState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerParryState),   
             typeof(PlayerDashState),
             typeof(PlayerSwingState),
             typeof(PlayerThrowWormState),
@@ -43,7 +44,7 @@ public class PlayerJumpState : PlayerAirState
 
     public override bool StateAvailable()
     {
-        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered && PlayerGrounded)
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Jump].Buffered && Player.PlayerGrounded)
         {
             return true;
         }

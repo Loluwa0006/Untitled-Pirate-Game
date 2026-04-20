@@ -19,9 +19,7 @@ public class PlayerThrowWormState : PlayerAirState
         get => new Type[]
         {
             typeof(PlayerSwingState),
-            typeof(PlayerFallState),
-            typeof(PlayerRunState),
-            typeof(PlayerIdleState)
+            typeof (PlayerDashState),
 
         };
         protected set => base.statesToAttemptToTransitionTo = value;
@@ -36,7 +34,7 @@ public class PlayerThrowWormState : PlayerAirState
         base.Enter(message);
         FireWorm();
         Vector3 newSpeed = Player.RigidBody.linearVelocity;
-        Player.RigidBody.AddForce(Vector3.up * Player.PlayerStats.WormThrowJumpInfo.JumpVelocity);
+        newSpeed.y = Mathf.Max(newSpeed.y + Player.PlayerStats.WormThrowJumpInfo.JumpVelocity, Player.PlayerStats.WormThrowJumpInfo.JumpVelocity);
         Player.RigidBody.linearVelocity = newSpeed;
         durationTracker = stateDuration;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
@@ -73,15 +71,25 @@ public class PlayerThrowWormState : PlayerAirState
         }
         AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
         durationTracker--;
-    }
-
-    public override void Process()
-    {
         if (durationTracker == 0)
         {
-            PlayerGrounded = IsGrounded();
-            AttemptStateTransition();
+            StateMachine.TransitionTo<PlayerFallState>();
+            return;
         }
+        Player.PlayerGrounded = IsGrounded();
+        if (Player.PlayerGrounded)
+        {
+            if (StateMachine.IsStateAvailable<PlayerRunState>())
+            {
+                StateMachine.TransitionTo<PlayerRunState>();
+            }
+            else
+            {
+                StateMachine.TransitionTo<PlayerIdleState>();
+            }
+        }
+
+       
     }
 
     public override bool StateAvailable()

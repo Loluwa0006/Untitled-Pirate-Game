@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
 
     public RodManager RodManager { get => _rodManager; private set => _rodManager = value; }
 
+    public bool PlayerGrounded { get; set; }
+
+
 
     void Update()
     {
