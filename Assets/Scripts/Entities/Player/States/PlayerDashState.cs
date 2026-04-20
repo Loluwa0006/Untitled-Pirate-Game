@@ -23,10 +23,10 @@ public class PlayerDashState : PlayerAirState
     {
         var dashDirection = Player.PlayerInput.GetMovementDirection().y;
 
-        var dashDirectionCorrected = 1 -( (dashDirection + 1) / 2.0f); //converts range from (-1,1) to (0, 1)
+        var dashDirectionCorrected = ( (dashDirection + 1) / 2.0f); //converts range from (-1,1) to (1,0)
 
         base.PhysicsProcess();
-        float gravity = Player.PlayerStats.DashGravity * dashDirectionCorrected;
+        float gravity = Player.PlayerStats.DashGravity * (1.0f - dashDirectionCorrected);
 
         ApplyGravity(gravity);
         AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.DashLateralAcceleration);
@@ -38,8 +38,16 @@ public class PlayerDashState : PlayerAirState
             StateMachine.TransitionTo<PlayerFallState>();
             return;
         }
-        var speedToAdd = directionToGrapple * Player.PlayerStats.DashPower;
-        var currentSpeed = Player.RigidBody.linearVelocity;
+        var speedToAdd = GetSpeedToAdd(directionToGrapple);
+        Player.RigidBody.AddForce(speedToAdd, ForceMode.VelocityChange);
+        var strippedLateral = StripLateralMovementBasedOnInput(directionToGrapple, dashDirection);
+        Player.RigidBody.AddForce(strippedLateral, ForceMode.VelocityChange);
+    }
+
+    Vector3 GetSpeedToAdd(Vector3 directionToGrapple)
+    {
+        Vector3 speedToAdd = directionToGrapple * Player.PlayerStats.DashPower;
+        var currentSpeed = new Vector3(Player.RigidBody.linearVelocity.x, 0, Player.RigidBody.linearVelocity.z); //don't use y when clamping lateral movement
         if (currentSpeed.magnitude >= Player.PlayerStats.MaxDashSpeed)
         {
             var speedNormalized = currentSpeed.normalized;
@@ -49,8 +57,15 @@ public class PlayerDashState : PlayerAirState
                 speedToAdd -= extraSpeed * speedNormalized;
             }
         }
-        Player.RigidBody.AddForce(speedToAdd, ForceMode.VelocityChange);
+        return speedToAdd;
+    }
 
+    Vector3 StripLateralMovementBasedOnInput(Vector3 directionToGrapple, float yAxis)
+    {
+        var velocityProjected = Vector3.Dot(Player.RigidBody.linearVelocity, directionToGrapple) * directionToGrapple;
+        var lateralMovement = Player.RigidBody.linearVelocity - velocityProjected; //subtract aligned velocity
+
+        return -lateralMovement * yAxis;
     }
     public override void Process()
     {

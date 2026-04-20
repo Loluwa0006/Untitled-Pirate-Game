@@ -59,13 +59,22 @@ public class PlayerAirState : PlayerBaseState
 public static class WormStateUtilities
 {
 
-    public static RaycastHit raycastResult { get; private set; }
+    public static RaycastHit raycastResult;
+
+    public static RaycastHit RaycastResult { get => raycastResult; private set => raycastResult = value; }
+
+    
     public static bool AimingAtWorm(PlayerController Player, LayerMask swingMask)
     {
         var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f));
         if (Physics.Raycast(ray, out RaycastHit hitInfo, Player.PlayerStats.MaxRodRange, swingMask, QueryTriggerInteraction.Collide))
         {
+            
             raycastResult = hitInfo;
+            if (hitInfo.collider.gameObject.layer == LayerMask.GetMask("Worm"))
+            {
+                raycastResult.point = hitInfo.collider.bounds.center;
+            }
             return true;
         }
         return false;

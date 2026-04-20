@@ -29,10 +29,10 @@ public class RodManager : MonoBehaviour
 
     public void StartSwing()
     {
-        if (WormStateUtilities.raycastResult.collider != null)
+        if (WormStateUtilities.RaycastResult.collider != null)
         {
-            grappleInfo.collider = WormStateUtilities.raycastResult.collider;
-            grappleInfo.offset = WormStateUtilities.raycastResult.point - grappleInfo.collider.bounds.center;
+            grappleInfo.collider = WormStateUtilities.RaycastResult.collider;
+            grappleInfo.offset = WormStateUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
 
             grappleJoint = player.gameObject.AddComponent<SpringJoint>();
             grappleJoint.autoConfigureConnectedAnchor = false;
@@ -54,13 +54,13 @@ public class RodManager : MonoBehaviour
 
     public void StartDash()
     {
-        if (WormStateUtilities.raycastResult.collider != null)
+        if (WormStateUtilities.RaycastResult.collider != null)
         {
             grappleActive = true;
             rodLine.enabled = true;
 
-            grappleInfo.collider = WormStateUtilities.raycastResult.collider;
-            grappleInfo.offset = WormStateUtilities.raycastResult.point - grappleInfo.collider.bounds.center;
+            grappleInfo.collider = WormStateUtilities.RaycastResult.collider;
+            grappleInfo.offset = WormStateUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
         }
     }
     private void FixedUpdate()

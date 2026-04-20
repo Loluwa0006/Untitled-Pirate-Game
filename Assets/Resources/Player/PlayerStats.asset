@@ -64,7 +64,17 @@ MonoBehaviour:
   rodMinDistanceWithNoSpring: 0
   rodMaxDistanceWIthNoSpring: 1
   rodSwingMassScale: 4.5
-  dashGravity: 8
+  dashGravity: 0.25
   dashPower: 2.25
-  dashLateralAcceleration: 3.3333333
+  dashLateralAcceleration: 1.6
   maxDashSpeed: 100
+  minDistanceBeforeDashCancelled: 25
+  properParryDuration: 27
+  partialParryDuration: 13
+  parryAccelerationInPercent: 0.1
+  parryStrafeSpeed: 1
+  minParryRange: 2
+  parryRangeIncreaseWithSpeedRatio: 0.25
+  parrySpeedIncrease: 0.1
+  partialParrySpeedPenalty: 0.6
+  parryBounceControl: 0
