@@ -391,8 +391,8 @@ MonoBehaviour:
   numberOfOptionsToUseToReduceScaling: 2
   scalingGenerationReductionAmount: 0.1
   generationPerOption: 30
-  baseDecayRate: 50
-  minDecayRate: 30
+  baseDecayRate: 450
+  minDecayRate: 150
   anarchyGained:
     m_PersistentCalls:
       m_Calls: []
@@ -694,7 +694,7 @@ GameObject:
   - component: {fileID: 4316075470623054589}
   m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
