@@ -1868,8 +1868,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 80, y: 10}
-  m_SizeDelta: {x: 160, y: 20}
+  m_AnchoredPosition: {x: 160, y: 30}
+  m_SizeDelta: {x: 320, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &126491971
 MonoBehaviour:
@@ -4356,11 +4356,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!4 &702134873 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3340420948024593123, guid: 4312f6125a628fb479f93113155619b0, type: 3}
-  m_PrefabInstance: {fileID: 6542672992600298954}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &743273569
 Mesh:
   m_ObjectHideFlags: 0
@@ -5122,17 +5117,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!114 &1137467496 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5114671140808074405, guid: 4312f6125a628fb479f93113155619b0, type: 3}
-  m_PrefabInstance: {fileID: 6542672992600298954}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee775ecfd076fe748abd03a54805b38e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnarchyManager
 --- !u!1 &1184531111
 GameObject:
   m_ObjectHideFlags: 0
@@ -6157,53 +6141,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1 &1433678540
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1433678541}
-  - component: {fileID: 1433678542}
-  m_Layer: 3
-  m_Name: SquashbucklerManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1433678541
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433678540}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 702134873}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1433678542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1433678540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cba579494a5b646a930ced74bbc20c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SquashbucklerManager
-  maxCharge: 10
-  anarchyManager: {fileID: 1137467496}
-  squashbucklerMeter: {fileID: 126491971}
 --- !u!1 &1482896479
 GameObject:
   m_ObjectHideFlags: 0
@@ -8140,6 +8077,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1378361783068774386, guid: 4312f6125a628fb479f93113155619b0, type: 3}
+      propertyPath: squashbucklerMeter
+      value: 
+      objectReference: {fileID: 126491971}
     - target: {fileID: 3340420948024593123, guid: 4312f6125a628fb479f93113155619b0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.90458
@@ -8181,6 +8122,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5114671140808074405, guid: 4312f6125a628fb479f93113155619b0, type: 3}
+      propertyPath: minDecayRate
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114671140808074405, guid: 4312f6125a628fb479f93113155619b0, type: 3}
+      propertyPath: baseDecayRate
+      value: 450
+      objectReference: {fileID: 0}
+    - target: {fileID: 5114671140808074405, guid: 4312f6125a628fb479f93113155619b0, type: 3}
       propertyPath: anarchyDisplay
       value: 
       objectReference: {fileID: 425123272}
@@ -8198,10 +8147,7 @@ PrefabInstance:
       objectReference: {fileID: 1796935340}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 3340420948024593123, guid: 4312f6125a628fb479f93113155619b0, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1433678541}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4312f6125a628fb479f93113155619b0, type: 3}
 --- !u!1660057539 &9223372036854775807

@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Squashbuckler",
+                    "type": "Button",
+                    "id": "fd1c9219-f426-425c-9d3e-5b9bf66d5f38",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -233,6 +242,17 @@
                     "processors": "",
                     "groups": ";KeyboardAndMouse",
                     "action": "Parry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f04b51cc-286b-4e32-9cd8-6ca9258cfa23",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardAndMouse",
+                    "action": "Squashbuckler",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -14,7 +14,7 @@ public class PlayerParryState : PlayerAirState
     {
         get => new Type[]
         {
-            
+         typeof(PlayerShadowstepState),   
         };
     }
     public override void Enter(Dictionary<string, object> message = null)

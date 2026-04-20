@@ -8,6 +8,7 @@ public class PlayerDashState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerShadowstepState),
             typeof(PlayerFallState),
         };
     }

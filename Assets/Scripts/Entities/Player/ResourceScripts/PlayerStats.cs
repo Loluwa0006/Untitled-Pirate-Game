@@ -162,5 +162,13 @@ public class PlayerStats : ScriptableObject
     [SerializeField] int chargesToEnterSquashbucklerMode = 3;
 
     public int ChargesToEnterSquashbucklerMode { get => chargesToEnterSquashbucklerMode; }
+
+    [SerializeField] float minimumShadowstepSpeed = 60.0f;
+
+    public float MinimumShadowstepSpeed { get => minimumShadowstepSpeed; }
+
+    [SerializeField] int durationPerSquashbucklerCharge = 15;
+
+    public int DurationPerSquashbucklerCharge { get => durationPerSquashbucklerCharge; }    
     #endregion
 }

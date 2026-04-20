@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 113185586886681786}
   - component: {fileID: 5694696140749422823}
   m_Layer: 3
-  m_Name: DragonslashBuffer
+  m_Name: SquashbucklerBuffer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a990c9e1b135e40888653fbef9da3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
-  actionReference: {fileID: 0}
+  actionReference: {fileID: 2438331296719908163, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 0
   bufferDuration: 8
 --- !u!1 &1382705354711093442
@@ -185,6 +185,7 @@ Transform:
   - {fileID: 7431743368645410915}
   - {fileID: 3184677362814718927}
   - {fileID: 9122533123221172339}
+  - {fileID: 3436187125366228050}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -294,6 +295,52 @@ MonoBehaviour:
   actionReference: {fileID: -3922688528445652463, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 1
   bufferDuration: 2
+--- !u!1 &3360112544056742745
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3436187125366228050}
+  - component: {fileID: 4548343769585645294}
+  m_Layer: 3
+  m_Name: Shadowstep
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3436187125366228050
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360112544056742745}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4548343769585645294
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3360112544056742745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc3098f4df7ddd478c53403e308def2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShadowstepState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
 --- !u!1 &4681069711837776597
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,6 +393,9 @@ MonoBehaviour:
   generationPerOption: 30
   baseDecayRate: 50
   minDecayRate: 30
+  anarchyGained:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5006247246180266122
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,6 +719,7 @@ Transform:
   - {fileID: 3834760931267974327}
   - {fileID: 7435467149138354754}
   - {fileID: 3127645413297380931}
+  - {fileID: 4489595010220830823}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8369251970190751333
@@ -770,6 +821,7 @@ MonoBehaviour:
   _wormManager: {fileID: 6021299679631168183}
   _rodManager: {fileID: 8445331606179173087}
   _anarchyManager: {fileID: 5114671140808074405}
+  _squashbucklerManager: {fileID: 1378361783068774386}
   playerCollision:
     m_PersistentCalls:
       m_Calls: []
@@ -1206,6 +1258,53 @@ MonoBehaviour:
   wormPrefab: {fileID: 1895401925792460249, guid: b0e3f6ed5e41de34b9024fcb4d1d2f4d, type: 3}
   player: {fileID: 1870535501843506831}
   wormDisplay: {fileID: 0}
+--- !u!1 &7453938923956039747
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4489595010220830823}
+  - component: {fileID: 1378361783068774386}
+  m_Layer: 3
+  m_Name: SquashbucklerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4489595010220830823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7453938923956039747}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3340420948024593123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378361783068774386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7453938923956039747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cba579494a5b646a930ced74bbc20c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SquashbucklerManager
+  maxCharge: 10
+  anarchyManager: {fileID: 5114671140808074405}
+  squashbucklerMeter: {fileID: 0}
 --- !u!1 &8743300953651785316
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class AnarchyManager : MonoBehaviour
         Dash,
         Parry,
         RailParry,
-        Dragonstep,
+        Shadowstep,
         WormThrow,
     }
 
@@ -51,7 +51,7 @@ public class AnarchyManager : MonoBehaviour
         generationScaling[AnarchyGenerationMethod.Dash] = 0;
         generationScaling[AnarchyGenerationMethod.Parry] = 0;
         generationScaling[AnarchyGenerationMethod.RailParry] = 0;
-        generationScaling[AnarchyGenerationMethod.Dragonstep] = 0;
+        generationScaling[AnarchyGenerationMethod.Shadowstep] = 0;
         generationScaling[AnarchyGenerationMethod.WormThrow] = 0;
 
         UpdateAnarchyDisplays();

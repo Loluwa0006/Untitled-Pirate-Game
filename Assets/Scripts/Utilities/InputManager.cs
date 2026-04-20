@@ -30,7 +30,7 @@ public class InputManager : MonoBehaviour
         Slash,
         Swing,
         Parry,
-        Dragonslash,
+        Squashbuckler,
         Dash
     }
 
@@ -48,7 +48,7 @@ public class InputManager : MonoBehaviour
         BufferRegistry[BufferableInputs.Swing] = swingBuffer;
         BufferRegistry[BufferableInputs.Parry] = parryBuffer;
         BufferRegistry[BufferableInputs.Dash] = dashBuffer;
-        BufferRegistry[BufferableInputs.Dragonslash] = dragonslashBuffer;
+        BufferRegistry[BufferableInputs.Squashbuckler] = dragonslashBuffer;
     }
     public Vector2 GetMovementDirection()
     {

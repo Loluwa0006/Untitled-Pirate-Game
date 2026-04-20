@@ -8,8 +8,6 @@ public class PlayerThrowWormState : PlayerAirState
     [SerializeField] int stateDuration = 19;
     [SerializeField] LayerMask terrainMask;
     
-    Camera gameCamera;
-
     Vector3 middlePointOfViewport = new (0.5f, 0.5f);
 
     int durationTracker = 0;
@@ -24,11 +22,7 @@ public class PlayerThrowWormState : PlayerAirState
         };
         protected set => base.statesToAttemptToTransitionTo = value;
     }
-    public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
-    {
-        base.InitializeState(stateMachine, owner);
-        gameCamera = Camera.main;
-    }
+ 
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
@@ -43,7 +37,7 @@ public class PlayerThrowWormState : PlayerAirState
 
     void FireWorm()
     {
-        var cameraRay = gameCamera.ViewportPointToRay(middlePointOfViewport);
+        var cameraRay = viewCamera.ViewportPointToRay(middlePointOfViewport);
         var raycast = Physics.Raycast(cameraRay, out var hitInfo, throwRange, terrainMask, QueryTriggerInteraction.Collide);
         Vector3 wormTarget;
         if (raycast)
