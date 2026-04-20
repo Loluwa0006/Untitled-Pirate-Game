@@ -69,6 +69,7 @@ public class PlayerParryState : PlayerAirState
     {
         base.Exit();
         Player.playerCollision.RemoveListener(OnPlayerCollision);
+        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Parry);
     }
     public override bool StateAvailable()
     {

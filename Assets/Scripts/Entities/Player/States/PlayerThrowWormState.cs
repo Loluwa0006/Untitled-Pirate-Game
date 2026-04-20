@@ -38,6 +38,7 @@ public class PlayerThrowWormState : PlayerAirState
         Player.RigidBody.linearVelocity = newSpeed;
         durationTracker = stateDuration;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
+        Player.WormManager.WormsRemaining--;
     }
 
     void FireWorm()
@@ -88,13 +89,17 @@ public class PlayerThrowWormState : PlayerAirState
                 StateMachine.TransitionTo<PlayerIdleState>();
             }
         }
+    }
 
-       
+    public override void Exit()
+    {
+        base.Exit();
+        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.WormThrow);
     }
 
     public override bool StateAvailable()
     {
-        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered)
+        if (Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Buffered && Player.WormManager.WormsRemaining > 0)
         {
             return true;
         }

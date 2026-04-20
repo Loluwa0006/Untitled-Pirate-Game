@@ -61,6 +61,7 @@ public class PlayerSwingState : PlayerAirState
     {
         base.Exit();
         Player.RodManager.RetractRod();
+        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Swing);
     }
 
     public override bool StateAvailable()
