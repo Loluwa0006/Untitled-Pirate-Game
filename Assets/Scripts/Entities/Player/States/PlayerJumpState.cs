@@ -33,6 +33,7 @@ public class PlayerJumpState : PlayerAirState
 
     public override void PhysicsProcess()
     {
+        Player.PlayerGrounded = IsGrounded();
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
         AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
         if (Player.RigidBody.linearVelocity.y <= 0.0f)

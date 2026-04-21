@@ -43,7 +43,7 @@ public class PlayerShadowstepState : PlayerBaseState
     public override void Exit()
     {
         base.Exit();
-        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Shadowstep);
+        Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Shadowstep);
     }
     public override bool StateAvailable()
     {

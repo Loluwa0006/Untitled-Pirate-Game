@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] BufferHelper parryBuffer;
     [SerializeField] BufferHelper dragonslashBuffer;
     [SerializeField] BufferHelper dashBuffer;
+    [SerializeField] BufferHelper yawnBuffer;
 
     [Header("Input Action References")]
     [SerializeField] InputActionReference movementAxis;
@@ -31,7 +32,8 @@ public class InputManager : MonoBehaviour
         Swing,
         Parry,
         Squashbuckler,
-        Dash
+        Dash,
+        Yawn
     }
 
     public Dictionary<BufferableInputs, BufferHelper> BufferRegistry { get; private set; } = new();
@@ -49,6 +51,7 @@ public class InputManager : MonoBehaviour
         BufferRegistry[BufferableInputs.Parry] = parryBuffer;
         BufferRegistry[BufferableInputs.Dash] = dashBuffer;
         BufferRegistry[BufferableInputs.Squashbuckler] = dragonslashBuffer;
+        BufferRegistry[BufferableInputs.Yawn] = yawnBuffer;
     }
     public Vector2 GetMovementDirection()
     {

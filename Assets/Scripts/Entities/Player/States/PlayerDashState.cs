@@ -80,7 +80,7 @@ public class PlayerDashState : PlayerAirState
     {
         base.Exit();
         Player.RodManager.RetractRod();
-        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Dash);
+        Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Dash);
     }
     public override bool StateAvailable()
     {

@@ -78,3 +78,14 @@ MonoBehaviour:
   parrySpeedIncrease: 0.1
   partialParrySpeedPenalty: 0.6
   parryBounceControl: 0
+  chargesToEnterSquashbucklerMode: 3
+  minimumShadowstepSpeed: 60
+  durationPerSquashbucklerCharge: 15
+  dragonslashAnarchyProgressAmount: 300
+  yawnAirAcceleration: 1.6
+  minYawnTime: 45
+  minJustYawnTime: 15
+  justYawnWindow: 35
+  yawnAnarchyProgressPerFrame: 0.3
+  justYawnAnarchyProgress: 100
+  slashAnarchyProgressAmount: 100

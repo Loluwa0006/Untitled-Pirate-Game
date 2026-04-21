@@ -159,6 +159,7 @@ public class PlayerStats : ScriptableObject
     #endregion
 
     #region Squashbuckler
+    [Header("Squashbuckler")]
     [SerializeField] int chargesToEnterSquashbucklerMode = 3;
 
     public int ChargesToEnterSquashbucklerMode { get => chargesToEnterSquashbucklerMode; }
@@ -169,6 +170,44 @@ public class PlayerStats : ScriptableObject
 
     [SerializeField] int durationPerSquashbucklerCharge = 15;
 
-    public int DurationPerSquashbucklerCharge { get => durationPerSquashbucklerCharge; }    
+    public int DurationPerSquashbucklerCharge { get => durationPerSquashbucklerCharge; }
+
+    [SerializeField] float dragonslashAnarchyProgressAmount = 300.0f;
+
+    public float DragonslashAnarchyProgressAmount { get => dragonslashAnarchyProgressAmount; }
+    #endregion
+
+    #region Yawn
+    [Header("Yawn")]
+    [SerializeField] float yawnAirAcceleration = 40 / 25f;
+    public float YawnAirAcceleration { get => yawnAirAcceleration; }
+
+    [SerializeField] int minYawnTime = 24;
+
+    public int MinYawnTime { get => minYawnTime; }
+
+    [SerializeField] int minJustYawnTime = 8;
+
+    public int MinJustYawnTime { get => minJustYawnTime; }
+
+    [SerializeField] int justYawnWindow = 8;
+
+    public int JustYawnWindow { get => justYawnWindow; }
+
+    [SerializeField] float yawnAnarchyProgressPerFrame = 1.75f;
+
+    public float YawnAnarchyProgressPerFrame { get =>  yawnAnarchyProgressPerFrame; }
+
+    [SerializeField] float justYawnAnarchyProgress = 100.0f;
+
+    public float JustYawnAnarchyProgress { get => justYawnAnarchyProgress; }
+
+    #endregion
+    #region Slash
+    [SerializeField] float slashAnarchyProgressAmount = 100.0f;
+
+    public float SlashAnarchyProgressAmount {  get => slashAnarchyProgressAmount; }
+
+
     #endregion
 }

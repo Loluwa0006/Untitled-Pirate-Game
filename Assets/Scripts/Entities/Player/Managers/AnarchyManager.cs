@@ -7,15 +7,7 @@ using UnityEngine.Events;
 public class AnarchyManager : MonoBehaviour
 {
     const int MAX_ANARCHY = 99;
-    public enum AnarchyGenerationMethod
-    {
-        Swing,
-        Dash,
-        Parry,
-        RailParry,
-        Shadowstep,
-        WormThrow,
-    }
+
 
    [SerializeField] PlayerController player;
    [SerializeField] TMP_Text anarchyDisplay;
@@ -30,70 +22,105 @@ public class AnarchyManager : MonoBehaviour
     /// <summary>
     /// Passes the number of charges gained.
     /// </summary>
-    public UnityEvent<int> anarchyGained = new();
+    public UnityEvent<ScaledGenerationMethod, int> anarchyGainedThroughScaledMethod = new();
+    public UnityEvent<UnscaledGenerationMethod, int> anarchyGainedThroughUnscaledMethod = new();
+
 
     public int DecayRate { get => Mathf.RoundToInt(Mathf.Lerp(baseDecayRate, minDecayRate, CurrentAnarchy / MAX_ANARCHY)); }
 
     int decayTracker = 0;
     int currentAnarchy;
-   public int CurrentAnarchy { set => currentAnarchy = Mathf.RoundToInt(Mathf.Clamp(value, 0, MAX_ANARCHY)); get => currentAnarchy; }
-
+     public int CurrentAnarchy { private set { currentAnarchy = Mathf.RoundToInt(Mathf.Clamp(value, 0, MAX_ANARCHY)); } get => currentAnarchy; }
+    /// <summary>
+    /// Progress towards next anarchy charge in percentage
+    /// </summary>
     float progressToAnarchy;
-    public float ProgressToAnarchy { set => progressToAnarchy = value; get => progressToAnarchy; }
+    public float ProgressToAnarchy 
+    { 
+        set
+        {
+            progressToAnarchy = value;
+        }
+        get => progressToAnarchy; 
+    }
 
-
+    /// <summary>
+    /// Float represents scaling of the base generation value.
+    /// </summary>
     
-    Dictionary<AnarchyGenerationMethod, float> generationScaling = new();
+    Dictionary<ScaledGenerationMethod, float> scaledGenerationMethods = new();
+    /// <summary>
+    /// Int represents flat anarchy progress generated on usage.
+    /// </summary>
+    Dictionary<UnscaledGenerationMethod, float> unscaledGenerationMethods = new();
 
     private void Start()
     {
-        generationScaling[AnarchyGenerationMethod.Swing] = 0;
-        generationScaling[AnarchyGenerationMethod.Dash] = 0;
-        generationScaling[AnarchyGenerationMethod.Parry] = 0;
-        generationScaling[AnarchyGenerationMethod.RailParry] = 0;
-        generationScaling[AnarchyGenerationMethod.Shadowstep] = 0;
-        generationScaling[AnarchyGenerationMethod.WormThrow] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.Swing] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.Dash] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.Parry] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.RailParry] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.Shadowstep] = 0;
+        scaledGenerationMethods[ScaledGenerationMethod.WormThrow] = 0;
+
+        unscaledGenerationMethods[UnscaledGenerationMethod.JustYawn] = player.PlayerStats.JustYawnAnarchyProgress;
+        unscaledGenerationMethods[UnscaledGenerationMethod.Yawn] = player.PlayerStats.YawnAnarchyProgressPerFrame;
+        unscaledGenerationMethods[UnscaledGenerationMethod.Slash] = player.PlayerStats.SlashAnarchyProgressAmount;
+        unscaledGenerationMethods[UnscaledGenerationMethod.Dragonslash] = player.PlayerStats.DragonslashAnarchyProgressAmount;
 
         UpdateAnarchyDisplays();
     }
 
-    public void GenerateAnarchy(AnarchyGenerationMethod method)
+    public void GenerateAnarchy(ScaledGenerationMethod method)
     {
-        foreach (var kvp in generationScaling.ToList())
+        foreach (var kvp in scaledGenerationMethods.ToList())
         {
             if (kvp.Key == method) continue;
-            generationScaling[kvp.Key]--;
+            scaledGenerationMethods[kvp.Key]--;
         }
-        progressToAnarchy += generationPerOption * (1 - generationScaling[method]);
-        generationScaling[method] = scalingGenerationReductionAmount * numberOfOptionsToUseToReduceScaling;
+        scaledGenerationMethods[method] = scalingGenerationReductionAmount * numberOfOptionsToUseToReduceScaling;
+        progressToAnarchy += generationPerOption * (1 - scaledGenerationMethods[method]);
+        
+        int chargesGained = ConvertProgressToCharges();
+        if (chargesGained > 0) anarchyGainedThroughScaledMethod.Invoke(method, chargesGained);
+        decayTracker = DecayRate;
+        UpdateAnarchyDisplays();
+    }
 
+    public void GenerateAnarchyUnscaled(UnscaledGenerationMethod method)
+    {
+        progressToAnarchy += unscaledGenerationMethods[method];
+
+        int chargesGained = ConvertProgressToCharges();
+        if (chargesGained > 0) anarchyGainedThroughUnscaledMethod.Invoke(method, chargesGained);
+
+        UpdateAnarchyDisplays();
+    }
+
+
+    public int ConvertProgressToCharges()
+    {
         var increasesToAnarchy = Mathf.FloorToInt(progressToAnarchy / 100);
         currentAnarchy += increasesToAnarchy;
         player.WormManager.WormsRemaining += increasesToAnarchy;
         ProgressToAnarchy -= increasesToAnarchy * 100;
-        if (increasesToAnarchy > 0) anarchyGained.Invoke(increasesToAnarchy);
-        decayTracker = DecayRate;
-        UpdateAnarchyDisplays();
-       
+        return increasesToAnarchy;
     }
-
     void UpdateAnarchyDisplays()
     {
        if (anarchyDisplay != null) anarchyDisplay.text = "Anarchy: " + currentAnarchy.ToString();
-       if (anarchyProgressDisplay != null) anarchyProgressDisplay.text = "Anarchy Progress: " + progressToAnarchy.ToString();
+        if (anarchyProgressDisplay != null) anarchyProgressDisplay.text = "Anarchy Progress: " + Mathf.RoundToInt(progressToAnarchy);
     }
-
     void ResetAnarchy()
     {
         CurrentAnarchy = 0;
         decayTracker = DecayRate;
-        foreach (var kvp in generationScaling.ToList())
+        foreach (var kvp in scaledGenerationMethods.ToList())
         {
-            generationScaling[kvp.Key] = 0;
+            scaledGenerationMethods[kvp.Key] = 0;
         }
         UpdateAnarchyDisplays();
     }
-
     private void FixedUpdate()
     {
         if (decayTracker > 0)
@@ -105,6 +132,22 @@ public class AnarchyManager : MonoBehaviour
             }
         }
     }
+}
 
+public enum ScaledGenerationMethod
+{
+    Swing,
+    Dash,
+    Parry,
+    RailParry,
+    Shadowstep,
+    WormThrow,
+}
 
+public enum UnscaledGenerationMethod 
+{
+    Slash,
+    Dragonslash,
+    JustYawn,
+    Yawn,
 }

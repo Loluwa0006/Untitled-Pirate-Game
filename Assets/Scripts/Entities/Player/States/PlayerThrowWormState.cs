@@ -88,7 +88,7 @@ public class PlayerThrowWormState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.WormThrow);
+        Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.WormThrow);
     }
 
     public override bool StateAvailable()

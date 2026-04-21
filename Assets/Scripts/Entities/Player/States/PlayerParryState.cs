@@ -61,10 +61,11 @@ public class PlayerParryState : PlayerAirState
             bounceVelocity *= Player.PlayerStats.PartialParrySpeedPenalty;
         }
         Vector3 velocityReflected = Vector3.Reflect(Player.RigidBody.linearVelocity.normalized, normal).normalized;
-        Vector3 velocityRotated = Vector3.Lerp(velocityReflected, movementDirection.normalized, Player.PlayerStats.ParryBounceControl);
+        Vector3 movementAccountedForRotation = movementDirection.x * viewCamera.transform.right + movementDirection.y * viewCamera.transform.forward;
+        Vector3 velocityRotated = Vector3.Lerp(velocityReflected, movementAccountedForRotation.normalized, Player.PlayerStats.ParryBounceControl);
 
         Player.RigidBody.linearVelocity = velocityRotated * bounceVelocity;
-        Player.AnarchyManager.GenerateAnarchy(AnarchyManager.AnarchyGenerationMethod.Parry);
+        Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Parry);
     }
     public override void Exit()
     {

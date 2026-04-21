@@ -186,6 +186,7 @@ Transform:
   - {fileID: 3184677362814718927}
   - {fileID: 9122533123221172339}
   - {fileID: 3436187125366228050}
+  - {fileID: 7669484520907310133}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -341,6 +342,52 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShadowstepState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
+--- !u!1 &3742787347067088513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7669484520907310133}
+  - component: {fileID: 4911462927792934176}
+  m_Layer: 3
+  m_Name: Yawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7669484520907310133
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742787347067088513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4911462927792934176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3742787347067088513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a5078c8f7f248748896d0db13f1969b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerYawnState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
 --- !u!1 &4681069711837776597
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +440,10 @@ MonoBehaviour:
   generationPerOption: 30
   baseDecayRate: 450
   minDecayRate: 150
-  anarchyGained:
+  anarchyGainedThroughScaledMethod:
+    m_PersistentCalls:
+      m_Calls: []
+  anarchyGainedThroughUnscaledMethod:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &5006247246180266122
@@ -624,6 +674,7 @@ Transform:
   - {fileID: 2838280220984933442}
   - {fileID: 113185586886681786}
   - {fileID: 3093619228572318862}
+  - {fileID: 7661988239980545327}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &524940674328920117
@@ -675,6 +726,7 @@ MonoBehaviour:
   parryBuffer: {fileID: 5192299551710823708}
   dragonslashBuffer: {fileID: 5694696140749422823}
   dashBuffer: {fileID: 5506414441952474501}
+  yawnBuffer: {fileID: 7425947603331392362}
   movementAxis: {fileID: 3833152164696439778, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   lookAxis: {fileID: -8909627186484831652, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   sensitivity: {x: 2.25, y: 1}
@@ -849,7 +901,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!1 &6044328036533850337
@@ -1305,6 +1357,53 @@ MonoBehaviour:
   maxCharge: 10
   anarchyManager: {fileID: 5114671140808074405}
   squashbucklerMeter: {fileID: 0}
+--- !u!1 &7589547966762801291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7661988239980545327}
+  - component: {fileID: 7425947603331392362}
+  m_Layer: 3
+  m_Name: YawnBuffer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7661988239980545327
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589547966762801291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 562454960481291192}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7425947603331392362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7589547966762801291}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a990c9e1b135e40888653fbef9da3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
+  actionReference: {fileID: 4377703542099576203, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
+  isHoldable: 1
+  bufferDuration: 2
 --- !u!1 &8743300953651785316
 GameObject:
   m_ObjectHideFlags: 0

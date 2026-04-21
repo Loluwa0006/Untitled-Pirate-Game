@@ -21,7 +21,7 @@ public class SquashbucklerManager : MonoBehaviour
     private void Start()
     {
         squashbucklerMeter.maxValue = maxCharge;
-        anarchyManager.anarchyGained.AddListener(OnAnarchyGained);
+        anarchyManager.anarchyGainedThroughScaledMethod.AddListener((method, charges) => OnAnarchyGained(charges));
         UpdateSquashbucklerDisplays();
     }
 

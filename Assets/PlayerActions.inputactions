@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Yawn",
+                    "type": "Button",
+                    "id": "a268f31c-4a11-4128-8bc6-ba9e03e03a42",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -253,6 +262,17 @@
                     "processors": "",
                     "groups": ";KeyboardAndMouse",
                     "action": "Squashbuckler",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e26ed251-f00a-41aa-bbc6-fd12e6420ccb",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardAndMouse",
+                    "action": "Yawn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
