@@ -13,6 +13,7 @@ public class AnarchyManager : MonoBehaviour
    [SerializeField] PlayerController player;
    [SerializeField] TMP_Text anarchyDisplay;
    [SerializeField] Slider anarchyProgressDisplay;
+    [SerializeField] Slider anarchyDecayDisplay;
 
    [SerializeField] int numberOfOptionsToUseToReduceScaling = 2;
    [SerializeField, Range(0, 1)] float scalingGenerationReductionAmount = 0.1f;
@@ -111,6 +112,7 @@ public class AnarchyManager : MonoBehaviour
     {
        if (anarchyDisplay != null) anarchyDisplay.text = "x" + currentAnarchy.ToString();
        if (anarchyProgressDisplay != null) anarchyProgressDisplay.value = progressToAnarchy;
+     
     }
     void ResetAnarchy()
     {
@@ -132,6 +134,9 @@ public class AnarchyManager : MonoBehaviour
                 ResetAnarchy();
             }
         }
+        if (anarchyDecayDisplay != null) anarchyDecayDisplay.value = (float)decayTracker / (float)DecayRate;
+
+        Debug.Log((float)decayTracker / (float)DecayRate);
     }
 }
 
