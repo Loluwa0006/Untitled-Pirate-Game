@@ -16,7 +16,7 @@ public class WormManager : MonoBehaviour
         {
             wormsRemaining =
             Mathf.Clamp(value, 0, player.PlayerStats.MaxWorms);
-            if (wormDisplay != null) wormDisplay.text = "Worms: " + wormsRemaining;
+            if (wormDisplay != null) wormDisplay.text = wormsRemaining.ToString();
         }
     }
     Queue<WormEntity> wormPool = new();

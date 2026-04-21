@@ -3,6 +3,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class AnarchyManager : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class AnarchyManager : MonoBehaviour
 
    [SerializeField] PlayerController player;
    [SerializeField] TMP_Text anarchyDisplay;
-   [SerializeField] TMP_Text anarchyProgressDisplay;
+   [SerializeField] Slider anarchyProgressDisplay;
 
    [SerializeField] int numberOfOptionsToUseToReduceScaling = 2;
    [SerializeField, Range(0, 1)] float scalingGenerationReductionAmount = 0.1f;
@@ -108,8 +109,8 @@ public class AnarchyManager : MonoBehaviour
     }
     void UpdateAnarchyDisplays()
     {
-       if (anarchyDisplay != null) anarchyDisplay.text = "Anarchy: " + currentAnarchy.ToString();
-        if (anarchyProgressDisplay != null) anarchyProgressDisplay.text = "Anarchy Progress: " + Mathf.RoundToInt(progressToAnarchy);
+       if (anarchyDisplay != null) anarchyDisplay.text = "x" + currentAnarchy.ToString();
+       if (anarchyProgressDisplay != null) anarchyProgressDisplay.value = progressToAnarchy;
     }
     void ResetAnarchy()
     {
