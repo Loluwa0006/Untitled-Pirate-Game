@@ -14,6 +14,7 @@ public class PlayerParryState : PlayerAirState
     {
         get => new Type[]
         {
+        typeof (PlayerRailParryState),
          typeof(PlayerShadowstepState),   
         };
     }
@@ -41,14 +42,18 @@ public class PlayerParryState : PlayerAirState
         Vector3 movementDirection = Player.PlayerInput.GetMovementDirection();
         AirborneMovement(movementDirection, Player.PlayerStats.ParryStrafeSpeed);
         durationTracker++;
-
+        if (StateMachine.IsStateAvailable<PlayerRailParryState>())
+        {
+            StateMachine.TransitionTo<PlayerRailParryState>();
+                return;
+        }
+        
         if (durationTracker == Player.PlayerStats.ProperParryDuration + Player.PlayerStats.PartialParryDuration)
         {
             StateMachine.TransitionTo<PlayerFallState>();
         }
     }
 
-  
     void OnPlayerCollision(Collision collision)
     {
         PerformParry(Player.PlayerInput.GetMovementDirection(), collision.GetContact(0).normal);

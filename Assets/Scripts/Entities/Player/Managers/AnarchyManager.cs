@@ -134,9 +134,14 @@ public class AnarchyManager : MonoBehaviour
                 ResetAnarchy();
             }
         }
-        if (anarchyDecayDisplay != null) anarchyDecayDisplay.value = (float)decayTracker / (float)DecayRate;
+        if (anarchyDecayDisplay != null)
+        {
+            if (currentAnarchy > 0)
+            {
+                anarchyDecayDisplay.value = (float)decayTracker / (float)DecayRate;
+            }
+        }
 
-        Debug.Log((float)decayTracker / (float)DecayRate);
     }
 }
 

@@ -156,6 +156,19 @@ public class PlayerStats : ScriptableObject
 
     [SerializeField, Range(0, 1)] float parryBounceControl;
     public float ParryBounceControl { get => parryBounceControl; }
+
+    [Header("Rail Parry")]
+
+    [SerializeField] float railParryMinimumSpeed = 40.0f;
+    public float RailParryMinimumSpeed { get => railParryMinimumSpeed; }
+
+    [SerializeField] float railParryMinimumJump = 8.0f;
+
+    public float RailParryMinimumJump { get => railParryMinimumJump; }
+
+    [SerializeField] float previousSpeedToRailSpeedRatio = 2.4f;
+
+    public float PreviousSpeedToRailSpeedRatio { get => previousSpeedToRailSpeedRatio; }
     #endregion
 
     #region Squashbuckler

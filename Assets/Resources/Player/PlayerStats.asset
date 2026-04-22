@@ -78,6 +78,9 @@ MonoBehaviour:
   parrySpeedIncrease: 0.1
   partialParrySpeedPenalty: 0.6
   parryBounceControl: 0
+  railParryMinimumSpeed: 120
+  railParryMinimumJump: 8
+  previousSpeedToRailSpeedRatio: 2.4
   chargesToEnterSquashbucklerMode: 3
   minimumShadowstepSpeed: 60
   durationPerSquashbucklerCharge: 15

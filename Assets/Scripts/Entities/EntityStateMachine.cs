@@ -52,9 +52,14 @@ public class EntityStateMachine : MonoBehaviour
             Debug.LogWarning("Could not find object of type " + typeof(T));
             return;
         }
-        
+        var newState = stateLookup[typeof(T)];
+        if (newState == currentState)
+        {
+            return;
+        }
+
         currentState.Exit();
-        currentState = stateLookup[typeof(T)];
+        currentState = newState;
         currentState.Enter(message);
     }
 
