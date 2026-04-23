@@ -68,7 +68,7 @@ public class PlayerSwingState : PlayerAirState
 
     public override bool StateAvailable()
     {
-        if (WormStateUtilities.AimingAtWorm(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
+        if (GrappleUtilities.AimingAtGrappable(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Buffered)
         {
             return true;
         }

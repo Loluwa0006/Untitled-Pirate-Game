@@ -3,7 +3,7 @@ using UnityEngine;
 public class RodManager : MonoBehaviour
 {
     [SerializeField] LineRenderer rodLine;
-    [SerializeField] LayerMask swingMask;
+    [SerializeField] LayerMask grappleMask;
     [SerializeField] PlayerController player;
 
     bool grappleActive = true;
@@ -21,7 +21,7 @@ public class RodManager : MonoBehaviour
     GrappleData grappleInfo;
 
     public GrappleData GrappleInfo { set => grappleInfo = value; get => grappleInfo; }
-    public LayerMask GrappleMask { get => swingMask; }
+    public LayerMask GrappleMask { get => grappleMask; }
     private void Start()
     {
         RetractRod();
@@ -29,10 +29,10 @@ public class RodManager : MonoBehaviour
 
     public void StartSwing()
     {
-        if (WormStateUtilities.RaycastResult.collider != null)
+        if (GrappleUtilities.RaycastResult.collider != null)
         {
-            grappleInfo.collider = WormStateUtilities.RaycastResult.collider;
-            grappleInfo.offset = WormStateUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
+            grappleInfo.collider = GrappleUtilities.RaycastResult.collider;
+            grappleInfo.offset = GrappleUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
 
             grappleJoint = player.gameObject.AddComponent<SpringJoint>();
             grappleJoint.autoConfigureConnectedAnchor = false;
@@ -54,13 +54,13 @@ public class RodManager : MonoBehaviour
 
     public void StartDash()
     {
-        if (WormStateUtilities.RaycastResult.collider != null)
+        if (GrappleUtilities.RaycastResult.collider != null)
         {
             grappleActive = true;
             rodLine.enabled = true;
 
-            grappleInfo.collider = WormStateUtilities.RaycastResult.collider;
-            grappleInfo.offset = WormStateUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
+            grappleInfo.collider = GrappleUtilities.RaycastResult.collider;
+            grappleInfo.offset = GrappleUtilities.RaycastResult.point - grappleInfo.collider.bounds.center;
         }
     }
     private void FixedUpdate()

@@ -42,7 +42,7 @@ public class PlayerParryState : PlayerAirState
         Vector3 movementDirection = Player.PlayerInput.GetMovementDirection();
         AirborneMovement(movementDirection, Player.PlayerStats.ParryStrafeSpeed);
         durationTracker++;
-        if (StateMachine.IsStateAvailable<PlayerRailParryState>() && durationTracker <= Player.PlayerStats.ProperParryDuration)
+        if (StateMachine.IsStateAvailable<PlayerRailParryState>())
         {
             StateMachine.TransitionTo<PlayerRailParryState>();
             return;

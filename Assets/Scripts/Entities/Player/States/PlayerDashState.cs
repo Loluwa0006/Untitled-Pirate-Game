@@ -84,9 +84,9 @@ public class PlayerDashState : PlayerAirState
     }
     public override bool StateAvailable()
     {
-        if (WormStateUtilities.AimingAtWorm(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Dash].Buffered)
+        if (GrappleUtilities.AimingAtGrappable(Player, Player.RodManager.GrappleMask) && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Dash].Buffered)
         {
-            if (Vector3.Distance(WormStateUtilities.RaycastResult.point, Player.Collider.bounds.center) >= Player.PlayerStats.MinDistanceBeforeDashCancelled)
+            if (Vector3.Distance(GrappleUtilities.RaycastResult.point, Player.Collider.bounds.center) >= Player.PlayerStats.MinDistanceBeforeDashCancelled)
             {
                 return true;
             }
