@@ -56,6 +56,7 @@ public class PlayerRailParryState : PlayerBaseState
         Vector3 tangent = Vector3.Normalize(SplineUtility.EvaluateTangent(splineToFollow.Spline, time));
         Vector2 lateralSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z);
         var velocityProjectedOntoSpline = Vector3.Dot(tangent, lateralSpeed.normalized);
+        var facingProjectedOntoSpline = Vector3.Dot(tangent, viewCamera.transform.forward);
         splineDirection = Mathf.Sign(velocityProjectedOntoSpline);
         splineAnimator.Container = splineToFollow;
         splineAnimator.MaxSpeed = Mathf.Abs(
@@ -106,6 +107,7 @@ public class PlayerRailParryState : PlayerBaseState
             if (overlap.Length > 0)
             {
                 splineToFollow = overlap[0].GetComponent<SplineContainer>();
+                if (splineToFollow == null) splineToFollow = overlap[0].transform.parent.GetComponent<SplineContainer>();
                 return true;
             }
         }
