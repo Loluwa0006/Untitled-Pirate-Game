@@ -27,25 +27,24 @@ public class PlayerAirState : PlayerBaseState
 
         if (moveDirection.magnitude < MOVEMENT_DEADZONE) return;
 
-        Vector2 currentSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z);
-        float lateralSpeed = currentSpeed.magnitude;
+        Vector2 lateralSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z);
+        float lateralMagnitude = lateralSpeed.magnitude;
         Vector2 lateralAddition = new(moveDirection.x * acceleration, moveDirection.z * acceleration);
 
+        float currentTurnAngle = Vector2.Angle(lateralSpeed, lateralSpeed + lateralAddition);
 
-        var turnAngle = Vector2.Angle(currentSpeed, currentSpeed + lateralAddition);
-
-        bool turning = (turnAngle <= Player.PlayerStats.TurnAngle);
-
-        if (!turning) //too sharp, decelerating
+        if (currentTurnAngle > Player.PlayerStats.AngleToBeConsideredTurning) //too sharp, decelerating
         {
-            var value01 = Mathf.InverseLerp(Player.PlayerStats.TurnAngle + 0.001f, 180, turnAngle);
+            //normalize the turn angle so we can sample it later
+            var value01 = Mathf.InverseLerp(Player.PlayerStats.AngleToBeConsideredTurning + 0.001f, 180, currentTurnAngle);
+            //map the loss to a curve for more control
             var scaler = Player.PlayerStats.TurnAngleSpeedLostCurve.Evaluate(value01);
             lateralAddition *= scaler;
         }
 
-        if (currentSpeed.magnitude >= Player.PlayerStats.MoveSpeed)
+        if (lateralSpeed.magnitude >= Player.PlayerStats.MoveSpeed)
         {
-            var speedNormalized = currentSpeed.normalized;
+            var speedNormalized = lateralSpeed.normalized;
             var extraSpeed = Vector2.Dot(lateralAddition, speedNormalized);
             if (extraSpeed > 0)
             {

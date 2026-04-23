@@ -37,7 +37,7 @@ public class PlayerStats : ScriptableObject
     public float AirAcceleration { get => airAcceleration; private set => airAcceleration = value; }
 
     [SerializeField] float angleToBeConsideredTurning = 5.0f;
-    public float TurnAngle { get => angleToBeConsideredTurning; private set => angleToBeConsideredTurning = value; }
+    public float AngleToBeConsideredTurning { get => angleToBeConsideredTurning; private set => angleToBeConsideredTurning = value; }
 
     [SerializeField] float maxFallSpeed;
 
