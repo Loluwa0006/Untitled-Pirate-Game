@@ -66,10 +66,7 @@ public class PlayerYawnState : PlayerAirState
     }
     public override void InactivePhysicsProcess()
     {
-        if (justYawnTracker > 0)
-        {
-            justYawnTracker--;
-        }
+        justYawnTracker = (int) Mathf.MoveTowards(justYawnTracker, 0, 1);     
     }
     public override bool StateAvailable()
     {
