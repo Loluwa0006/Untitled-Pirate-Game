@@ -174,9 +174,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WormEntity
   gravityFreeTime: 180
   distanceWhereTargetConsideredReached: 8
-  flySpeed: 40
+  flySpeed: 120
   gravity: 9
-  maxFallSpeed: 25
+  maxFallSpeed: 30
   model: {fileID: 4913076193423099044}
   swingbox: {fileID: 4482398490604426576}
   velocityManager: {fileID: 4256996498727238545}

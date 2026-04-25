@@ -1,0 +1,57 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerGetHitState : PlayerAirState
+{
+
+    public enum PlayerGetHitMessage
+    {
+        ContactInfo,
+    }
+    int hitstunTracker = 0;
+    HitboxContactInfo contactInfo;
+    public override void Enter(Dictionary<string, object> message = null)
+    {
+        base.Enter(message);
+        bool validTransition = false;
+        if (message != null)
+        {
+            if (message.ContainsKey(PlayerGetHitMessage.ContactInfo.ToString()))
+            {
+                validTransition = true;
+                contactInfo = (HitboxContactInfo)message[PlayerGetHitMessage.ContactInfo.ToString()];
+                hitstunTracker = Mathf.Max(contactInfo.DamageInfo.hitstunFrames, 0);
+            }
+        }
+        if (!validTransition)
+        {
+            StateMachine.TransitionTo<PlayerFallState>();
+            return;
+        }
+
+        ApplyAttackKnockback();
+    }
+
+    void ApplyAttackKnockback()
+    {
+        Vector3 knockbackDirection = (contactInfo.hurtbox.bounds.center - contactInfo.collisionPoint).normalized;
+        Vector3 knockbackForce = knockbackDirection * contactInfo.DamageInfo.horizontalKnockback;
+        knockbackForce.y = contactInfo.DamageInfo.verticalKnockback;
+        Player.RigidBody.linearVelocity = knockbackForce;
+    }
+
+    public override void PhysicsProcess()
+    {
+        hitstunTracker--;
+        if (hitstunTracker == 0 )
+        {
+            StateMachine.TransitionTo<PlayerFallState>();
+            return;
+        }
+
+        //Use jump gravity because it's more forgiving: the force is weaker and gives the player
+        //more opportunity to recover.
+        ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
+        AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
+    }
+}

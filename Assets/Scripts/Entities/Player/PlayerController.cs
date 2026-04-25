@@ -1,10 +1,8 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
-
-    [SerializeField] float moveSpeed;
-    [SerializeField] EntityStateMachine playerStateMachine;
     [SerializeField] Rigidbody _rb;
     [SerializeField] PlayerStats _playerStats;
     [SerializeField] Collider _collider;
@@ -15,6 +13,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] RodManager _rodManager;
     [SerializeField] AnarchyManager _anarchyManager;
     [SerializeField] SquashbucklerManager _squashbucklerManager;
+    [SerializeField] EntityStateMachine playerStateMachine;
+
+    [Header("Components")]
+    [SerializeField] HealthComponent _healthComponent;
+
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
     public Rigidbody RigidBody { get => _rb; private set => _rb = value; }
@@ -32,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     public SquashbucklerManager SquashbucklerManager { get => _squashbucklerManager; }
 
+    public HealthComponent HealthComponent { get => _healthComponent; }
+
     public bool PlayerGrounded { get; set; }
 
     public UnityEvent<Collision> playerCollision = new();
@@ -48,5 +53,15 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         playerCollision.Invoke(collision);
+    }
+
+    public void OnPlayerDamaged(HitboxContactInfo info)
+    {
+        Debug.Log("Player damaged");
+        Dictionary<string, object> getHitStateMessage = new()
+        {
+            [PlayerGetHitState.PlayerGetHitMessage.ContactInfo.ToString()] = info
+        };
+        playerStateMachine.TransitionTo<PlayerGetHitState>(getHitStateMessage);
     }
 }

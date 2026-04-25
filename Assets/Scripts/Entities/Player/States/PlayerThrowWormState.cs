@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 public class PlayerThrowWormState : PlayerAirState
-{
-    [SerializeField] float throwRange = 120;
-
-    [SerializeField] int stateDuration = 19;
+{ 
     [SerializeField] LayerMask terrainMask;
     
     Vector3 middlePointOfViewport = new (0.5f, 0.5f);
@@ -30,7 +27,7 @@ public class PlayerThrowWormState : PlayerAirState
         Vector3 newSpeed = Player.RigidBody.linearVelocity;
         newSpeed.y = Mathf.Max(newSpeed.y + Player.PlayerStats.WormThrowJumpInfo.JumpVelocity, Player.PlayerStats.WormThrowJumpInfo.JumpVelocity);
         Player.RigidBody.linearVelocity = newSpeed;
-        durationTracker = stateDuration;
+        durationTracker = Player.PlayerStats.WormThrowDuration;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.FireWorm].Consume();
         Player.WormManager.WormsRemaining--;
     }
@@ -38,7 +35,7 @@ public class PlayerThrowWormState : PlayerAirState
     void FireWorm()
     {
         var cameraRay = viewCamera.ViewportPointToRay(middlePointOfViewport);
-        var raycast = Physics.Raycast(cameraRay, out var hitInfo, throwRange, terrainMask, QueryTriggerInteraction.Collide);
+        var raycast = Physics.Raycast(cameraRay, out var hitInfo, Player.PlayerStats.WormThrowRange, terrainMask, QueryTriggerInteraction.Collide);
         Vector3 wormTarget;
         if (raycast)
         {
@@ -46,7 +43,7 @@ public class PlayerThrowWormState : PlayerAirState
         }
         else
         {
-            wormTarget = cameraRay.GetPoint(throwRange);
+            wormTarget = cameraRay.GetPoint(Player.PlayerStats.WormThrowRange);
         }
         WormEntity newWorm = Player.WormManager.GetNewWorm();
         newWorm.Fire(wormTarget, Player.transform.position, Player.RigidBody.linearVelocity);

@@ -21,7 +21,7 @@ MonoBehaviour:
     jumpTimeToDecent: 0.7
   airAcceleration: 3.3333333
   angleToBeConsideredTurning: 5
-  maxFallSpeed: 90
+  maxFallSpeed: 130
   turnAngleToSpeedLost:
     serializedVersion: 2
     m_Curve:
@@ -66,7 +66,7 @@ MonoBehaviour:
   rodSwingMassScale: 4.5
   dashGravity: 0.25
   dashPower: 3.5
-  dashLateralAcceleration: 5
+  dashLateralAcceleration: 11
   maxDashSpeed: 100
   minDistanceBeforeDashCancelled: 25
   properParryDuration: 27

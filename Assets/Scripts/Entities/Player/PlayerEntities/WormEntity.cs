@@ -24,10 +24,10 @@ public class WormEntity : MonoBehaviour
         transform.position = startingLocation;
         Vector3 direction = (target - startingLocation).normalized;
 
-        float velocityToInheritFromOwner = Vector3.Dot(direction, ownerVelocity);
+        float velocityToInheritFromOwner = Vector3.Dot(direction, ownerVelocity.normalized);
 
         
-        velocityManager.OverwriteInternalSpeed((direction * flySpeed) + ownerVelocity);
+        velocityManager.OverwriteInternalSpeed((direction * flySpeed) + ownerVelocity * velocityToInheritFromOwner);
 
         wormActive = true;
         model.enabled = true;

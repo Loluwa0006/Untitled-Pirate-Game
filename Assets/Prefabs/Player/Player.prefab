@@ -142,8 +142,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerThrowWormState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
-  throwRange: 120
-  stateDuration: 19
   terrainMask:
     serializedVersion: 2
     m_Bits: 192
@@ -188,6 +186,7 @@ Transform:
   - {fileID: 3436187125366228050}
   - {fileID: 7669484520907310133}
   - {fileID: 1262573910220082082}
+  - {fileID: 9105740226442567929}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -204,6 +203,93 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EntityStateMachine
   owner: {fileID: 3340420948024593123}
   currentState: {fileID: 4667353602917662838}
+--- !u!1 &1992170549738256108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1583420984136553807}
+  - component: {fileID: 6899298490414880762}
+  - component: {fileID: 1292771791658868985}
+  m_Layer: 3
+  m_Name: HealthComponent
+  m_TagString: Hurtbox
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1583420984136553807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992170549738256108}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3340420948024593123}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &6899298490414880762
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992170549738256108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1292771791658868985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1992170549738256108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01348f95923b114fb8298dd97931f0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealthComponent
+  maxHealth: 3
+  hurtbox: {fileID: 6899298490414880762}
+  entityKilled:
+    m_PersistentCalls:
+      m_Calls: []
+  entityDamaged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1870535501843506831}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnPlayerDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  wormManager: {fileID: 6021299679631168183}
 --- !u!1 &2079831159420978055
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,6 +474,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerYawnState
   hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 1
+--- !u!1 &4054177553845067648
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9105740226442567929}
+  - component: {fileID: 8958096604214603123}
+  m_Layer: 3
+  m_Name: GetHit
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9105740226442567929
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054177553845067648}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8958096604214603123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4054177553845067648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c76feb2fe1f4be94eb2d6a3bead62d30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerGetHitState
+  hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
 --- !u!1 &4677468440693043105
 GameObject:
@@ -460,7 +592,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4681069711837776597
 GameObject:
@@ -488,7 +620,7 @@ Transform:
   m_GameObject: {fileID: 4681069711837776597}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 272.40436, y: 145.69174, z: 385.4511}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -613,9 +745,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RodManager
   rodLine: {fileID: 8496726179433166469}
-  swingMask:
+  grappleMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 1792
   player: {fileID: 1870535501843506831}
 --- !u!1 &5401427390679268989
 GameObject:
@@ -848,6 +980,7 @@ Transform:
   - {fileID: 7435467149138354754}
   - {fileID: 3127645413297380931}
   - {fileID: 4489595010220830823}
+  - {fileID: 1583420984136553807}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8369251970190751333
@@ -940,8 +1073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce93b69d46554924885cbf577f277411, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  moveSpeed: 7
-  playerStateMachine: {fileID: 4640383311062024331}
   _rb: {fileID: 4316075470623054589}
   _playerStats: {fileID: 11400000, guid: 37afd5eea4cfb2a48aaf3c3462bff32a, type: 2}
   _collider: {fileID: 8061839667610271217}
@@ -950,6 +1081,8 @@ MonoBehaviour:
   _rodManager: {fileID: 8445331606179173087}
   _anarchyManager: {fileID: 5114671140808074405}
   _squashbucklerManager: {fileID: 1378361783068774386}
+  playerStateMachine: {fileID: 4640383311062024331}
+  _healthComponent: {fileID: 1292771791658868985}
   playerCollision:
     m_PersistentCalls:
       m_Calls: []
@@ -977,7 +1110,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 2
   m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!114 &1366431042455759010

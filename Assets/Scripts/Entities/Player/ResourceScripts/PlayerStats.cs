@@ -55,6 +55,16 @@ public class PlayerStats : ScriptableObject
     [SerializeField] JumpInfo wormThrowInfo;
 
     public JumpInfo WormThrowJumpInfo { get => wormThrowInfo; private set => wormThrowInfo = value; }
+
+    
+    [SerializeField] float wormThrowRange = 120;
+
+    public float WormThrowRange { get => wormThrowRange; }
+
+
+    [SerializeField] int wormThrowDuration = 19;
+
+    public int WormThrowDuration { get => wormThrowDuration; }
     #endregion
     #region Rod
     [Header("Rod")]
