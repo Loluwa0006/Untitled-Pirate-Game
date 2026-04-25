@@ -74,6 +74,7 @@ public struct DamageInfo
     public float horizontalKnockback;
     public float verticalKnockback;
     public int hitstunFrames;
+    public DamageSource damageSource;
 }
 
 public struct HitboxContactInfo
@@ -82,3 +83,9 @@ public struct HitboxContactInfo
     public Vector3 collisionPoint;
     public Collider hurtbox;
 }
+public enum DamageSource : short
+{
+    EnemyWall,
+    AnySource
+}
+

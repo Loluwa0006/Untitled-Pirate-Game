@@ -233,4 +233,11 @@ public class PlayerStats : ScriptableObject
 
 
     #endregion
+
+    #region Misc
+    [Header("Invulnerablity")]
+    [SerializeField] int extraInvulnerabilityFramesAfterHit = 45;
+
+    public int ExtraInvulnerablityFramesAfterHit { get => extraInvulnerabilityFramesAfterHit;}
+    #endregion
 }

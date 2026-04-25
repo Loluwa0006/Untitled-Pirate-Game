@@ -8,12 +8,19 @@ public class PlayerHealthComponent : HealthComponent
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public override void Damage(HitboxContactInfo info)
     {
-        wormManager.WormsRemaining--;
-        if (wormManager.WormsRemaining <= 0)
+        foreach (var status in statusEffects)
         {
-            Kill();
-            return;
+            info = status.Value.ProcessDamage(info);
         }
-        entityDamaged.Invoke(info);
+        if (info.DamageInfo.damage > 0)
+        {
+            if (wormManager.WormsRemaining <= 0)
+            {
+                Kill();
+                return;
+            }
+            wormManager.WormsRemaining--;
+            entityDamaged.Invoke(info);
+        }
     }
 }

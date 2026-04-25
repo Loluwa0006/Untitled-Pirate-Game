@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] EntityStateMachine playerStateMachine;
 
     [Header("Components")]
-    [SerializeField] HealthComponent _healthComponent;
+    [SerializeField] PlayerHealthComponent _healthComponent;
 
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPlayerDamaged(HitboxContactInfo info)
     {
-        Debug.Log("Player damaged");
+        if (info.DamageInfo.damage <= 0) return;
         Dictionary<string, object> getHitStateMessage = new()
         {
             [PlayerGetHitState.PlayerGetHitMessage.ContactInfo.ToString()] = info

@@ -3,12 +3,13 @@ using UnityEngine;
 
 public class PlayerGetHitState : PlayerAirState
 {
-
+   
     public enum PlayerGetHitMessage
     {
         ContactInfo,
     }
     int hitstunTracker = 0;
+    int invulnerablityTracker = 0;
     HitboxContactInfo contactInfo;
     public override void Enter(Dictionary<string, object> message = null)
     {
@@ -20,7 +21,7 @@ public class PlayerGetHitState : PlayerAirState
             {
                 validTransition = true;
                 contactInfo = (HitboxContactInfo)message[PlayerGetHitMessage.ContactInfo.ToString()];
-                hitstunTracker = Mathf.Max(contactInfo.DamageInfo.hitstunFrames, 0);
+                hitstunTracker = Mathf.Abs(contactInfo.DamageInfo.hitstunFrames);
             }
         }
         if (!validTransition)
@@ -30,8 +31,14 @@ public class PlayerGetHitState : PlayerAirState
         }
 
         ApplyAttackKnockback();
+        ApplyInvincibility();
+        invulnerablityTracker = Player.PlayerStats.ExtraInvulnerablityFramesAfterHit;
     }
-
+    void ApplyInvincibility()
+    {
+        InvulnerabilityEffect invulnerabilityEffect = new(StatusEffectID.PlayerGethitInvulnerability, DamageSource.EnemyWall, InvulnerabilityEffect.INFINITE_DURATION_VALUE);
+        Player.HealthComponent.AddStatusEffect(invulnerabilityEffect);
+    }
     void ApplyAttackKnockback()
     {
         Vector3 knockbackDirection = (contactInfo.hurtbox.bounds.center - contactInfo.collisionPoint).normalized;
@@ -39,7 +46,6 @@ public class PlayerGetHitState : PlayerAirState
         knockbackForce.y = contactInfo.DamageInfo.verticalKnockback;
         Player.RigidBody.linearVelocity = knockbackForce;
     }
-
     public override void PhysicsProcess()
     {
         hitstunTracker--;
@@ -48,10 +54,23 @@ public class PlayerGetHitState : PlayerAirState
             StateMachine.TransitionTo<PlayerFallState>();
             return;
         }
-
         //Use jump gravity because it's more forgiving: the force is weaker and gives the player
         //more opportunity to recover.
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
         AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
+    }
+
+    public override void InactivePhysicsProcess()
+    {
+        invulnerablityTracker--;
+        if (invulnerablityTracker == 0)
+        {
+            Player.HealthComponent.RemoveStatusEffect(StatusEffectID.PlayerGethitInvulnerability);
+        }
+    }
+
+    public override bool StateAvailable()
+    {
+        return false; //special exception, only player controller handles transitions to this state
     }
 }
