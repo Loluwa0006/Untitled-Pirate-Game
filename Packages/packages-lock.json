@@ -1,14 +1,13 @@
 {
   "dependencies": {
     "com.isako.spline-collider": {
-      "version": "https://github.com/Isako-Sakuraba/Unity-Spline-Collider.git",
+      "version": "file:com.isako.spline-collider",
       "depth": 0,
-      "source": "git",
+      "source": "embedded",
       "dependencies": {
         "com.unity.splines": "2.4.0",
         "com.unity.mathematics": "1.2.0"
-      },
-      "hash": "3c45f2522771a792e669aa326f074c9c9b2874c8"
+      }
     },
     "com.unity.ai.navigation": {
       "version": "2.0.10",

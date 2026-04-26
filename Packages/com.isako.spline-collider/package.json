@@ -1,0 +1,17 @@
+{
+  "name": "com.isako.spline-collider",
+  "version": "1.0.0",
+  "displayName": "Spline Collider",
+  "description": "Generates optimized colliders along splines with unified physics events.",
+  "unity": "2022.3",
+  "license": "MIT",
+  "dependencies": {
+    "com.unity.splines": "2.4.0",
+    "com.unity.mathematics": "1.2.0"
+  },
+  "author": {
+    "name": "Isako Sakuraba",
+    "url": "https://github.com/Isako-Sakuraba"
+  },
+  "_fingerprint": "3c45f2522771a792e669aa326f074c9c9b2874c8"
+}
