@@ -49,6 +49,52 @@ MonoBehaviour:
   parryMask:
     serializedVersion: 2
     m_Bits: 832
+--- !u!1 &688355114899007959
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1522539469012922421}
+  - component: {fileID: 7697902623462757242}
+  m_Layer: 3
+  m_Name: Slash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1522539469012922421
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688355114899007959}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7697902623462757242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688355114899007959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb5ed3b43746cd946890e63ed08d5743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSlashState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
 --- !u!1 &1169385189053670155
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,6 +233,7 @@ Transform:
   - {fileID: 7669484520907310133}
   - {fileID: 1262573910220082082}
   - {fileID: 9105740226442567929}
+  - {fileID: 1522539469012922421}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -520,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerGetHitState
   hasInactiveProcess: 0
-  hasInactivePhysicsProcess: 0
+  hasInactivePhysicsProcess: 1
 --- !u!1 &4677468440693043105
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,6 +999,7 @@ GameObject:
   - component: {fileID: 1870535501843506831}
   - component: {fileID: 4316075470623054589}
   - component: {fileID: 1366431042455759010}
+  - component: {fileID: 5721147126557053551}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -1083,6 +1131,7 @@ MonoBehaviour:
   _squashbucklerManager: {fileID: 1378361783068774386}
   playerStateMachine: {fileID: 4640383311062024331}
   _healthComponent: {fileID: 1292771791658868985}
+  _animator: {fileID: 5721147126557053551}
   playerCollision:
     m_PersistentCalls:
       m_Calls: []
@@ -1136,6 +1185,28 @@ MonoBehaviour:
   m_ObjectForwardAxis: 2
   m_ObjectUpAxis: 1
   m_StartOffset: 0
+--- !u!95 &5721147126557053551
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5834537706312432830}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40fa7ade0938c7741b7e88f6b5717754, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6044328036533850337
 GameObject:
   m_ObjectHideFlags: 0

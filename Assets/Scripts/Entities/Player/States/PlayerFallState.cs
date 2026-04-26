@@ -11,6 +11,7 @@ public class PlayerFallState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerSlashState),
             typeof(PlayerYawnState),
             typeof(PlayerShadowstepState),
             

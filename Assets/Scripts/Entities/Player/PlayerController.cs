@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Components")]
     [SerializeField] PlayerHealthComponent _healthComponent;
+    [SerializeField] Animator _animator;
 
 
     public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
@@ -36,6 +37,8 @@ public class PlayerController : MonoBehaviour
     public SquashbucklerManager SquashbucklerManager { get => _squashbucklerManager; }
 
     public HealthComponent HealthComponent { get => _healthComponent; }
+
+    public Animator Animator { get => _animator; }
 
     public bool PlayerGrounded { get; set; }
 

@@ -14,7 +14,7 @@ public class PlayerBaseState : BaseState
     public PlayerController Player { private set; get; }
 
 
-    public virtual System.Type[] statesToAttemptToTransitionTo { get; protected set; }
+    public virtual Type[] statesToAttemptToTransitionTo { get; protected set; }
 
 
     protected static Camera viewCamera;

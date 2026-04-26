@@ -32,6 +32,7 @@ public class HealthComponent : MonoBehaviour
         {
             info = status.Value.ProcessDamage(info);
         }
+        var previousHealth = health;    
         health -= info.DamageInfo.damage;
         if (health <= 0)
         {

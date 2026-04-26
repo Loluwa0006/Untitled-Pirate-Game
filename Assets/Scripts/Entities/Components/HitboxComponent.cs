@@ -10,24 +10,39 @@ public class HitboxComponent : MonoBehaviour
     [SerializeField] LayerMask hitboxMask;
     [SerializeField] List<HealthComponent> blacklistedTargets;
     [SerializeField] DamageInfo damageInfo;
+
+    [Header("Editor")]
+    [SerializeField] Color inactiveColor = Color.red;
+    [SerializeField] Color activeColor = Color.green;
+    [SerializeField] HitboxDrawMode hitboxDrawMode = HitboxDrawMode.NoDraw;
+
     Collider[] struckTargets = new Collider[MAX_CONTACTS_PER_FRAME];
     List<HealthComponent> previousTargets = new();
 
+
     bool isBoxCollider;
+    bool wasActive;
+
+    [HideInInspector] public bool HitboxActive = false;
+    enum HitboxDrawMode
+    {
+        NoDraw,
+        Wireframe,
+        Solid
+    }
     private void Start()
     {   
         if (hitboxCollider == null) hitboxCollider = GetComponent<Collider>();
-        isBoxCollider = (hitboxCollider is BoxCollider);
+        isBoxCollider = hitboxCollider is BoxCollider;
     }
-    public void Activate()
+    public void OnActivate()
     {
-        hitboxCollider.enabled = true;
         previousTargets.Clear();
     }
 
-    public void Deactivate()
+    public void OnDeactivate()
     {
-        hitboxCollider.enabled = false;
+
     }
 
     private void FixedUpdate()
@@ -38,9 +53,25 @@ public class HitboxComponent : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        hitboxCollider.enabled = HitboxActive;
+        if (!wasActive && hitboxCollider.enabled)
+        {
+            OnActivate();
+        }
+        else if (wasActive && !hitboxCollider.enabled)
+        {
+            OnDeactivate();
+        }
+        wasActive = hitboxCollider.enabled;
+    }
     void CheckForCollisions()
     {
-        System.Array.Clear(struckTargets, 0, struckTargets.Length);
+        for (int i = 0; i < struckTargets.Length; i++)
+        {
+            struckTargets[i] = null;
+        }
         if (!isBoxCollider) Physics.OverlapSphereNonAlloc(hitboxCollider.bounds.center, hitboxCollider.bounds.extents.x, struckTargets, hitboxMask, QueryTriggerInteraction.Collide);
         else Physics.OverlapBoxNonAlloc(hitboxCollider.bounds.center, hitboxCollider.bounds.extents, struckTargets, hitboxCollider.transform.rotation, hitboxMask, QueryTriggerInteraction.Collide);
         for (int i = 0; i < struckTargets.Length; i++)
@@ -50,11 +81,40 @@ public class HitboxComponent : MonoBehaviour
             if (collider.TryGetComponent(out HealthComponent hp))
             {
                 if (blacklistedTargets.Contains(hp) || previousTargets.Contains(hp)) continue;
+                Debug.Log("attempting to hit object " + collider.name);
                 DamageEntity(hp);
             }
         }
     }
 
+
+    private void OnDrawGizmos()
+    {
+        if (hitboxDrawMode == HitboxDrawMode.NoDraw || hitboxCollider == null) return;
+        bool isBoxCollider = hitboxCollider is BoxCollider;
+        Color hitboxColor;
+       if (HitboxActive)
+        {
+            hitboxColor = activeColor;
+        }
+       else
+        {
+            hitboxColor = inactiveColor;
+        }
+       Gizmos.color = hitboxColor;
+
+       if (isBoxCollider)
+        {
+           if (hitboxDrawMode == HitboxDrawMode.Wireframe)  Gizmos.DrawWireCube(hitboxCollider.bounds.center, hitboxCollider.bounds.size);
+           else  Gizmos.DrawCube(hitboxCollider.bounds.center, hitboxCollider.bounds.size);
+
+        }
+        else
+        {
+           if (hitboxDrawMode == HitboxDrawMode.Wireframe) Gizmos.DrawWireSphere(hitboxCollider.bounds.center, hitboxCollider.bounds.extents.x);
+           else Gizmos.DrawSphere(hitboxCollider.bounds.center, hitboxCollider.bounds.extents.x);
+        }
+    }
     void DamageEntity(HealthComponent healthComponent)
     {
         HitboxContactInfo collisionInfo = new()
@@ -85,6 +145,8 @@ public struct HitboxContactInfo
 }
 public enum DamageSource : short
 {
+    PlayerSlash,
+    PlayerDragonslash,
     EnemyWall,
     AnySource
 }

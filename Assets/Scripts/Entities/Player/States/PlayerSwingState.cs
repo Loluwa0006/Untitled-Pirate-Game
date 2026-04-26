@@ -9,6 +9,7 @@ public class PlayerSwingState : PlayerAirState
     {
         get => new Type[]
         {
+            typeof(PlayerSlashState),
             typeof(PlayerShadowstepState),
             
             typeof(PlayerParryState),

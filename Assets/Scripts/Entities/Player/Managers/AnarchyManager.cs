@@ -82,7 +82,6 @@ public class AnarchyManager : MonoBehaviour
             scaling = Mathf.MoveTowards(scaling, 0, scalingGenerationReductionAmount);
             scaledGenerationMethods[kvp.Key] = scaling;
             
-            Debug.Log(kvp.Key.ToString() + " scaling : " + kvp.Value.ToString());
         }
         progressToAnarchy += generationPerOption * (1 - scaledGenerationMethods[method]);
         scaledGenerationMethods[method] = scalingGenerationReductionAmount * numberOfOptionsToUseToReduceScaling;
