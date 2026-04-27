@@ -21,7 +21,12 @@ public class CameraManager : MonoBehaviour
         lookDirection += new Vector2(lookInput.x * inputManager.Sensitivity.x, lookInput.y * inputManager.Sensitivity.y);
 
         lookDirection.y = Mathf.Clamp(lookDirection.y, -90, 90);
+        
+    }
+
+    private void FixedUpdate()
+    {
         playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);
-        lookTarget.localRotation = Quaternion.Euler(-lookDirection.y, 0, 0);
+        lookTarget.localRotation = Quaternion.Euler(-lookDirection.y, lookDirection.x, 0);
     }
 }
