@@ -231,7 +231,29 @@ public class PlayerStats : ScriptableObject
 
     public float SlashAnarchyProgressAmount {  get => slashAnarchyProgressAmount; }
 
+    [SerializeField] AnimationCurve speedToSlashDamage;
 
+    public AnimationCurve SpeedToSlashDamageCurve { get => speedToSlashDamage; }
+
+    [SerializeField] AnimationCurve speedToDragonslashDamage;
+
+    public AnimationCurve SpeedToDragonslashDamageCurve { get => speedToDragonslashDamage; }
+
+    [SerializeField] int minSlashDamage = 1;
+
+    public int MinSlashDamage { get => minSlashDamage; }
+
+    [SerializeField] int maxSlashDamage = 8;
+
+    public int MaxSlashDamage { get => maxSlashDamage; }
+
+    [SerializeField] int minDragonslashDamage = 10;
+
+    public int MinDragonslashDamage { get => minDragonslashDamage; }
+
+    [SerializeField] int maxDragonslashDamage = 15;
+
+    public int MaxDragonslashDamage { get => maxDragonslashDamage; }
     #endregion
 
     #region Misc

@@ -6,13 +6,18 @@ public class PlayerShadowstepState : PlayerBaseState
     float initialSpeed;
 
     int durationTracker = 0;
+
+    bool startedAtMaxCharge = false;
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
+        startedAtMaxCharge = Player.SquashbucklerManager.SquashbucklerCharge == Player.SquashbucklerManager.MaxCharge;
         initialSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z).magnitude;
         if (initialSpeed < Player.PlayerStats.MinimumShadowstepSpeed) initialSpeed = Player.PlayerStats.MinimumShadowstepSpeed;
         durationTracker = Player.PlayerStats.DurationPerSquashbucklerCharge * Player.PlayerStats.ChargesToEnterSquashbucklerMode;
         Player.SquashbucklerManager.SquashbucklerCharge -= Player.PlayerStats.ChargesToEnterSquashbucklerMode;
+        Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Squashbuckler].Consume();
+        Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Slash].Consume(); //prevent accidental dragonslashes
     }
     public override void PhysicsProcess()
     {
@@ -23,21 +28,33 @@ public class PlayerShadowstepState : PlayerBaseState
         {
             Player.SquashbucklerManager.SquashbucklerCharge--;
             durationTracker = Player.PlayerStats.DurationPerSquashbucklerCharge;
+            if (!Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Squashbuckler].ActionPressed)
+            {
+                FallFromShadowstep();
+                return;
+            }
         }
         if (Player.SquashbucklerManager.SquashbucklerCharge == 0)
         {
-            StateMachine.TransitionTo<PlayerFallState>();
+            FallFromShadowstep();
+            return;
+        }
+        if (startedAtMaxCharge && Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Slash].Buffered)
+        {
+            StateMachine.TransitionTo<PlayerDragonslashState>();
             return;
         }
     }
 
+    void FallFromShadowstep()
+    {
+        Player.Animator.SetBool(Player.GetAnimationParameterFormatted(PlayerController.AnimationParameter.Bool_InSquashbuckler), false);
+        StateMachine.TransitionTo<PlayerFallState>();
+    }
+
     public override void Process()
     {
-        if (!Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Squashbuckler].ActionPressed)
-        {
-            StateMachine.TransitionTo<PlayerFallState>();
-            return;
-        }
+  
     }
 
     public override void Exit()

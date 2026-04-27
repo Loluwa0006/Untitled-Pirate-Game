@@ -3,6 +3,13 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
+
+    public enum AnimationParameter
+    {
+        Trigger_IsAttacking,
+        Bool_InSquashbuckler
+    }
+
     [SerializeField] Rigidbody _rb;
     [SerializeField] PlayerStats _playerStats;
     [SerializeField] Collider _collider;
@@ -14,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AnarchyManager _anarchyManager;
     [SerializeField] SquashbucklerManager _squashbucklerManager;
     [SerializeField] EntityStateMachine playerStateMachine;
+    [SerializeField] CameraManager _cameraManager;
 
     [Header("Components")]
     [SerializeField] PlayerHealthComponent _healthComponent;
@@ -39,6 +47,8 @@ public class PlayerController : MonoBehaviour
     public HealthComponent HealthComponent { get => _healthComponent; }
 
     public Animator Animator { get => _animator; }
+
+    public CameraManager CameraManager { get => _cameraManager; }
 
     public bool PlayerGrounded { get; set; }
 
@@ -66,5 +76,11 @@ public class PlayerController : MonoBehaviour
             [PlayerGetHitState.PlayerGetHitMessage.ContactInfo.ToString()] = info
         };
         playerStateMachine.TransitionTo<PlayerGetHitState>(getHitStateMessage);
+    }
+
+    public string GetAnimationParameterFormatted(AnimationParameter parameter)
+    {
+        var parameterString = parameter.ToString();
+        return parameterString.Substring(parameterString.IndexOf("_") + 1);
     }
 }

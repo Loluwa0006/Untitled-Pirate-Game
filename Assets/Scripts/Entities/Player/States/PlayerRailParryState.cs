@@ -41,6 +41,7 @@ public class PlayerRailParryState : PlayerBaseState
             StateMachine.TransitionTo<PlayerFallState>();
             return;
         }
+        Player.CameraManager.ControlPlayerRotation = false;
         splineAnimator.enabled = true;
 
         InitializeSplineMovement();
@@ -72,17 +73,17 @@ public class PlayerRailParryState : PlayerBaseState
         float timeToAdd = (delta * splineDirection) * Time.fixedDeltaTime;
         splineAnimator.NormalizedTime = Mathf.Clamp01(splineAnimator.NormalizedTime + timeToAdd);
         SplineUtility.Evaluate(splineToFollow.Spline, splineAnimator.NormalizedTime, out float3 splinePoint, out float3 tangent, out float3 upVector);
-        Player.RigidBody.Move(splineToFollow.transform.TransformPoint(splinePoint), Quaternion.LookRotation(tangent, upVector));
+        Player.RigidBody.MovePosition(splineToFollow.transform.TransformPoint(splinePoint));
+        viewCamera.transform.rotation = Quaternion.Euler(tangent.x, -tangent.y, 0);
+
         if (splineAnimator.NormalizedTime > 0.999f || splineAnimator.NormalizedTime < 0.001f || !Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].ActionPressed)
         {
             StateMachine.TransitionTo<PlayerFallState>();
         }
     }
 
-    Vector3 CalculateExitVelocity()
+    Vector3 CalculateExitVelocity(Vector3 tangent)
     {
-        SplineUtility.Evaluate(splineToFollow.Spline, splineAnimator.NormalizedTime, out float3 position, out float3 tangent, out float3 upVector);
-
         Vector3 normalizedTangent = Vector3.Normalize(tangent);
 
         Vector3 exitVelocity = splineAnimator.MaxSpeed * normalizedTangent * splineDirection;
@@ -96,8 +97,11 @@ public class PlayerRailParryState : PlayerBaseState
         base.Exit();
         splineAnimator.enabled = false;
         Player.RigidBody.isKinematic = false;
-        Player.RigidBody.linearVelocity = CalculateExitVelocity();
+        SplineUtility.Evaluate(splineToFollow.Spline, splineAnimator.NormalizedTime, out float3 position, out float3 tangent, out float3 upVector);
+        Player.RigidBody.linearVelocity = CalculateExitVelocity(tangent);
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.RailParry);
+        Player.CameraManager.ControlPlayerRotation = true;
+        viewCamera.transform.rotation = Quaternion.LookRotation(-tangent, upVector);
     }
     public override bool StateAvailable()
     {

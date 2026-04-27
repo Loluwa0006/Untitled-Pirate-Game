@@ -16,11 +16,14 @@ public class PlayerSlashState : PlayerAirState
         };
     }
 
+    float baseDamage;
+
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
         if (slashHitbox == null) slashHitbox = GetComponent<HitboxComponent>();
         slashHitbox.targetsStruck += OnHitboxDeactivation;
+        baseDamage = slashHitbox.DamageInfo.damage;
     }
     public override void Enter(Dictionary<string, object> message = null)
     {
@@ -45,14 +48,25 @@ public class PlayerSlashState : PlayerAirState
             StateMachine.TransitionTo<PlayerShadowstepState>();
             return;
         }
+        CalculateDamage(Player.PlayerStats.MinSlashDamage, Player.PlayerStats.MaxSlashDamage, Player.PlayerStats.SpeedToSlashDamageCurve);
     }
 
-    public void OnHitboxDeactivation(List<HealthComponent> victims)
+    public virtual void OnHitboxDeactivation(List<HealthComponent> victims)
     {
         for (int i = 0; i < victims.Count; i++)
         {
             Player.AnarchyManager.GenerateAnarchyUnscaled(UnscaledGenerationMethod.Slash);
         }
+    }
+
+    protected void CalculateDamage(int minDamage, int maxDamage, AnimationCurve curve)
+    {
+        var lateralSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z).magnitude;
+        var speedSampled = curve.Evaluate(lateralSpeed);
+
+        var info = slashHitbox.DamageInfo;
+        info.damage = Mathf.RoundToInt(Mathf.Lerp(minDamage, maxDamage, speedSampled));
+        slashHitbox.DamageInfo = info;
     }
 
     public override void Process()

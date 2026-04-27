@@ -51,6 +51,8 @@ MonoBehaviour:
     jumpHeight: 5.5
     jumpTimeToPeak: 1.4
     jumpTimeToDecent: 1
+  wormThrowRange: 120
+  wormThrowDuration: 19
   maxRodRange: 180
   swingAcceleration: 6.6666665
   swingJumpInfo:
@@ -92,3 +94,56 @@ MonoBehaviour:
   yawnAnarchyProgressPerFrame: 0.3
   justYawnAnarchyProgress: 100
   slashAnarchyProgressAmount: 100
+  speedToSlashDamage:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.013333334
+      outSlope: 0.013333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 75
+      value: 1
+      inSlope: 0.013333334
+      outSlope: 0.013333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speedToDragonslashDamage:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0.013333334
+      outSlope: 0.013333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 75
+      value: 1
+      inSlope: 0.013333334
+      outSlope: 0.013333334
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minSlashDamage: 1
+  maxSlashDamage: 8
+  minDragonslashDamage: 10
+  maxDragonslashDamage: 15
+  extraInvulnerabilityFramesAfterHit: 45

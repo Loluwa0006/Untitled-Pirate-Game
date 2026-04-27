@@ -17,6 +17,8 @@ public class SquashbucklerManager : MonoBehaviour
         }
     }
 
+    public int MaxCharge { get => maxCharge; }
+
 
     private void Start()
     {

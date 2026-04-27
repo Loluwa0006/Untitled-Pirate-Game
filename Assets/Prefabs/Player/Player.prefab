@@ -146,7 +146,7 @@ MonoBehaviour:
     damageSource: 0
   inactiveColor: {r: 1, g: 0, b: 0, a: 1}
   activeColor: {r: 0, g: 1, b: 0, a: 1}
-  hitboxDrawMode: 1
+  hitboxDrawMode: 0
   HitboxActive: 0
 --- !u!1 &1169385189053670155
 GameObject:
@@ -287,6 +287,7 @@ Transform:
   - {fileID: 1262573910220082082}
   - {fileID: 9105740226442567929}
   - {fileID: 1522539469012922421}
+  - {fileID: 151139268132224842}
   m_Father: {fileID: 3340420948024593123}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4640383311062024331
@@ -896,6 +897,104 @@ MonoBehaviour:
   actionReference: {fileID: 2261118959499317939, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 0
   bufferDuration: 8
+--- !u!1 &5483223935698956039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 151139268132224842}
+  - component: {fileID: 1885915755285934966}
+  - component: {fileID: 7736850955957959357}
+  - component: {fileID: 1487945002665989433}
+  m_Layer: 3
+  m_Name: Dragonslash
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &151139268132224842
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483223935698956039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6071449120060975319}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1885915755285934966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483223935698956039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32642bb9819681f44a82da772f2c872b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDragonslashState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
+  slashHitbox: {fileID: 7736850955957959357}
+  animationOver: 0
+--- !u!114 &7736850955957959357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483223935698956039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c8292e105d9644abe68605b8366174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxComponent
+  hitboxCollider: {fileID: 1487945002665989433}
+  hitboxMask:
+    serializedVersion: 2
+    m_Bits: 0
+  blacklistedTargets: []
+  damageInfo:
+    damage: 0
+    horizontalKnockback: 0
+    verticalKnockback: 0
+    hitstunFrames: 0
+    damageSource: 0
+  inactiveColor: {r: 1, g: 0, b: 0, a: 1}
+  activeColor: {r: 0, g: 1, b: 0, a: 1}
+  hitboxDrawMode: 1
+  HitboxActive: 0
+--- !u!135 &1487945002665989433
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5483223935698956039}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 8}
 --- !u!1 &5496275448405256864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1183,6 +1282,7 @@ MonoBehaviour:
   _anarchyManager: {fileID: 5114671140808074405}
   _squashbucklerManager: {fileID: 1378361783068774386}
   playerStateMachine: {fileID: 4640383311062024331}
+  _cameraManager: {fileID: 8914475700068092981}
   _healthComponent: {fileID: 1292771791658868985}
   _animator: {fileID: 5721147126557053551}
   playerCollision:

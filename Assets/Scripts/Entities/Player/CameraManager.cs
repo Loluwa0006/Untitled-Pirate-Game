@@ -8,6 +8,7 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] InputManager inputManager;
 
+    public bool ControlPlayerRotation { get; set; } = true;
     Vector2 lookDirection;
 
     private void Start()
@@ -26,7 +27,7 @@ public class CameraManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);
+        if (ControlPlayerRotation) playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);
         lookTarget.localRotation = Quaternion.Euler(-lookDirection.y, lookDirection.x, 0);
     }
 }

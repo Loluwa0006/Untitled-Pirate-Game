@@ -6,12 +6,20 @@ using UnityEngine.Events;
 
 public class HitboxComponent : MonoBehaviour
 {
+    enum HitboxDrawMode
+    {
+        NoDraw,
+        Wireframe,
+        Solid
+    }
 
     public const int MAX_CONTACTS_PER_FRAME = 4;
     [SerializeField] Collider hitboxCollider;
     [SerializeField] LayerMask hitboxMask;
     [SerializeField] List<HealthComponent> blacklistedTargets;
     [SerializeField] DamageInfo damageInfo;
+
+    public DamageInfo DamageInfo { get { return damageInfo; } set { damageInfo = value; } }
 
     [Header("Editor")]
     [SerializeField] Color inactiveColor = Color.red;
@@ -27,12 +35,6 @@ public class HitboxComponent : MonoBehaviour
 
     public Action<List<HealthComponent>> targetsStruck;
     [HideInInspector] public bool HitboxActive = false;
-    enum HitboxDrawMode
-    {
-        NoDraw,
-        Wireframe,
-        Solid
-    }
     private void Start()
     {   
         if (hitboxCollider == null) hitboxCollider = GetComponent<Collider>();
