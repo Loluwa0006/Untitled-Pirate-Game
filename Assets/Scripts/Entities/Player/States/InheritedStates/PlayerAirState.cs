@@ -3,10 +3,8 @@ using UnityEngine;
 
 public class PlayerAirState : PlayerBaseState
 {
-    protected virtual void ApplyGravity(float gravity, bool clamp = true)
+    protected virtual void ApplyGravity(float gravity)
     {
-        if (clamp)
-        {
             if (Player.RigidBody.linearVelocity.y < Player.PlayerStats.MaxFallSpeed)
             {
                 var speedNormalized = Player.RigidBody.linearVelocity.normalized;
@@ -16,9 +14,7 @@ public class PlayerAirState : PlayerBaseState
                     gravity = 0.0f;
                 }
             }
-        }
         Player.RigidBody.AddForce(gravity * Vector3.down, ForceMode.Acceleration);
-
     }
 
     protected void AirborneMovement(Vector2 movementDirection, float acceleration)
@@ -70,7 +66,7 @@ public static class GrappleUtilities
         {
             
             raycastResult = hitInfo;
-            if (hitInfo.collider.gameObject.layer == LayerMask.GetMask("Worm"))
+            if (hitInfo.collider.gameObject.CompareTag("LockOn"))
             {
                 raycastResult.point = hitInfo.collider.bounds.center;
             }

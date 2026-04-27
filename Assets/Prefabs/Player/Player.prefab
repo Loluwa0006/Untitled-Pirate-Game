@@ -59,6 +59,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1522539469012922421}
   - component: {fileID: 7697902623462757242}
+  - component: {fileID: 5631768534695570731}
+  - component: {fileID: 7901163656482743022}
   m_Layer: 3
   m_Name: Slash
   m_TagString: Untagged
@@ -95,8 +97,57 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSlashState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
-  slashHitbox: {fileID: 0}
+  slashHitbox: {fileID: 7901163656482743022}
   animationOver: 0
+--- !u!135 &5631768534695570731
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688355114899007959}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4
+  m_Center: {x: 0, y: 0, z: 4}
+--- !u!114 &7901163656482743022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688355114899007959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51c8292e105d9644abe68605b8366174, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitboxComponent
+  hitboxCollider: {fileID: 5631768534695570731}
+  hitboxMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  blacklistedTargets:
+  - {fileID: 1292771791658868985}
+  damageInfo:
+    damage: 1
+    horizontalKnockback: 0
+    verticalKnockback: 0
+    hitstunFrames: 30
+    damageSource: 0
+  inactiveColor: {r: 1, g: 0, b: 0, a: 1}
+  activeColor: {r: 0, g: 1, b: 0, a: 1}
+  hitboxDrawMode: 1
+  HitboxActive: 0
 --- !u!1 &1169385189053670155
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,9 +314,9 @@ GameObject:
   - component: {fileID: 1583420984136553807}
   - component: {fileID: 6899298490414880762}
   - component: {fileID: 1292771791658868985}
-  m_Layer: 3
+  m_Layer: 11
   m_Name: HealthComponent
-  m_TagString: Hurtbox
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -300,7 +351,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -430,8 +481,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
   actionReference: {fileID: -3922688528445652463, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
-  isHoldable: 1
-  bufferDuration: 2
+  isHoldable: 0
+  bufferDuration: 8
 --- !u!1 &3360112544056742745
 GameObject:
   m_ObjectHideFlags: 0
@@ -985,7 +1036,7 @@ MonoBehaviour:
   yawnBuffer: {fileID: 7425947603331392362}
   movementAxis: {fileID: 3833152164696439778, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   lookAxis: {fileID: -8909627186484831652, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
-  sensitivity: {x: 2.25, y: 1}
+  sensitivity: {x: 1.25, y: 2}
 --- !u!1 &5834537706312432830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1212,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 0
-  m_Interpolate: 2
+  m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!114 &1366431042455759010
@@ -1299,7 +1350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54a990c9e1b135e40888653fbef9da3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
-  actionReference: {fileID: 0}
+  actionReference: {fileID: -8394138887830037779, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
   isHoldable: 0
   bufferDuration: 8
 --- !u!1 &6401039149585163686
@@ -1847,7 +1898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BufferHelper
   actionReference: {fileID: 3801048610446737908, guid: 48a71e602041d0148aa05db4a4d57bc6, type: 3}
-  isHoldable: 1
+  isHoldable: 0
   bufferDuration: 8
 --- !u!1 &8967542058144390881
 GameObject:

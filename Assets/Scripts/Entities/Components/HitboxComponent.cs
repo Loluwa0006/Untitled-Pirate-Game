@@ -1,6 +1,8 @@
 using NaughtyAttributes;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class HitboxComponent : MonoBehaviour
 {
@@ -23,6 +25,7 @@ public class HitboxComponent : MonoBehaviour
     bool isBoxCollider;
     bool wasActive;
 
+    public Action<List<HealthComponent>> targetsStruck;
     [HideInInspector] public bool HitboxActive = false;
     enum HitboxDrawMode
     {
@@ -42,7 +45,7 @@ public class HitboxComponent : MonoBehaviour
 
     public void OnDeactivate()
     {
-
+        targetsStruck.Invoke(previousTargets);
     }
 
     private void FixedUpdate()

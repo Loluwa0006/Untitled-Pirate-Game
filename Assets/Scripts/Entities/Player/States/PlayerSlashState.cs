@@ -20,6 +20,7 @@ public class PlayerSlashState : PlayerAirState
     {
         base.InitializeState(stateMachine, owner);
         if (slashHitbox == null) slashHitbox = GetComponent<HitboxComponent>();
+        slashHitbox.targetsStruck += OnHitboxDeactivation;
     }
     public override void Enter(Dictionary<string, object> message = null)
     {
@@ -43,6 +44,14 @@ public class PlayerSlashState : PlayerAirState
         {
             StateMachine.TransitionTo<PlayerShadowstepState>();
             return;
+        }
+    }
+
+    public void OnHitboxDeactivation(List<HealthComponent> victims)
+    {
+        for (int i = 0; i < victims.Count; i++)
+        {
+            Player.AnarchyManager.GenerateAnarchyUnscaled(UnscaledGenerationMethod.Slash);
         }
     }
 
