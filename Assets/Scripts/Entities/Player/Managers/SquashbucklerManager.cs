@@ -30,7 +30,7 @@ public class SquashbucklerManager : MonoBehaviour
 
     void OnAnarchyGained(int charges)
     {
-        squashbucklerCharge += charges;
+        SquashbucklerCharge += charges;
         UpdateSquashbucklerDisplays();
     }
 

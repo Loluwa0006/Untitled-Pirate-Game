@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
     public string GetAnimationParameterFormatted(AnimationParameter parameter)
     {
         var parameterString = parameter.ToString();
-        return parameterString.Substring(parameterString.IndexOf("_") + 1);
+        parameterString = parameterString.Substring(parameterString.IndexOf("_") + 1);
+        return parameterString;
     }
 }

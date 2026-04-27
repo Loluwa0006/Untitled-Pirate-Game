@@ -6,7 +6,7 @@ public class PlayerSlashState : PlayerAirState
 {
     [SerializeField] HitboxComponent slashHitbox;
 
-    [HideInInspector] public bool animationOver = false;
+    [HideInInspector] public bool slashAnimationOver = false;
 
     public override Type[] statesToAttemptToTransitionTo
     {
@@ -16,20 +16,17 @@ public class PlayerSlashState : PlayerAirState
         };
     }
 
-    float baseDamage;
-
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
         base.InitializeState(stateMachine, owner);
         if (slashHitbox == null) slashHitbox = GetComponent<HitboxComponent>();
         slashHitbox.targetsStruck += OnHitboxDeactivation;
-        baseDamage = slashHitbox.DamageInfo.damage;
     }
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
-        Player.Animator.SetTrigger("IsAttacking");
-        animationOver = false;
+        Player.Animator.SetTrigger(Player.GetAnimationParameterFormatted(PlayerController.AnimationParameter.Trigger_IsAttacking).ToString());
+        slashAnimationOver = false;
     }
 
     public override void PhysicsProcess()
@@ -38,7 +35,7 @@ public class PlayerSlashState : PlayerAirState
         AirborneMovement(Player.PlayerInput.GetMovementDirection(), Player.PlayerStats.AirAcceleration);
         //use jump gravity to make attacks feel more floaty
         ApplyGravity(Player.PlayerStats.GroundedJumpInfo.JumpGravity);
-        if (animationOver)
+        if (slashAnimationOver)
         {
             StateMachine.TransitionTo<PlayerFallState>();
             return;

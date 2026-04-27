@@ -80,7 +80,7 @@ AnimationClip:
         outWeight: 0
       - serializedVersion: 3
         time: 0.6666667
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -89,7 +89,7 @@ AnimationClip:
         outWeight: 0
       - serializedVersion: 3
         time: 0.68333334
-        value: 0
+        value: 1
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -99,7 +99,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: animationOver
+    attribute: slashAnimationOver
     path: StateMachine/Slash
     classID: 114
     script: {fileID: 11500000, guid: fb5ed3b43746cd946890e63ed08d5743, type: 3}
@@ -123,7 +123,7 @@ AnimationClip:
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
       path: 1171275334
-      attribute: 2247391569
+      attribute: 2759520450
       script: {fileID: 11500000, guid: fb5ed3b43746cd946890e63ed08d5743, type: 3}
       typeID: 114
       customType: 0
@@ -215,7 +215,7 @@ AnimationClip:
         outWeight: 0
       - serializedVersion: 3
         time: 0.6666667
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -224,7 +224,7 @@ AnimationClip:
         outWeight: 0
       - serializedVersion: 3
         time: 0.68333334
-        value: 0
+        value: 1
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -234,7 +234,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: animationOver
+    attribute: slashAnimationOver
     path: StateMachine/Slash
     classID: 114
     script: {fileID: 11500000, guid: fb5ed3b43746cd946890e63ed08d5743, type: 3}
