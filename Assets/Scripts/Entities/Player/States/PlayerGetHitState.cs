@@ -36,7 +36,7 @@ public class PlayerGetHitState : PlayerAirState
     }
     void ApplyInvincibility()
     {
-        InvulnerabilityEffect invulnerabilityEffect = new(StatusEffectID.PlayerGethitInvulnerability, DamageSource.EnemyWall, InvulnerabilityEffect.INFINITE_DURATION_VALUE);
+        InvulnerabilityEffect invulnerabilityEffect = new(StatusEffectID.PlayerGethitInvulnerability, DamageSource.AnySource, InvulnerabilityEffect.INFINITE_DURATION_VALUE);
         Player.HealthComponent.AddStatusEffect(invulnerabilityEffect);
     }
     void ApplyAttackKnockback()
