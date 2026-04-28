@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerSwingState : PlayerAirState
 {
+    [SerializeField] float cameraTransitionTime = 0.35f;
 
     public override Type[] statesToAttemptToTransitionTo
     {
@@ -18,11 +19,13 @@ public class PlayerSwingState : PlayerAirState
         };
     }
 
+
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
         Player.RodManager.StartSwing();
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Swing].Consume();
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.WideFollowCamera, cameraTransitionTime);
     }
 
     public override void Process()
@@ -70,6 +73,7 @@ public class PlayerSwingState : PlayerAirState
         base.Exit();
         Player.RodManager.RetractRod();
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Swing);
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.DefaultCamera, cameraTransitionTime);
     }
 
     public override bool StateAvailable()

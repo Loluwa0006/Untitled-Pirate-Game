@@ -1,6 +1,5 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CameraManager : MonoBehaviour
 {
@@ -17,8 +16,14 @@ public class CameraManager : MonoBehaviour
 
 
     public CinemachineCamera CloseFollowCamera { get => closeFollowCamera; }
-    CinemachineCamera activeCamera;
 
+
+    [SerializeField] CinemachineCamera wideFollowCamera;
+
+    public CinemachineCamera WideFollowCamera { get => wideFollowCamera; }
+
+
+    CinemachineCamera activeCamera;
     float cameraTransitionTime = 0.0f;
     float elaspedTransitionTime = 0.0f;
 
@@ -74,7 +79,6 @@ public class CameraManager : MonoBehaviour
 
     public void TransitionToCamera(CinemachineCamera camera, float duration)
     {
-        if (activeCamera == camera) return;
         cameraTransitionTime = duration;
         elaspedTransitionTime = 0.0f;
         cameraToTransitionTo = camera;

@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
     public bool PlayerGrounded { get; set; }
 
     public UnityEvent<Collision> playerCollision = new();
+    public UnityEvent<Collider> playerTriggerEnter = new();
     void Update()
     {
         playerStateMachine.Process();
@@ -68,6 +69,10 @@ public class PlayerController : MonoBehaviour
         playerCollision.Invoke(collision);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        playerTriggerEnter.Invoke(other);
+    }
     public void OnPlayerDamaged(HitboxContactInfo info)
     {
         if (info.DamageInfo.damage <= 0) return;
