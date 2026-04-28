@@ -18,7 +18,7 @@ MonoBehaviour:
   groundedJumpInfo:
     jumpHeight: 10
     jumpTimeToPeak: 0.9
-    jumpTimeToDecent: 0.7
+    jumpTimeToDecent: 0.5
   airAcceleration: 3.3333333
   angleToBeConsideredTurning: 5
   maxFallSpeed: 130
@@ -53,7 +53,7 @@ MonoBehaviour:
     jumpTimeToDecent: 1
   wormThrowRange: 120
   wormThrowDuration: 19
-  maxRodRange: 180
+  maxRodRange: 320
   swingAcceleration: 6.6666665
   swingJumpInfo:
     jumpHeight: 5
