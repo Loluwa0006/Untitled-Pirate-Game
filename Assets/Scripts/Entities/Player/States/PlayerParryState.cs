@@ -22,11 +22,15 @@ public class PlayerParryState : PlayerAirState
     {
         base.Enter(message);
         startingSpeed = Player.RigidBody.linearVelocity.magnitude;
-        Player.playerCollision.AddListener(OnPlayerCollision);
+        Player.entityCollision.AddListener(OnPlayerCollision);
+//        Player.entityTriggerEntry.AddListener(OnPlayerTriggerEnter);
         durationTracker = 0;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].Consume();
+
+        InvulnerabilityEffect invulnerabilityEffect = new(StatusEffectID.ParryProjectileInvulnerability, DamageSource.EnemySmallProjectile, InvulnerabilityEffect.INFINITE_DURATION_VALUE);
+        Player.HealthComponent.AddStatusEffect(invulnerabilityEffect);
     }
-    
+
     public override void PhysicsProcess()
     {
         float gravity;
@@ -58,6 +62,13 @@ public class PlayerParryState : PlayerAirState
     {
         PerformParry(Player.PlayerInput.GetMovementDirection(), collision.GetContact(0).normal);
     }
+    //void OnPlayerTriggerEnter(Collider collider)
+    //{
+    //    if ((parryMask & (1 << collider.gameObject.layer)) != 0)
+    //    {
+    //        PerformParry(Player.PlayerInput.GetMovementDirection(), Vector3.zero);
+    //    }
+    //}
     void PerformParry(Vector3 movementDirection, Vector3 normal)
     {
         float bounceVelocity = startingSpeed + (startingSpeed * Player.PlayerStats.ParrySpeedIncrease);
@@ -75,7 +86,8 @@ public class PlayerParryState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
-        Player.playerCollision.RemoveListener(OnPlayerCollision);
+        Player.entityCollision.RemoveListener(OnPlayerCollision);
+        Player.HealthComponent.RemoveStatusEffect(StatusEffectID.ParryProjectileInvulnerability);
     }
     public override bool StateAvailable()
     {

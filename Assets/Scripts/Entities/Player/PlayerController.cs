@@ -1,18 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseEntity
 {
-
     public enum AnimationParameter
     {
         Trigger_IsAttacking,
         Bool_InSquashbuckler
     }
 
-    [SerializeField] Rigidbody _rb;
     [SerializeField] PlayerStats _playerStats;
-    [SerializeField] Collider _collider;
 
     [Header("Managers")]
     [SerializeField] InputManager _playerInput;
@@ -20,59 +16,36 @@ public class PlayerController : MonoBehaviour
     [SerializeField] RodManager _rodManager;
     [SerializeField] AnarchyManager _anarchyManager;
     [SerializeField] SquashbucklerManager _squashbucklerManager;
-    [SerializeField] EntityStateMachine playerStateMachine;
     [SerializeField] CameraManager _cameraManager;
 
     [Header("Components")]
-    [SerializeField] PlayerHealthComponent _healthComponent;
     [SerializeField] Animator _animator;
 
 
-    public InputManager PlayerInput { get => _playerInput; private set => _playerInput = value; }
-    public Rigidbody RigidBody { get => _rb; private set => _rb = value; }
+    public InputManager PlayerInput { get => _playerInput; }
+    public PlayerStats PlayerStats { get => _playerStats;}
+    public WormManager WormManager { get => _wormManager; }
 
+    public RodManager RodManager { get => _rodManager; }
 
-    public PlayerStats PlayerStats { get => _playerStats; private set => _playerStats = value; }
-
-    public Collider Collider { get => _collider; private set => _collider = value; }
-
-    public WormManager WormManager { get => _wormManager; private set => _wormManager = value; }
-
-    public RodManager RodManager { get => _rodManager; private set => _rodManager = value; }
-
-    public AnarchyManager AnarchyManager { get => _anarchyManager; private set => _anarchyManager = value; }
+    public AnarchyManager AnarchyManager { get => _anarchyManager; }
 
     public SquashbucklerManager SquashbucklerManager { get => _squashbucklerManager; }
-
-    public HealthComponent HealthComponent { get => _healthComponent; }
-
     public Animator Animator { get => _animator; }
 
     public CameraManager CameraManager { get => _cameraManager; }
 
     public bool PlayerGrounded { get; set; }
-
-    public UnityEvent<Collision> playerCollision = new();
-    public UnityEvent<Collider> playerTriggerEnter = new();
     void Update()
     {
-        playerStateMachine.Process();
+        stateMachine.Process();
     }
 
     private void FixedUpdate()
     {
-        playerStateMachine.PhysicsProcess();
+        stateMachine.PhysicsProcess();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        playerCollision.Invoke(collision);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        playerTriggerEnter.Invoke(other);
-    }
     public void OnPlayerDamaged(HitboxContactInfo info)
     {
         if (info.DamageInfo.damage <= 0) return;
@@ -80,7 +53,7 @@ public class PlayerController : MonoBehaviour
         {
             [PlayerGetHitState.PlayerGetHitMessage.ContactInfo.ToString()] = info
         };
-        playerStateMachine.TransitionTo<PlayerGetHitState>(getHitStateMessage);
+        stateMachine.TransitionTo<PlayerGetHitState>(getHitStateMessage);
     }
 
     public string GetAnimationParameterFormatted(AnimationParameter parameter)
