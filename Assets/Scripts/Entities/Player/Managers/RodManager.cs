@@ -6,6 +6,8 @@ public class RodManager : MonoBehaviour
     [SerializeField] LayerMask grappleMask;
     [SerializeField] PlayerController player;
 
+    [SerializeField] Transform grapplePoint;
+
     bool grappleActive = true;
 
     SpringJoint grappleJoint;
@@ -85,6 +87,7 @@ public class RodManager : MonoBehaviour
         {
             rodLine.SetPosition(0, player.transform.position);
             rodLine.SetPosition(1, grappleInfo.GrapplePosition);
+            grapplePoint.position = grappleInfo.GrapplePosition;
         }
     }
 }

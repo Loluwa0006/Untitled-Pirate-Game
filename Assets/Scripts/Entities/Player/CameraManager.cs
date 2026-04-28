@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,12 +9,33 @@ public class CameraManager : MonoBehaviour
     [SerializeField] Transform playerTransform;
     [SerializeField] InputManager inputManager;
 
+    [Header("Cameras")]
+    [SerializeField] CinemachineMixingCamera mixingCamera;
+    [SerializeField] CinemachineCamera defaultCamera;
+    public CinemachineCamera DefaultCamera { get => defaultCamera; }
+    [SerializeField] CinemachineCamera closeFollowCamera;
+
+
+    public CinemachineCamera CloseFollowCamera { get => closeFollowCamera; }
+    CinemachineCamera activeCamera;
+
+    float cameraTransitionTime = 0.0f;
+    float elaspedTransitionTime = 0.0f;
+
     public bool ControlPlayerRotation { get; set; } = true;
     Vector2 lookDirection;
+
+    CinemachineCamera cameraToTransitionTo;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        for (int i = 0; i < mixingCamera.ChildCameras.Count; i++)
+        {
+            mixingCamera.SetWeight(i, 0.0f);
+        }
+        mixingCamera.SetWeight(defaultCamera, 1.0f);
+        activeCamera = defaultCamera;
     }
     private void Update()
     {
@@ -22,7 +44,25 @@ public class CameraManager : MonoBehaviour
         lookDirection += new Vector2(lookInput.x * inputManager.Sensitivity.x, lookInput.y * inputManager.Sensitivity.y);
 
         lookDirection.y = Mathf.Clamp(lookDirection.y, -90, 90);
-        
+
+        HandleCameraTransition();
+    }
+
+    void HandleCameraTransition()
+    {
+        if (activeCamera == cameraToTransitionTo || cameraToTransitionTo == null) return;
+
+        elaspedTransitionTime += Time.deltaTime;
+
+        var transitionProgressNormalized = elaspedTransitionTime / cameraTransitionTime;
+
+        mixingCamera.SetWeight(activeCamera, 1 - transitionProgressNormalized);
+        mixingCamera.SetWeight(cameraToTransitionTo, transitionProgressNormalized);
+
+        if (transitionProgressNormalized > 0.99f)
+        {
+            activeCamera = cameraToTransitionTo;
+        }
     }
 
     private void FixedUpdate()
@@ -30,4 +70,15 @@ public class CameraManager : MonoBehaviour
         if (ControlPlayerRotation) playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);
         lookTarget.localRotation = Quaternion.Euler(-lookDirection.y, lookDirection.x, 0);
     }
+
+
+    public void TransitionToCamera(CinemachineCamera camera, float duration)
+    {
+        if (activeCamera == camera) return;
+        cameraTransitionTime = duration;
+        elaspedTransitionTime = 0.0f;
+        cameraToTransitionTo = camera;
+    }
+
+
 }

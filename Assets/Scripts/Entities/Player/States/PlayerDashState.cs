@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class PlayerDashState : PlayerAirState
 {
+    [SerializeField] float cameraTransitionTime = 0.1f;
     public override Type[] statesToAttemptToTransitionTo
     {
         get => new Type[]
@@ -19,6 +21,7 @@ public class PlayerDashState : PlayerAirState
         base.Enter(message);
         Player.RodManager.StartDash();
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Dash].Consume();
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.CloseFollowCamera, cameraTransitionTime);
     }
 
     public override void PhysicsProcess()
@@ -82,6 +85,7 @@ public class PlayerDashState : PlayerAirState
         base.Exit();
         Player.RodManager.RetractRod();
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Dash);
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.DefaultCamera, cameraTransitionTime);
     }
     public override bool StateAvailable()
     {

@@ -8,7 +8,7 @@ public class PlayerRailParryState : PlayerBaseState
     [SerializeField] LayerMask railLayer;
     [SerializeField] SphereCollider railCollider;
     [SerializeField] SplineAnimate splineAnimator;
-
+    [SerializeField] float cameraTransitionTime = 0.35f;
     SplineContainer splineToFollow;
 
     float splineDirection;
@@ -48,6 +48,8 @@ public class PlayerRailParryState : PlayerBaseState
         Player.PlayerGrounded = true;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].Consume();
         Player.RigidBody.isKinematic = false;
+
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.CloseFollowCamera, cameraTransitionTime);
     }
 
     void InitializeSplineMovement()
@@ -102,6 +104,8 @@ public class PlayerRailParryState : PlayerBaseState
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.RailParry);
         Player.CameraManager.ControlPlayerRotation = true;
         viewCamera.transform.rotation = Quaternion.LookRotation(-tangent, upVector);
+        Player.CameraManager.TransitionToCamera(Player.CameraManager.DefaultCamera, cameraTransitionTime);
+
     }
     public override bool StateAvailable()
     {
