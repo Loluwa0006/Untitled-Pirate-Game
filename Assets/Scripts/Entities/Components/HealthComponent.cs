@@ -126,5 +126,6 @@ public class InvulnerabilityEffect : StatusEffect
 
 public enum StatusEffectID
 {
-    PlayerGethitInvulnerability
+    PlayerGethitInvulnerability,
+    ParryProjectileInvulnerability,
 }

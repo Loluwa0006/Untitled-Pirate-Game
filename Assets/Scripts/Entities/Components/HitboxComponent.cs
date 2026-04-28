@@ -153,6 +153,7 @@ public enum DamageSource : short
     PlayerSlash,
     PlayerDragonslash,
     EnemyWall,
+    EnemySmallProjectile,
     AnySource
 }
 
