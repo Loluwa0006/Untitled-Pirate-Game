@@ -30,6 +30,7 @@ public class PlayerDragonslashState : PlayerBaseState
         initialSpeed = new Vector2(Player.RigidBody.linearVelocity.x, Player.RigidBody.linearVelocity.z).magnitude;
         dragonslashAnimationOver = false;
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Slash].Consume();
+        Player.SquashbucklerManager.SquashbucklerCharge = 0;
     }
 
     public override void PhysicsProcess()
