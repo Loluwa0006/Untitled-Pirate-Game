@@ -437,6 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSwingState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
+  cameraTransitionTime: 0.35
 --- !u!1 &2904388703539900743
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,7 +802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDashState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
-  cameraTransitionTime: 0.5
+  cameraTransitionTime: 0.35
 --- !u!1 &5355215119351398126
 GameObject:
   m_ObjectHideFlags: 0
@@ -1279,20 +1280,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _rb: {fileID: 4316075470623054589}
-  _playerStats: {fileID: 11400000, guid: 37afd5eea4cfb2a48aaf3c3462bff32a, type: 2}
   _collider: {fileID: 8061839667610271217}
+  stateMachine: {fileID: 4640383311062024331}
+  _healthComponent: {fileID: 1292771791658868985}
+  entityCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  entityTriggerEntry:
+    m_PersistentCalls:
+      m_Calls: []
+  _playerStats: {fileID: 11400000, guid: 37afd5eea4cfb2a48aaf3c3462bff32a, type: 2}
   _playerInput: {fileID: 7156764095087575519}
   _wormManager: {fileID: 6021299679631168183}
   _rodManager: {fileID: 8445331606179173087}
   _anarchyManager: {fileID: 5114671140808074405}
   _squashbucklerManager: {fileID: 1378361783068774386}
-  playerStateMachine: {fileID: 4640383311062024331}
   _cameraManager: {fileID: 8914475700068092981}
-  _healthComponent: {fileID: 1292771791658868985}
   _animator: {fileID: 5721147126557053551}
-  playerCollision:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!54 &4316075470623054589
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1992,6 +1996,7 @@ MonoBehaviour:
   mixingCamera: {fileID: 0}
   defaultCamera: {fileID: 0}
   closeFollowCamera: {fileID: 0}
+  wideFollowCamera: {fileID: 0}
 --- !u!1 &8955696398517843960
 GameObject:
   m_ObjectHideFlags: 0
