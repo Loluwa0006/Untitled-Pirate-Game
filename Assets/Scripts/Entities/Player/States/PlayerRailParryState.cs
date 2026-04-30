@@ -74,7 +74,7 @@ public class PlayerRailParryState : PlayerBaseState
         float timeToAdd = (delta * splineDirection) * Time.fixedDeltaTime;
         splineAnimator.NormalizedTime = Mathf.Clamp01(splineAnimator.NormalizedTime + timeToAdd);
         SplineUtility.Evaluate(splineToFollow.Spline, splineAnimator.NormalizedTime, out float3 splinePoint, out float3 tangent, out float3 upVector);
-        Player.RigidBody.Move(splineToFollow.transform.TransformPoint(splinePoint), Quaternion.LookRotation(tangent));
+        Player.RigidBody.Move(splineToFollow.transform.TransformPoint(splinePoint), Quaternion.LookRotation(splineToFollow.transform.TransformDirection(tangent), upVector));
         viewCamera.transform.rotation = Quaternion.Euler(tangent.x, -tangent.y, 0);
 
         if (splineAnimator.NormalizedTime > 0.999f || splineAnimator.NormalizedTime < 0.001f || !Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Parry].ActionPressed)
