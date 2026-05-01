@@ -1,6 +1,4 @@
-using JetBrains.Annotations;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 public class TestEnemy : BaseEnemy
 {
@@ -44,27 +42,28 @@ public class TestEnemy : BaseEnemy
             {
                 var newProjectile = Instantiate(nextInfo.fireInformation.projectilePrefab);
                 newProjectile.InitializeProjectile(this);
+                newProjectile.name = name + nextInfo.ID.ToString() + i;
                 newProjectile.DestroyProjectile();
                 projectilePool.Enqueue(newProjectile);
             }
             nextInfo.projectilePool = projectilePool;
             testEnemyProjectileInfos[i] = nextInfo;
             projectileRegistry[nextInfo.ID] = nextInfo;
-            Debug.Log("Setting up projectile " + nextInfo.ID);
         }
     }
-    public void PrepareToFire(ProjectileInfoID projectileType)
+    public void PrepareToFire()
     {
         SetFireType();
         fireState = FireState.Preparing;
-        queuedProjectileFire = projectileType;
-        delayRemaining = projectileRegistry[projectileType].fireInformation.delayBeforeFiring;
+        delayRemaining = projectileRegistry[queuedProjectileFire].fireInformation.delayBeforeFiring;
     }
 
     void FireProjectile()
     {
         fireState = FireState.Reloading;
-        var nextProjectile = projectileRegistry[queuedProjectileFire].projectilePool.Dequeue();
+        var queueInfo = projectileRegistry[queuedProjectileFire];
+        var nextProjectile = queueInfo.projectilePool.Dequeue();
+        nextProjectile.RigidBody.MovePosition(queueInfo.fireInformation.spawnPoint.position);
         nextProjectile.EnableProjectile(player.transform);
         projectileRegistry[queuedProjectileFire].projectilePool.Enqueue(nextProjectile);
         cooldownRemaining = projectileRegistry[queuedProjectileFire].fireInformation.fireCooldown;
@@ -75,33 +74,34 @@ public class TestEnemy : BaseEnemy
         var distance = Vector3.Distance(player.RigidBody.position, RigidBody.position);
         if (distance < distanceToUseSniperFireAt)
         {
+            Debug.Log("Preparing rapid fire");
             queuedProjectileFire = ProjectileInfoID.RapidFire;
         }
         else
         {
+            Debug.Log("Preparing sniper shot");
             queuedProjectileFire = ProjectileInfoID.SniperShot;
         }
     }
     private void FixedUpdate()
     {
-       
-        if (fireState == FireState.Preparing)
+        switch (fireState)
         {
-            delayRemaining = (int)Mathf.MoveTowards(delayRemaining, 0, 1);
-            if (delayRemaining < 0.001f)
-            {
-                FireProjectile();
-            }
+            case FireState.Reloading:
+                cooldownRemaining = (int)Mathf.MoveTowards(cooldownRemaining, 0, 1);
+                if (cooldownRemaining < 0.001f)
+                {
+                    PrepareToFire();
+                }
+                break;
+            case FireState.Preparing:
+                delayRemaining = (int)Mathf.MoveTowards(delayRemaining, 0, 1);
+                if (delayRemaining < 0.001f)
+                {
+                    FireProjectile();
+                }
+                break;
         }
-        else if (fireState == FireState.Reloading)
-        {
-            cooldownRemaining = (int)Mathf.MoveTowards(cooldownRemaining, 0, 1);
-            if (cooldownRemaining < 0.001f)
-            {
-                PrepareToFire(queuedProjectileFire);
-            }
-        }
-       
     }
 
 

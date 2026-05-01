@@ -17,4 +17,14 @@ public class BaseProjectileModifier : MonoBehaviour
     {
 
     }
+
+    public virtual void OnProjectileFired()
+    {
+
+    }
+
+    public virtual void OnProjectileDestroyed()
+    {
+
+    }
 }

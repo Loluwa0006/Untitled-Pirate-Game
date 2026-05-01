@@ -5,6 +5,7 @@ public class CameraManager : MonoBehaviour
 {
 
     [SerializeField] Transform lookTarget;
+    public Transform LookTarget { get => lookTarget; }
     [SerializeField] Transform playerTransform;
     [SerializeField] InputManager inputManager;
 

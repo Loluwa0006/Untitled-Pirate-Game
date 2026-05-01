@@ -26,12 +26,17 @@ public class ProjectileContactModifier : BaseProjectileModifier
         var overlap = Physics.OverlapSphereNonAlloc(hitboxCollider.bounds.center, hitboxCollider.bounds.extents.z, hitboxResults, projectileMask, QueryTriggerInteraction.Collide);
         if (overlap > 0)
         {
+            bool validContact = true;
             for (int i = 0; i < overlap; i++)
             {
                 var currentCollider = hitboxResults[i];
                 if (currentCollider.TryGetComponent(out HealthComponent healthComponent))
                 {
-                    if (blacklistedTargets.Contains(healthComponent)) continue;
+                    if (blacklistedTargets.Contains(healthComponent)) 
+                    {
+                        validContact = false;
+                        continue;
+                    }
                     HitboxContactInfo contactInfo = new()
                     {
                         DamageInfo = hitboxInfo,
@@ -41,7 +46,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
                     healthComponent.Damage(contactInfo);
                 }
             }
-            Projectile.DestroyProjectile();
+            if (validContact) Projectile.DestroyProjectile();
         }
     }
 }

@@ -23,7 +23,7 @@ public class PlayerBaseState : BaseState
     {
         base.InitializeState(stateMachine, owner);
         Player = owner.GetComponent<PlayerController>();
-        groundMask = LayerMask.GetMask("Ground");
+        groundMask = LayerMask.GetMask("Ground", "Swingable");
         if (viewCamera == null ) viewCamera = Camera.main;
     }
 

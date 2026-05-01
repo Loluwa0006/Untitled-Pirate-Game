@@ -56,6 +56,10 @@ public class BaseProjectile : MonoBehaviour
         ProjectileFired?.Invoke();
         projectileCollider.enabled = true;
         Active = true;
+        for (int i = 0; i < projectileModifiers.Length; i++)
+        {
+            projectileModifiers[i].OnProjectileFired();
+        }
     }
     public void DestroyProjectile()
     {
@@ -63,6 +67,10 @@ public class BaseProjectile : MonoBehaviour
         ProjectileDestroyed?.Invoke();
         projectileCollider.enabled = false;
         Active = false;
+        for (int i = 0; i < projectileModifiers.Length; i++)
+        {
+            projectileModifiers[i].OnProjectileDestroyed();
+        }
     }
 
     public T GetModifier<T>() where T: BaseProjectileModifier

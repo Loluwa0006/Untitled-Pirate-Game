@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d94fc2858869ca49a4f7d501e9d68e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileVelocityModifier
-  moveAcceleration: 4
-  moveSpeed: 40
+  moveAcceleration: 45
+  moveSpeed: 250
 --- !u!114 &6078590934086159548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,8 +168,7 @@ MonoBehaviour:
     verticalKnockback: 100
     hitstunFrames: 40
     damageSource: 3
-  blacklistedTargets:
-  - {fileID: 0}
+  blacklistedTargets: []
   hitboxCollider: {fileID: 9175763313394684376}
 --- !u!1 &6460488579097432311
 GameObject:
