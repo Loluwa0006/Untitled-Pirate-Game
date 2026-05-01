@@ -12,7 +12,7 @@ public class BaseEntity : MonoBehaviour
 
     [SerializeField] protected EntityStateMachine stateMachine;
 
-    [SerializeField] PlayerHealthComponent _healthComponent;
+    [SerializeField] HealthComponent _healthComponent;
 
     public HealthComponent HealthComponent { get => _healthComponent; }
 
