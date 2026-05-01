@@ -5,9 +5,15 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
     [SerializeField] float moveAcceleration = 8.0f;
     [SerializeField] float moveSpeed = 120.0f;
 
+    Vector3 directionTowardsTarget;
+
+    public override void OnProjectileFired()
+    {
+        directionTowardsTarget = (Projectile.Target.position - Projectile.RigidBody.position).normalized;
+    }
+
     public override void UpdateModifier()
     {
-        var directionTowardsTarget = (Projectile.Target.position - Projectile.RigidBody.position).normalized;
         var forceToAdd = directionTowardsTarget * moveAcceleration;
         var newVelocity = forceToAdd + Projectile.RigidBody.linearVelocity;
         if ( newVelocity.magnitude >= moveSpeed)
