@@ -21,8 +21,9 @@ public class BaseProjectile : MonoBehaviour
     public bool Active { set; get; } = false;
 
     public BaseEntity ProjectileOwner { set; get; }
-    private void Start()
+    public void InitializeProjectile(BaseEntity entity)
     {
+        ProjectileOwner = entity;
         projectileModifiers = modifierHolder.GetComponents<BaseProjectileModifier>();
         for (int i = 0; i < projectileModifiers.Length; i++)
         {
@@ -52,14 +53,14 @@ public class BaseProjectile : MonoBehaviour
     {
         Target = target;
         meshObjects.SetActive(true);
-        ProjectileFired.Invoke();
+        ProjectileFired?.Invoke();
         projectileCollider.enabled = true;
         Active = true;
     }
     public void DestroyProjectile()
     {
         meshObjects.SetActive(false);
-        ProjectileDestroyed.Invoke();
+        ProjectileDestroyed?.Invoke();
         projectileCollider.enabled = false;
         Active = false;
     }
@@ -83,7 +84,7 @@ public struct ProjectileFireInformation
     public Transform spawnPoint;
     public int delayBeforeFiring;
     public BaseProjectile projectilePrefab;
-    public float fireCooldown;
+    public int fireCooldown;
     public int poolSize;
 }
 

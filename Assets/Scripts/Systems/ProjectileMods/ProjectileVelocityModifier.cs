@@ -7,7 +7,7 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
 
     public override void UpdateModifier()
     {
-        var directionTowardsTarget = (Projectile.RigidBody.position - Projectile.Target.position).normalized;
+        var directionTowardsTarget = (Projectile.Target.position - Projectile.RigidBody.position).normalized;
         var forceToAdd = directionTowardsTarget * moveAcceleration;
         var newVelocity = forceToAdd + Projectile.RigidBody.linearVelocity;
         if ( newVelocity.magnitude >= moveSpeed)
@@ -20,6 +20,6 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
             }
         }
 
-        Projectile.RigidBody.AddForce(forceToAdd);
+        Projectile.RigidBody.AddForce(forceToAdd, ForceMode.VelocityChange);
     }
 }

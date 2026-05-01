@@ -69,6 +69,10 @@ public class PlayerGetHitState : PlayerAirState
         }
     }
 
+    public override void Process()
+    {
+        //no auto transitions
+    }
     public override bool StateAvailable()
     {
         return false; //special exception, only player controller handles transitions to this state

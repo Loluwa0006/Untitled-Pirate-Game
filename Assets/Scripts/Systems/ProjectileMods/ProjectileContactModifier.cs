@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 public class ProjectileContactModifier : BaseProjectileModifier
@@ -8,6 +7,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
     [SerializeField] LayerMask projectileMask;
     [SerializeField] DamageInfo hitboxInfo;
     [SerializeField] List<HealthComponent> blacklistedTargets = new();
+    [SerializeField] Collider hitboxCollider;
 
     Collider[] hitboxResults = new Collider[MAX_CONTACTS_PER_FRAME];
 
@@ -15,6 +15,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
     {
         base.InitializeModifier(owner);
         blacklistedTargets.Add(Projectile.ProjectileOwner.HealthComponent);
+        if (hitboxCollider == null) hitboxCollider = GetComponent<Collider>();  
     }
     public override void UpdateModifier()
     {
@@ -22,7 +23,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
         {
             hitboxResults[i] = null;
         }
-        var overlap = Physics.OverlapSphereNonAlloc(Projectile.RigidBody.position, Projectile.ProjectileCollider.bounds.extents.z, hitboxResults, projectileMask, QueryTriggerInteraction.Collide);
+        var overlap = Physics.OverlapSphereNonAlloc(hitboxCollider.bounds.center, hitboxCollider.bounds.extents.z, hitboxResults, projectileMask, QueryTriggerInteraction.Collide);
         if (overlap > 0)
         {
             for (int i = 0; i < overlap; i++)
@@ -40,6 +41,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
                     healthComponent.Damage(contactInfo);
                 }
             }
+            Projectile.DestroyProjectile();
         }
     }
 }
