@@ -4,12 +4,15 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
 {
     [SerializeField] float moveAcceleration = 8.0f;
     [SerializeField] float moveSpeed = 120.0f;
+    [SerializeField] Quaternion rotationOffset;
 
     Vector3 directionTowardsTarget;
 
     public override void OnProjectileFired()
     {
         directionTowardsTarget = (Projectile.Target.position - Projectile.RigidBody.position).normalized;
+        Quaternion lookTowardsTarget = Quaternion.LookRotation(directionTowardsTarget);
+        Projectile.RigidBody.MoveRotation(lookTowardsTarget * rotationOffset);
     }
 
     public override void UpdateModifier()
@@ -27,5 +30,6 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
         }
 
         Projectile.RigidBody.AddForce(forceToAdd, ForceMode.VelocityChange);
+        
     }
 }
