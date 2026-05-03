@@ -27,6 +27,7 @@ public class PlayerSlashState : PlayerAirState
         base.Enter(message);
         Player.Animator.SetTrigger(Player.GetAnimationParameterFormatted(PlayerController.AnimationParameter.Trigger_IsAttacking).ToString());
         slashAnimationOver = false;
+        Player.RigidBody.MoveRotation(Quaternion.LookRotation(viewCamera.transform.forward));
     }
 
     public override void PhysicsProcess()
@@ -73,6 +74,7 @@ public class PlayerSlashState : PlayerAirState
     public override void Exit()
     {
         base.Exit();
+        Player.CameraManager.ControlPlayerRotation = true;
         slashHitbox.OnDeactivate();
     }
 

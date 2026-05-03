@@ -6,7 +6,7 @@ public class CameraManager : MonoBehaviour
 
     [SerializeField] Transform lookTarget;
     public Transform LookTarget { get => lookTarget; }
-    [SerializeField] Transform playerTransform;
+    [SerializeField] PlayerController player;
     [SerializeField] InputManager inputManager;
 
     [Header("Cameras")]
@@ -50,7 +50,6 @@ public class CameraManager : MonoBehaviour
         lookDirection += new Vector2(lookInput.x * inputManager.Sensitivity.x, lookInput.y * inputManager.Sensitivity.y);
 
         lookDirection.y = Mathf.Clamp(lookDirection.y, -90, 90);
-
         HandleCameraTransition();
     }
 
@@ -73,7 +72,10 @@ public class CameraManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (ControlPlayerRotation) playerTransform.localRotation = Quaternion.Euler(0, lookDirection.x, 0);
+        if (ControlPlayerRotation)
+        {
+            player.RigidBody.MoveRotation(Quaternion.Euler(0, lookDirection.x, 0));
+        }
         lookTarget.localRotation = Quaternion.Euler(-lookDirection.y, lookDirection.x, 0);
     }
 

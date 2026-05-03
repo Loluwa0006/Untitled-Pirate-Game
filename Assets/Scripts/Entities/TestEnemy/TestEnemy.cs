@@ -74,12 +74,10 @@ public class TestEnemy : BaseEnemy
         var distance = Vector3.Distance(player.RigidBody.position, RigidBody.position);
         if (distance < distanceToUseSniperFireAt)
         {
-            Debug.Log("Preparing rapid fire");
             queuedProjectileFire = ProjectileInfoID.RapidFire;
         }
         else
         {
-            Debug.Log("Preparing sniper shot");
             queuedProjectileFire = ProjectileInfoID.SniperShot;
         }
     }

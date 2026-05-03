@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 7947073713133903600}
   - component: {fileID: 3609325259787111825}
   - component: {fileID: 5185180999352317941}
+  - component: {fileID: 7314135796376226468}
   m_Layer: 0
   m_Name: SniperProjectile
   m_TagString: Untagged
@@ -145,8 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d94fc2858869ca49a4f7d501e9d68e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileVelocityModifier
-  moveAcceleration: 65
-  moveSpeed: 500
+  moveAcceleration: 50
+  moveSpeed: 400
   rotationOffset: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
 --- !u!114 &5185180999352317941
 MonoBehaviour:
@@ -162,7 +163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileContactModifier
   projectileMask:
     serializedVersion: 2
-    m_Bits: 2240
+    m_Bits: 2752
   hitboxInfo:
     damage: 1
     horizontalKnockback: 50
@@ -171,6 +172,23 @@ MonoBehaviour:
     damageSource: 3
   blacklistedTargets: []
   hitboxCollider: {fileID: 3809078192718183567}
+--- !u!114 &7314135796376226468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138496419796540292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c8ca7e2aefeb84090e8bacbda7b1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileHomingModifier
+  homingPower: 5
+  hasMaxDistanceForHoming: 0
+  maxDistanceForHoming: 1500
+  invertHoming: 0
+  homingTargetOffset: {x: 0, y: 5, z: 0}
 --- !u!1 &4054444061763140079
 GameObject:
   m_ObjectHideFlags: 0

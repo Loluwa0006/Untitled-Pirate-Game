@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 3
   tags:
   - Rail
-  - Hurtbox
   - LockOn
   layers:
   - Default
@@ -20,7 +19,7 @@ TagManager:
   - Swingable
   - Rail
   - Hurtbox
-  - 
+  - Enemy
   - 
   - 
   - 

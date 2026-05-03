@@ -81,12 +81,11 @@ public class HitboxComponent : MonoBehaviour
         else Physics.OverlapBoxNonAlloc(hitboxCollider.bounds.center, hitboxCollider.bounds.extents, struckTargets, hitboxCollider.transform.rotation, hitboxMask, QueryTriggerInteraction.Collide);
         for (int i = 0; i < struckTargets.Length; i++)
         {
-            var collider = struckTargets[i];
-            if (collider == null) continue;
-            if (collider.TryGetComponent(out HealthComponent hp))
+            var target = struckTargets[i];
+            if (target == null) continue;
+            if (target.TryGetComponent(out HealthComponent hp))
             {
                 if (blacklistedTargets.Contains(hp) || previousTargets.Contains(hp)) continue;
-                Debug.Log("attempting to hit object " + collider.name);
                 DamageEntity(hp);
             }
         }
