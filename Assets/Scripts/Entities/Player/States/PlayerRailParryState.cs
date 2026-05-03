@@ -103,7 +103,6 @@ public class PlayerRailParryState : PlayerBaseState
         Player.RigidBody.linearVelocity = CalculateExitVelocity(tangent);
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.RailParry);
         Player.CameraManager.ControlPlayerRotation = true;
-        viewCamera.transform.rotation = Quaternion.LookRotation(-tangent, upVector);
         Player.CameraManager.TransitionToCamera(Player.CameraManager.DefaultCamera, cameraTransitionTime);
 
     }
