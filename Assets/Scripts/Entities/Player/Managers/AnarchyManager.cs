@@ -32,7 +32,7 @@ public class AnarchyManager : MonoBehaviour
 
     int decayTracker = 0;
     int currentAnarchy;
-     public int CurrentAnarchy { private set { currentAnarchy = Mathf.RoundToInt(Mathf.Clamp(value, 0, MAX_ANARCHY)); } get => currentAnarchy; }
+     public int CurrentAnarchy { set { currentAnarchy = Mathf.RoundToInt(Mathf.Clamp(value, 0, MAX_ANARCHY)); } get => currentAnarchy; }
     /// <summary>
     /// Progress towards next anarchy charge in percentage
     /// </summary>

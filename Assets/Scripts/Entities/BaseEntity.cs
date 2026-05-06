@@ -1,33 +1,32 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class BaseEntity : MonoBehaviour
 {
-    [SerializeField] Rigidbody _rb;
-    public Rigidbody RigidBody { get => _rb; }
+    [SerializeField] IDComponent idComponent;
 
-    [SerializeField] Collider _collider;
+    public IDComponent IDComponent { get => idComponent; }
 
-    public Collider Collider { get => _collider; }
+    public Action<BaseEntity> entityDestroyed;
 
-    [SerializeField] protected EntityStateMachine stateMachine;
-
-    [SerializeField] HealthComponent _healthComponent;
-
-    public HealthComponent HealthComponent { get => _healthComponent; }
-
-
-
-    public UnityEvent<Collision> entityCollision = new();
-    public UnityEvent<Collider> entityTriggerEntry = new();
-
-    private void OnCollisionEnter(Collision collision)
+    public virtual void Process()
     {
-        entityCollision.Invoke(collision);
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    public virtual void PhysicsProcess()
     {
-        entityTriggerEntry.Invoke(other);
+
+    }
+
+    private void OnEnable()
+    {
+        EntityManager.Instance.RegisterEntity(this);
+    }
+
+    private void OnDestroy()
+    {
+        entityDestroyed?.Invoke(this);
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class TestEnemy : BaseEnemy
+public class TestEnemy : BaseActor
 {
     public enum FireState
     {
@@ -81,7 +81,8 @@ public class TestEnemy : BaseEnemy
             queuedProjectileFire = ProjectileInfoID.SniperShot;
         }
     }
-    private void FixedUpdate()
+
+    public override void PhysicsProcess()
     {
         switch (fireState)
         {

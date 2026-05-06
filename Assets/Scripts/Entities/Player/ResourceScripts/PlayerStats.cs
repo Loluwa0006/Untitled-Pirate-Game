@@ -30,7 +30,6 @@ public class PlayerStats : ScriptableObject
     [SerializeField] JumpInfo groundedJumpInfo;
     public JumpInfo GroundedJumpInfo { get => groundedJumpInfo; private set => groundedJumpInfo = value; }
     #endregion
-
     #region AirMovement
     [Header("Air Movement")]
     [SerializeField] float airAcceleration = 15 / 12.0f;
@@ -46,7 +45,6 @@ public class PlayerStats : ScriptableObject
     [SerializeField] AnimationCurve turnAngleToSpeedLost;
     public AnimationCurve TurnAngleSpeedLostCurve { get => turnAngleToSpeedLost; private set => turnAngleToSpeedLost = value;}
     #endregion
-
     #region Worms
     [Header("Worms")]
     [SerializeField] int maxWorms = 3;
@@ -71,7 +69,6 @@ public class PlayerStats : ScriptableObject
     [SerializeField] float maxRodRange = 120;
     public float MaxRodRange { get => maxRodRange; private set => maxRodRange = value; }
     #endregion
-
     #region Swing
     [SerializeField] float swingAcceleration = 8.0f;
     public float SwingAcceleration { get => swingAcceleration; private set => swingAcceleration = value; }
@@ -106,7 +103,6 @@ public class PlayerStats : ScriptableObject
 
     public float RodSwingMassScale { get => rodSwingMassScale; }
     #endregion
-
     #region Dash
 
     [SerializeField] float dashGravity = 8.0f;
@@ -130,7 +126,6 @@ public class PlayerStats : ScriptableObject
     public float MinDistanceBeforeDashCancelled { get => minDistanceBeforeDashCancelled; }
 
     #endregion
-
     #region Parry
 
     [Header("Parry")]
@@ -180,7 +175,6 @@ public class PlayerStats : ScriptableObject
 
     public float PreviousSpeedToRailSpeedRatio { get => previousSpeedToRailSpeedRatio; }
     #endregion
-
     #region Squashbuckler
     [Header("Squashbuckler")]
     [SerializeField] int chargesToEnterSquashbucklerMode = 3;
@@ -199,7 +193,6 @@ public class PlayerStats : ScriptableObject
 
     public float DragonslashAnarchyProgressAmount { get => dragonslashAnarchyProgressAmount; }
     #endregion
-
     #region Yawn
     [Header("Yawn")]
     [SerializeField] float yawnAirAcceleration = 40 / 25f;
@@ -255,7 +248,6 @@ public class PlayerStats : ScriptableObject
 
     public int MaxDragonslashDamage { get => maxDragonslashDamage; }
     #endregion
-
     #region Misc
     [Header("Invulnerablity")]
     [SerializeField] int extraInvulnerabilityFramesAfterHit = 45;

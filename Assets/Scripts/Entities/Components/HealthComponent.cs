@@ -18,6 +18,7 @@ public class HealthComponent : MonoBehaviour
 
     public UnityEvent entityKilled = new();
     public UnityEvent<HitboxContactInfo> entityDamaged = new();
+    public UnityEvent<int> entityHealed = new();
 
     protected Dictionary<StatusEffectID, StatusEffect> statusEffects = new();
 
@@ -33,16 +34,25 @@ public class HealthComponent : MonoBehaviour
             info = status.Value.ProcessDamage(info);
         }
         var previousHealth = health;    
-        health -= info.DamageInfo.damage;
-        if (health <= 0)
+        Health -= info.DamageInfo.damage;
+        if (Health == 0)
         {
-            health = 0;
             Kill();
             return;
         }
          entityDamaged.Invoke(info);
     }
 
+    public virtual void Heal(int amount)
+    {
+        foreach (var status in statusEffects)
+        {
+            amount = status.Value.Heal(amount);
+        }
+        Health += amount;
+        entityHealed.Invoke(amount);
+
+    }
     public virtual void Kill()
     {
         entityKilled.Invoke();
@@ -84,6 +94,8 @@ public abstract class StatusEffect
     public abstract void PhysicsProcess();
     public abstract HitboxContactInfo ProcessDamage(HitboxContactInfo info);
 
+    public abstract int Heal(int amount);
+
     protected void RequestDelete() => removeStatus.Invoke(ID);
 }
 
@@ -120,6 +132,11 @@ public class InvulnerabilityEffect : StatusEffect
             info.DamageInfo = damageInfo;   
         }
         return info;
+    }
+
+    public override int Heal(int amount)
+    {
+        return amount;
     }
 
 }

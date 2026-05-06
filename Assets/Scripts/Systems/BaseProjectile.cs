@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class BaseProjectile : MonoBehaviour
+public class BaseProjectile : BaseEntity
 {
     [SerializeField] GameObject modifierHolder;
     [SerializeField] protected Rigidbody rigidBody;
@@ -29,9 +29,10 @@ public class BaseProjectile : MonoBehaviour
         {
             projectileModifiers[i].InitializeModifier(this);
         }
+        EntityManager.Instance.RegisterEntity(this);
     }
 
-    private void FixedUpdate()
+    public override void PhysicsProcess()
     {
         if (Active)
         {

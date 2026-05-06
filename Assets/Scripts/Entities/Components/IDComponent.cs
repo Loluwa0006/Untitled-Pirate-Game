@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class IDComponent : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static int nextID = 0;
+
+    public int ID { get; private set; }
+
+    [System.Serializable]
+    public enum IDType
     {
-        
+        Player, 
+        Projectile,
+        ShipAbility,
+        Entity,
+        Other
     }
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] IDType idType;
+
+    public IDType ID_Type { get => idType; }
+    private void Awake()
     {
-        
+        ID = nextID;
+        nextID++;
     }
 }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-public class PlayerController : BaseEntity
+public class PlayerController : BaseActor
 {
     public enum AnimationParameter
     {
@@ -17,6 +17,7 @@ public class PlayerController : BaseEntity
     [SerializeField] AnarchyManager _anarchyManager;
     [SerializeField] SquashbucklerManager _squashbucklerManager;
     [SerializeField] CameraManager _cameraManager;
+    [SerializeField] ShipManager _shipManager;
 
     [Header("Components")]
     [SerializeField] Animator _animator;
@@ -36,12 +37,19 @@ public class PlayerController : BaseEntity
     public CameraManager CameraManager { get => _cameraManager; }
 
     public bool PlayerGrounded { get; set; }
-    void Update()
+
+    private void Start()
+    {
+        _shipManager.InitializeShipManager();
+        EntityManager.Instance.PlayerID = IDComponent.ID;
+    }
+
+    public override void Process()
     {
         stateMachine.Process();
     }
 
-    private void FixedUpdate()
+    public override void PhysicsProcess()
     {
         stateMachine.PhysicsProcess();
     }

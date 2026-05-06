@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WormEntity : MonoBehaviour
+public class WormEntity : BaseEntity
 {
     [SerializeField] int gravityFreeTime = 7 * 60;
     [SerializeField] float distanceWhereTargetConsideredReached = 8.0f;
@@ -42,7 +42,7 @@ public class WormEntity : MonoBehaviour
         wormActive = false;
     }
 
-    private void FixedUpdate()
+    public override void PhysicsProcess()
     {
         if (!wormActive) return;
         GravityLogic();

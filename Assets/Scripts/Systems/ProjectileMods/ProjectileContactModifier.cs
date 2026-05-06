@@ -14,7 +14,6 @@ public class ProjectileContactModifier : BaseProjectileModifier
     public override void InitializeModifier(BaseProjectile owner)
     {
         base.InitializeModifier(owner);
-        blacklistedTargets.Add(Projectile.ProjectileOwner.HealthComponent);
         if (hitboxCollider == null) hitboxCollider = GetComponent<Collider>();  
     }
     public override void UpdateModifier()
