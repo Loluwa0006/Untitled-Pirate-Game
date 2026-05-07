@@ -14,6 +14,7 @@ public class BoostShieldShipAbility : BaseShipAbility
     Camera viewCamera;
     public override void InitializeShipAbility(AnarchyManager anarchyManager, PlayerController player)
     {
+        AnarchyCost = boostShieldAbilityData.AbilityCost;
         base.InitializeShipAbility(anarchyManager, player);
         viewCamera = Camera.main;
         if (shieldCollider == null)

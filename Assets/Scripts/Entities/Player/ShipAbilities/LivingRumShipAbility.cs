@@ -13,6 +13,7 @@ public class LivingRumShipAbility : BaseShipAbility
     int durationTracker = 0;
     public override void InitializeShipAbility(AnarchyManager anarchyManager, PlayerController player)
     {
+        AnarchyCost = livingRumAbilityData.AbilityCost;
         livingRumProjectile.InitializeProjectile(player);
         base.InitializeShipAbility(anarchyManager, player);
         viewCamera = Camera.main;
@@ -29,6 +30,8 @@ public class LivingRumShipAbility : BaseShipAbility
         base.ActivateAbility();
         SetRumTarget();
         durationTracker = livingRumAbilityData.RumDuration;
+        float velocityToInheritFromOwner = Vector3.Dot((rumTarget.position - player.Collider.bounds.center).normalized, player.RigidBody.linearVelocity);
+        livingRumProjectile.RigidBody.linearVelocity = player.RigidBody.linearVelocity * velocityToInheritFromOwner;
         livingRumProjectile.RigidBody.MovePosition(firePoint.position);
         livingRumProjectile.EnableProjectile(rumTarget);
     }

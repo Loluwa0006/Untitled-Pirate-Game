@@ -8,16 +8,14 @@ using UnityEngine.UI;
 public class AnarchyManager : MonoBehaviour
 {
     const int MAX_ANARCHY = 99;
-
-
-   [SerializeField] PlayerController player;
-   [SerializeField] TMP_Text anarchyDisplay;
-   [SerializeField] Slider anarchyProgressDisplay;
+    [SerializeField] PlayerController player;
+    [SerializeField] TMP_Text anarchyDisplay;
+    [SerializeField] Slider anarchyProgressDisplay;
     [SerializeField] Slider anarchyDecayDisplay;
 
-   [SerializeField] int numberOfOptionsToUseToReduceScaling = 2;
-   [SerializeField, Range(0, 1)] float scalingGenerationReductionAmount = 0.1f;
-   [SerializeField] float generationPerOption = 30.0f;
+    [SerializeField] int numberOfOptionsToUseToReduceScaling = 2;
+    [SerializeField, Range(0, 1)] float scalingGenerationReductionAmount = 0.1f;
+    [SerializeField] float generationPerOption = 30.0f;
 
     [SerializeField] int baseDecayRate = 150;
     [SerializeField] int minDecayRate = 30;
@@ -81,7 +79,6 @@ public class AnarchyManager : MonoBehaviour
             var scaling = scaledGenerationMethods[kvp.Key];
             scaling = Mathf.MoveTowards(scaling, 0, scalingGenerationReductionAmount / numberOfOptionsToUseToReduceScaling);
             scaledGenerationMethods[kvp.Key] = scaling;
-            Debug.Log("Setting option " + kvp.Key + " to scaling " + scaling);
         }
         progressToAnarchy += generationPerOption * (1 - scaledGenerationMethods[method]);
         scaledGenerationMethods[method] = scalingGenerationReductionAmount;

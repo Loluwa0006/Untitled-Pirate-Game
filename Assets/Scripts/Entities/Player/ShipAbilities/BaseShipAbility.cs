@@ -4,7 +4,7 @@ public class BaseShipAbility : BaseEntity
 {
     protected AnarchyManager anarchyManager;
     protected PlayerController player;
-    [SerializeField] int anarchyCost;
+    public int AnarchyCost { get; protected set; }
 
     protected bool abilityActive = false;
 
@@ -18,7 +18,7 @@ public class BaseShipAbility : BaseEntity
     public virtual void ActivateAbility()
     {
         abilityActive = true;
-        anarchyManager.CurrentAnarchy -= anarchyCost;
+        anarchyManager.CurrentAnarchy -= AnarchyCost;
     }
 
     public virtual void DeactivateAbility()
@@ -27,6 +27,6 @@ public class BaseShipAbility : BaseEntity
     }
     public virtual bool AbilityAvailable()
     {
-        return anarchyCost <= anarchyManager.CurrentAnarchy;
+        return AnarchyCost <= anarchyManager.CurrentAnarchy;
     }
 }
