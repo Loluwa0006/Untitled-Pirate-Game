@@ -23,12 +23,32 @@ public class BaseProjectile : BaseEntity
     public void InitializeProjectile(BaseEntity entity)
     {
         ProjectileOwner = entity;
+        InitializeModifiers();
+        OrderModifiersByPriority();
+        EntityManager.Instance.RegisterEntity(this);
+    }
+
+    void InitializeModifiers()
+    {
         projectileModifiers = modifierHolder.GetComponents<BaseProjectileModifier>();
         for (int i = 0; i < projectileModifiers.Length; i++)
         {
             projectileModifiers[i].InitializeModifier(this);
         }
-        EntityManager.Instance.RegisterEntity(this);
+    }
+
+    void OrderModifiersByPriority()
+    {
+        for (int i = 0; i < projectileModifiers.Length; i++)
+        {
+            for (int x = 0; x < projectileModifiers.Length - 1; x++)
+            {
+                if (projectileModifiers[x].priority > projectileModifiers[x + 1].priority)
+                {
+                    (projectileModifiers[x + 1], projectileModifiers[x]) = (projectileModifiers[x], projectileModifiers[x + 1]);
+                }
+            }
+        }
     }
 
     public override void PhysicsProcess()
