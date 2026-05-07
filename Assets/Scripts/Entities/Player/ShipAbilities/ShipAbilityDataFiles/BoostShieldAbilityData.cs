@@ -1,11 +1,8 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BoostShieldAbilityData", menuName = "Scriptable Objects/BoostShieldAbilityData")]
+[CreateAssetMenu(fileName = "BoostShieldAbilityData", menuName = "Scriptable Objects/ShipAbilityData/BoostShieldAbilityData")]
 public class BoostShieldAbilityData : ShipAbilityData
 {
-    [SerializeField] float shieldDuration = 5.0f;
-
-    public float ShieldDuration { get => shieldDuration; }
 
     [SerializeField] float minDistanceFromPlayer = 30.0f;
 

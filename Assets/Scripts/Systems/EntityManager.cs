@@ -75,7 +75,11 @@ public class EntityManager : MonoBehaviour
 
     public void RegisterEntity(BaseEntity entity)
     {
-        entityRegistry.Add(entity.IDComponent, entity);
-        entityList.Add(entity);
+        if (entity == null) return;
+        if (!entityRegistry.ContainsKey(entity.IDComponent))
+        {
+            entityRegistry.Add(entity.IDComponent, entity);
+            entityList.Add(entity);
+        }
     }
 }

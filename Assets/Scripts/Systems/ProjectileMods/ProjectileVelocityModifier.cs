@@ -12,7 +12,7 @@ public class ProjectileVelocityModifier : BaseProjectileModifier
     {
         directionTowardsTarget = (Projectile.Target.position - Projectile.RigidBody.position).normalized;
         Quaternion lookTowardsTarget = Quaternion.LookRotation(directionTowardsTarget);
-        Projectile.RigidBody.MoveRotation(lookTowardsTarget * rotationOffset);
+        Projectile.RigidBody.MoveRotation((lookTowardsTarget * rotationOffset).normalized);
     }
 
     public override void UpdateModifier()

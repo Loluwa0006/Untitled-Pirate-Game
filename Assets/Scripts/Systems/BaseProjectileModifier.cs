@@ -27,4 +27,9 @@ public class BaseProjectileModifier : MonoBehaviour
     {
 
     }
+
+    public virtual void OnProjectileLanded()
+    {
+
+    }
 }

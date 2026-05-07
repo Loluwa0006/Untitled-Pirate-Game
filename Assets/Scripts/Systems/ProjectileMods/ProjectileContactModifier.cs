@@ -45,7 +45,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
                     healthComponent.Damage(contactInfo);
                 }
             }
-            if (validContact) Projectile.DestroyProjectile();
+            if (validContact) Projectile.DisableProjectile();
         }
     }
 }

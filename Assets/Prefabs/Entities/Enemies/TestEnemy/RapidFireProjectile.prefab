@@ -66,6 +66,7 @@ GameObject:
   - component: {fileID: 8267344615652836179}
   - component: {fileID: 8699306797386648022}
   - component: {fileID: 6078590934086159548}
+  - component: {fileID: 8564550619827520923}
   m_Layer: 0
   m_Name: RapidFireProjectile
   m_TagString: Untagged
@@ -102,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b790fdb4ae35a034a9838127144c01da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectile
+  idComponent: {fileID: 8564550619827520923}
   modifierHolder: {fileID: 6115555356107912996}
   rigidBody: {fileID: 8267344615652836179}
   projectileCollider: {fileID: 9175763313394684376}
@@ -171,6 +173,19 @@ MonoBehaviour:
     damageSource: 3
   blacklistedTargets: []
   hitboxCollider: {fileID: 9175763313394684376}
+--- !u!114 &8564550619827520923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6115555356107912996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b73511aa27605468744d3677198fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IDComponent
+  idType: 1
 --- !u!1 &6460488579097432311
 GameObject:
   m_ObjectHideFlags: 0

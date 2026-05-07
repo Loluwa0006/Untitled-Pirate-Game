@@ -15,6 +15,7 @@ public class ShipAbilityData : ScriptableObject
    public enum ShipAbilityRegistry
     {
         BoostShield,
+        LivingRum,
         EMP
     }
 }

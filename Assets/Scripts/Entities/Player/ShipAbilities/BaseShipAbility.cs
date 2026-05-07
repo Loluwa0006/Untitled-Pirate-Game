@@ -6,7 +6,7 @@ public class BaseShipAbility : BaseEntity
     protected PlayerController player;
     [SerializeField] int anarchyCost;
 
-    protected bool abilityActive;
+    protected bool abilityActive = false;
 
     public virtual void InitializeShipAbility(AnarchyManager anarchyManager, PlayerController player)
     {

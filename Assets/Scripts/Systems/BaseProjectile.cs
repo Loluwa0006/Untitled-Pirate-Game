@@ -12,7 +12,6 @@ public class BaseProjectile : BaseEntity
     public Collider ProjectileCollider { get => projectileCollider; }
     BaseProjectileModifier[] projectileModifiers;
 
-    public event Action ProjectileLanded;
     public event Action ProjectileFired;
     public event Action ProjectileDestroyed;
 
@@ -62,7 +61,7 @@ public class BaseProjectile : BaseEntity
             projectileModifiers[i].OnProjectileFired();
         }
     }
-    public void DestroyProjectile()
+    public void DisableProjectile()
     {
         meshObjects.SetActive(false);
         ProjectileDestroyed?.Invoke();

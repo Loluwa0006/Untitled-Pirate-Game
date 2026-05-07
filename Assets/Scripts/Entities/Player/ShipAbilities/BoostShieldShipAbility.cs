@@ -1,5 +1,3 @@
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BoostShieldShipAbility : BaseShipAbility
@@ -10,7 +8,6 @@ public class BoostShieldShipAbility : BaseShipAbility
     [SerializeField] HealthComponent healthComponent;
     [SerializeField] BoostShieldAbilityData boostShieldAbilityData;
     [SerializeField] LayerMask shieldMask;
-
 
     Collider[] shieldContacts = new Collider[HitboxComponent.MAX_CONTACTS_PER_FRAME];
 

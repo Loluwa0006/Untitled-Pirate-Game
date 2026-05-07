@@ -43,7 +43,7 @@ public class TestEnemy : BaseActor
                 var newProjectile = Instantiate(nextInfo.fireInformation.projectilePrefab);
                 newProjectile.InitializeProjectile(this);
                 newProjectile.name = name + nextInfo.ID.ToString() + i;
-                newProjectile.DestroyProjectile();
+                newProjectile.DisableProjectile();
                 projectilePool.Enqueue(newProjectile);
             }
             nextInfo.projectilePool = projectilePool;

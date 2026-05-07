@@ -12,12 +12,13 @@ public class ShipManager : MonoBehaviour
     [Header("Ability Prefabs")]
     [SerializeField] BaseShipAbility EMP_Prefab;
     [SerializeField] BaseShipAbility BoostShieldPrefab;
+    [SerializeField] BaseShipAbility LivingRumPrefab;
 
     public bool AbilitiesAvailable { set; get; } = true;
 
     public void InitializeShipManager()
     {
-        abilityOne = CreateShipAbilityPrefab(abilityOneID);
+       abilityOne = CreateShipAbilityPrefab(abilityOneID);
        abilityTwo = CreateShipAbilityPrefab(abilityTwoID);
        if (abilityOne != null) abilityOne.InitializeShipAbility(player.AnarchyManager, player);
        if (abilityTwo != null) abilityTwo.InitializeShipAbility(player.AnarchyManager, player);
@@ -35,6 +36,10 @@ public class ShipManager : MonoBehaviour
                 if (BoostShieldPrefab == null) return null;
                 var ShieldObject = Instantiate(BoostShieldPrefab);
                 return ShieldObject;
+            case ShipAbilityData.ShipAbilityRegistry.LivingRum:
+                if (LivingRumPrefab == null) return null;
+                var RumObject = Instantiate(LivingRumPrefab);
+                return RumObject;
         }
         return null;
     }

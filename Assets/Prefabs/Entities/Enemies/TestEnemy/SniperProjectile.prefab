@@ -67,6 +67,7 @@ GameObject:
   - component: {fileID: 3609325259787111825}
   - component: {fileID: 5185180999352317941}
   - component: {fileID: 7314135796376226468}
+  - component: {fileID: 6132837562483315780}
   m_Layer: 0
   m_Name: SniperProjectile
   m_TagString: Untagged
@@ -103,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b790fdb4ae35a034a9838127144c01da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseProjectile
+  idComponent: {fileID: 6132837562483315780}
   modifierHolder: {fileID: 1138496419796540292}
   rigidBody: {fileID: 7947073713133903600}
   projectileCollider: {fileID: 3809078192718183567}
@@ -189,6 +191,19 @@ MonoBehaviour:
   maxDistanceForHoming: 1500
   invertHoming: 0
   homingTargetOffset: {x: 0, y: 5, z: 0}
+--- !u!114 &6132837562483315780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138496419796540292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b73511aa27605468744d3677198fc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IDComponent
+  idType: 1
 --- !u!1 &4054444061763140079
 GameObject:
   m_ObjectHideFlags: 0
