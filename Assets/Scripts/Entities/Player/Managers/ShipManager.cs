@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipManager : MonoBehaviour
@@ -8,40 +9,38 @@ public class ShipManager : MonoBehaviour
     BaseShipAbility abilityOne;
     BaseShipAbility abilityTwo;
     
+    [System.Serializable]
+    struct ShipAbilityIndex
+    {
+        public ShipAbilityData.ShipAbilityRegistry ID;
+        public BaseShipAbility Prefab;
+    }
 
-    [Header("Ability Prefabs")]
-    [SerializeField] BaseShipAbility EMP_Prefab;
-    [SerializeField] BaseShipAbility BoostShieldPrefab;
-    [SerializeField] BaseShipAbility LivingRumPrefab;
+    [SerializeField] List<ShipAbilityIndex> shipAbilityRegister = new();
 
     public bool AbilitiesAvailable { set; get; } = true;
 
     public void InitializeShipManager()
     {
-       abilityOne = CreateShipAbilityPrefab(abilityOneID);
-       abilityTwo = CreateShipAbilityPrefab(abilityTwoID);
-       if (abilityOne != null) abilityOne.InitializeShipAbility(player.AnarchyManager, player);
-       if (abilityTwo != null) abilityTwo.InitializeShipAbility(player.AnarchyManager, player);
+        InitializeShipAbilities();
     }
 
-    BaseShipAbility CreateShipAbilityPrefab(ShipAbilityData.ShipAbilityRegistry ID)
+    void InitializeShipAbilities()
     {
-        switch (ID)
+        for (int i = 0; i < shipAbilityRegister.Count; i++)
         {
-            case ShipAbilityData.ShipAbilityRegistry.EMP:
-                if (EMP_Prefab == null) return null;
-                var EMPObject = Instantiate(EMP_Prefab);
-                return EMPObject;
-            case ShipAbilityData.ShipAbilityRegistry.BoostShield:
-                if (BoostShieldPrefab == null) return null;
-                var ShieldObject = Instantiate(BoostShieldPrefab);
-                return ShieldObject;
-            case ShipAbilityData.ShipAbilityRegistry.LivingRum:
-                if (LivingRumPrefab == null) return null;
-                var RumObject = Instantiate(LivingRumPrefab);
-                return RumObject;
+            var index = shipAbilityRegister[i];
+            if (index.ID == abilityOneID)
+            {
+                abilityOne = Instantiate(index.Prefab);
+            }
+            if (index.ID == abilityTwoID)
+            {
+                abilityTwo = Instantiate(index.Prefab);
+            }
         }
-        return null;
+        if (abilityOne != null) abilityOne.InitializeShipAbility(player.AnarchyManager, player);
+        if (abilityTwo != null) abilityTwo.InitializeShipAbility(player.AnarchyManager, player);
     }
     private void Update()
     {

@@ -39,16 +39,7 @@ public class BaseProjectile : BaseEntity
 
     void OrderModifiersByPriority()
     {
-        for (int i = 0; i < projectileModifiers.Length; i++)
-        {
-            for (int x = 0; x < projectileModifiers.Length - 1; x++)
-            {
-                if (projectileModifiers[x].priority > projectileModifiers[x + 1].priority)
-                {
-                    (projectileModifiers[x + 1], projectileModifiers[x]) = (projectileModifiers[x], projectileModifiers[x + 1]);
-                }
-            }
-        }
+        Array.Sort(projectileModifiers, (a, b) => a.priority.CompareTo(b.priority));
     }
 
     public override void PhysicsProcess()
