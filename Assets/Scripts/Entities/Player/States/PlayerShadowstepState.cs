@@ -3,11 +3,15 @@ using UnityEngine;
 
 public class PlayerShadowstepState : PlayerBaseState
 {
+    [SerializeField] List<SkinnedMeshRenderer> playerMeshes = new();
+    [SerializeField] Material shadowMaterial;
     float shadowstepSpeed;
 
     int durationTracker = 0;
 
     bool startedAtMaxCharge = false;
+
+    Material previousMaterial = null;
     public override void Enter(Dictionary<string, object> message = null)
     {
         base.Enter(message);
@@ -18,6 +22,8 @@ public class PlayerShadowstepState : PlayerBaseState
         Player.SquashbucklerManager.SquashbucklerCharge -= (int) Player.StatsManager.GetValueFromStat(StatDatabase.Instance.PlayerStats.PlayerChargesToEnterSquashbucklerMode);
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Squashbuckler].Consume();
         Player.PlayerInput.BufferRegistry[InputManager.BufferableInputs.Slash].Consume(); //prevent accidental dragonslashes
+        previousMaterial = playerMeshes[0].material;
+        foreach (var mesh in playerMeshes) mesh.material = shadowMaterial;
     }
 
     public override void AnimationSetup()
@@ -67,6 +73,7 @@ public class PlayerShadowstepState : PlayerBaseState
     {
         base.Exit();
         Player.AnarchyManager.GenerateAnarchy(ScaledGenerationMethod.Shadowstep);
+        foreach (var mesh in playerMeshes) mesh.material = previousMaterial;
     }
 
     public override void AnimationTeardown()

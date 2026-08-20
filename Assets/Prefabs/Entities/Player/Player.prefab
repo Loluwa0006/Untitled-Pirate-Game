@@ -1188,6 +1188,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShadowstepState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 0
+  playerMeshes:
+  - {fileID: 3191038534040988723}
+  - {fileID: 4886816094106343344}
+  - {fileID: 3183432796238363457}
+  shadowMaterial: {fileID: 2100000, guid: ba62d6545ee6227478d4027cba8e4efe, type: 2}
 --- !u!1 &3742787347067088513
 GameObject:
   m_ObjectHideFlags: 0
@@ -8608,6 +8613,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.00006379707
       objectReference: {fileID: 0}
+    - target: {fileID: -4213761076027111091, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4111100768673639289, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0.000004384981
@@ -9368,6 +9377,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 28.014702
       objectReference: {fileID: 0}
+    - target: {fileID: 8654702536886492591, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8729369296439856808, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -0.31548503
@@ -9680,6 +9693,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4911439149819264390, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
   m_PrefabInstance: {fileID: 7976760705969138300}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3183432796238363457 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4800545675622748477, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
+  m_PrefabInstance: {fileID: 7976760705969138300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3191038534040988723 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -4396642182433536433, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
+  m_PrefabInstance: {fileID: 7976760705969138300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3328178535520049064 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4648617686011821524, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
@@ -9753,6 +9776,11 @@ Transform:
 --- !u!4 &4784931615560656712 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5993067989324083916, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
+  m_PrefabInstance: {fileID: 7976760705969138300}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4886816094106343344 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -5953106963640648244, guid: afbd4ab056cc8de42bc9e44c3d5c70cd, type: 3}
   m_PrefabInstance: {fileID: 7976760705969138300}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &5119345904951792713 stripped
