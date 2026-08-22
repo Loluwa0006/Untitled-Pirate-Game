@@ -223,6 +223,7 @@ MonoBehaviour:
     PlayerDragonslashAnarchyRequirement: {fileID: 11400000, guid: 179558dd7932a7a4f8de4234916bed05, type: 2}
     PlayerDragonslashSpeedBonusFromRodLength: {fileID: 11400000, guid: 428c2158609cdbb44b2e172d8cd8bd67, type: 2}
     PlayerDragonslashSpeed: {fileID: 11400000, guid: 93b2d5f3b947a544194e5ec25cb1ee8e, type: 2}
+    PlayerDragonslashAnarchyProgressAmount: {fileID: 11400000, guid: 2e48bfd72b2f637409ce9dbee63a176c, type: 2}
     PlayerUniqueAnarchyOptionCountToClearScaling: {fileID: 11400000, guid: 055aad07512f12c4993ac37e9017f7a9, type: 2}
     PlayerAnarchyScalingGenerationReductionAmount: {fileID: 11400000, guid: 40e1f9fcc95b139499a9696422efba93, type: 2}
     PlayerGenerationPerAnarchyOption: {fileID: 11400000, guid: 8834f637577bd914bbb4aeb6f9ad020c, type: 2}

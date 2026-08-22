@@ -52,7 +52,7 @@ public class AnarchyManager : MonoBehaviour
         unscaledGenerationMethods[UnscaledGenerationMethod.JustYawn] = StatDatabase.Instance.PlayerStats.PlayerJustYawnAnarchyProgress;
         unscaledGenerationMethods[UnscaledGenerationMethod.Yawn] = StatDatabase.Instance.PlayerStats.PlayerYawnAnarchyProgress;
         unscaledGenerationMethods[UnscaledGenerationMethod.Slash] = StatDatabase.Instance.PlayerStats.PlayerSlashAnarchyProgressAmount;
-        unscaledGenerationMethods[UnscaledGenerationMethod.Dragonslash] = StatDatabase.Instance.PlayerStats.PlayerDragonslashAnarchyRequirement;
+        unscaledGenerationMethods[UnscaledGenerationMethod.Dragonslash] = StatDatabase.Instance.PlayerStats.PlayerDragonslashAnarchyProgressAmount;
 
         UpdateAnarchyDisplays();
     }

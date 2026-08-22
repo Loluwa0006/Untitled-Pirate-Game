@@ -101,6 +101,8 @@ public class PlayerStats
     public StatObject PlayerDragonslashSpeedBonusFromRodLength;
     public StatObject PlayerDragonslashSpeed;
 
+    public StatObject PlayerDragonslashAnarchyProgressAmount;
+
     [Header("Anarchy")]
     public StatObject PlayerUniqueAnarchyOptionCountToClearScaling;
     public StatObject PlayerAnarchyScalingGenerationReductionAmount;
