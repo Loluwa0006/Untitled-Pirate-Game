@@ -47,6 +47,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EMPShipAbility
   idComponent: {fileID: 531240337432617445}
   empAbilityData: {fileID: 11400000, guid: 8471c2ad6b79b2f48853d33847d9fdd4, type: 2}
+  EMPMask:
+    serializedVersion: 2
+    m_Bits: 16384
 --- !u!114 &531240337432617445
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -164,5 +164,11 @@ public class LeviathanStats
     public StatObject LeviathanClawAttackLungeDistance;
     public StatObject LeviathanClawAttackRange;
 
+    [Header("Lighting Spikes")]
+
+    public StatObject LeviatanLightingSpikeAttackSpeed;
+
+    public StatObject LeviathanLightingSpikeAttackCooldown;
+
 
 }

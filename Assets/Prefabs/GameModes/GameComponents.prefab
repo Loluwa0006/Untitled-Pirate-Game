@@ -263,3 +263,5 @@ MonoBehaviour:
     LeviathanClawAttackCooldown: {fileID: 11400000, guid: 32da015e1e122e9428420c1a89b33a11, type: 2}
     LeviathanClawAttackLungeDistance: {fileID: 11400000, guid: 367cd8111a8d80044a58cb25df86076b, type: 2}
     LeviathanClawAttackRange: {fileID: 11400000, guid: d8d1a70d2e7454940872053072bc088a, type: 2}
+    LeviatanLightingSpikeAttackSpeed: {fileID: 11400000, guid: 28d59eccf79b22a44af9507608e4193f, type: 2}
+    LeviathanLightingSpikeAttackCooldown: {fileID: 11400000, guid: f40d1876085141146b6704a8424f5a81, type: 2}

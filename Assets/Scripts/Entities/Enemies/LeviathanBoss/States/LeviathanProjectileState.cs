@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class LeviathanProjectileState : LeviathanBaseState
 {
-    [SerializeField] protected int projectilePoolSize = 3;
-
     [Header("Game Objects")]
-    [SerializeField] protected Transform firePoint;
-    [SerializeField] protected BaseProjectile projectilePrefab;
     [SerializeField] protected AnimationClip animationClip;
 
     [Header("Stats")]
     [SerializeField] protected StatObject attackSpeedStat;
     [SerializeField] protected StatObject cooldownStat;
+
+    [Header("Fire Info")]
+
+    [SerializeField] protected ProjectileFireInformation projectileFireInfo;
 
     protected Queue<BaseProjectile> projectilePool;
 
@@ -25,11 +25,11 @@ public class LeviathanProjectileState : LeviathanBaseState
 
     public override void InitializeState(EntityStateMachine stateMachine, Transform owner)
     {
-        projectilePool = new Queue<BaseProjectile>(projectilePoolSize);
+        projectilePool = new Queue<BaseProjectile>(projectileFireInfo.poolSize);
         base.InitializeState(stateMachine, owner);
-        for (int x = 0; x < projectilePoolSize; x++)
+        for (int x = 0; x < projectileFireInfo.poolSize; x++)
         {
-            var newProjectile = Instantiate(projectilePrefab);
+            var newProjectile = Instantiate(projectileFireInfo.projectilePrefab);
             newProjectile.InitializeProjectile(Leviathan);
             newProjectile.name = Leviathan.name + newProjectile.name + x;
             newProjectile.DisableProjectile();
@@ -49,7 +49,7 @@ public class LeviathanProjectileState : LeviathanBaseState
     {
         if (!firedProjectilePreviously && FireProjectileThisFrame)
         {
-            FireProjectile();
+            FireProjectile();        
         }
         if (ExitStateThisFrame)
         {
@@ -61,7 +61,7 @@ public class LeviathanProjectileState : LeviathanBaseState
     void FireProjectile()
     {
         var newProjectile = projectilePool.Dequeue();
-        newProjectile.EnableProjectile(firePoint.position, Leviathan.Target.transform);
+        newProjectile.EnableProjectile(projectileFireInfo.spawnPoint.position, Leviathan.Target.transform);
         projectilePool.Enqueue(newProjectile);
     }
     public void ExitState()

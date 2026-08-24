@@ -3,6 +3,7 @@ using UnityEngine;
 public class EMPShipAbility : BaseShipAbility
 {
     [SerializeField] EMPAbilityData empAbilityData;
+    [SerializeField] LayerMask EMPMask;
 
     int durationTracker = 0;
     public override void InitializeShipAbility(AnarchyManager anarchyManager, PlayerController player)
@@ -38,7 +39,7 @@ public class EMPShipAbility : BaseShipAbility
             {
                 if (projectile.TryGetComponent(out BaseProjectile projectileComponent))
                 {
-                    if (projectileComponent.GetModifier<ProjectileEmpoweredModifier>() != null) continue;
+                    if ((projectileComponent.gameObject.layer & (1 << EMPMask)) != 0) continue;
                     projectileComponent.DisableProjectile();
                 }
             }

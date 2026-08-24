@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 2107915774276091421}
   - component: {fileID: 4159197923790612166}
   m_Layer: 0
-  m_Name: BeamHeadProjectile
+  m_Name: BeamProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -46,12 +46,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LeviathanClawSlashState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 1
-  projectilePoolSize: 3
-  firePoint: {fileID: 4123819682710680348}
-  projectilePrefab: {fileID: 3756745552118015287, guid: 0143556e9342d35479d2880060f2acc9, type: 3}
   animationClip: {fileID: 7400000, guid: e192c68d44f3a1a44a9ec8a6fde250b6, type: 2}
   attackSpeedStat: {fileID: 11400000, guid: 31093d5715ece80408a13a4eaf1b630b, type: 2}
   cooldownStat: {fileID: 11400000, guid: 32da015e1e122e9428420c1a89b33a11, type: 2}
+  projectileFireInfo:
+    spawnPoint: {fileID: 4123819682710680348}
+    delayBeforeFiring: 0
+    projectilePrefab: {fileID: 3756745552118015287, guid: 0143556e9342d35479d2880060f2acc9, type: 3}
+    fireCooldown: 12
+    poolSize: 2
+    numberOfProjectilesToFire: 1
   FireProjectileThisFrame: 0
   ExitStateThisFrame: 0
 --- !u!1 &938986083315498909
@@ -239,12 +243,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LeviathanLargeBeamState
   hasInactiveProcess: 0
   hasInactivePhysicsProcess: 1
-  projectilePoolSize: 3
-  firePoint: {fileID: 4034809319597035185}
-  projectilePrefab: {fileID: 3776733223040418089, guid: 9f85be4c28da19c41bf3c1d553fd7b86, type: 3}
   animationClip: {fileID: 7400000, guid: bddac2cee7596d34889a4b13cede9460, type: 2}
   attackSpeedStat: {fileID: 11400000, guid: 0548251ddc975994583e69e1d807dcde, type: 2}
   cooldownStat: {fileID: 11400000, guid: b74c66579a759554dab82e6f23fc7325, type: 2}
+  projectileFireInfo:
+    spawnPoint: {fileID: 4034809319597035185}
+    delayBeforeFiring: 0
+    projectilePrefab: {fileID: 3776733223040418089, guid: 9f85be4c28da19c41bf3c1d553fd7b86, type: 3}
+    fireCooldown: 8
+    poolSize: 3
+    numberOfProjectilesToFire: 1
   FireProjectileThisFrame: 0
   ExitStateThisFrame: 0
 --- !u!1 &3000469249260179960
@@ -497,7 +505,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2073
+  m_VersionIndex: 2129
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -517,7 +525,7 @@ MonoBehaviour:
   m_Shape:
     rid: 3996868044512034884
   m_ShapeRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_UnmodifiedMeshVersion: 1656
+  m_UnmodifiedMeshVersion: 2090
   m_Size: {x: -439.22314, y: 676.2446, z: 452.27734}
   m_LocalCenter: {x: 0, y: 0, z: 197.36475}
   references:
@@ -617,17 +625,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31ca389ec8596a04fad08e3874084fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  maxHealth: 10
+  maxHealth: 50
   hurtbox: {fileID: 4381427509788488829}
   entityKilled:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityKilled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   entityDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3754520711300672358}
+        m_TargetAssemblyTypeName: LeviathanEntity, Assembly-CSharp
+        m_MethodName: OnEntityDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   entityHealed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityHealed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   componentInitialized:
     m_PersistentCalls:
       m_Calls: []
@@ -707,10 +763,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 732949330743658921}
   - {fileID: 7320833414732098252}
   - {fileID: 4191133786806417984}
+  - {fileID: 732949330743658921}
   - {fileID: 7298655232842654098}
+  - {fileID: 7740344070859351157}
   m_Father: {fileID: 4808646506579364738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8299297381104378401
@@ -1250,7 +1307,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 1087
+  m_VersionIndex: 1132
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1370,7 +1427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31ca389ec8596a04fad08e3874084fb4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  maxHealth: 3
+  maxHealth: 20
   hurtbox: {fileID: 7925681697848827762}
   entityKilled:
     m_PersistentCalls:
@@ -1387,12 +1444,118 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityKilled
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   entityDamaged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3754520711300672358}
+        m_TargetAssemblyTypeName: LeviathanEntity, Assembly-CSharp
+        m_MethodName: OnEntityDamaged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   entityHealed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
+        m_MethodName: OnEntityHealed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   componentInitialized:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &9007138121703564119
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7740344070859351157}
+  - component: {fileID: 58903840322029170}
+  m_Layer: 0
+  m_Name: LeviathanLightingSpikeState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7740344070859351157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007138121703564119}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8699297847793595693}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &58903840322029170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007138121703564119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d48820b6b7bfb234ab22cfc5dbaf834f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeviathanLightingRainState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
+  animationClip: {fileID: 7400000, guid: 3f05bd0b292a40c49a76ea7c814c2900, type: 2}
+  attackSpeedStat: {fileID: 11400000, guid: 28d59eccf79b22a44af9507608e4193f, type: 2}
+  cooldownStat: {fileID: 11400000, guid: f40d1876085141146b6704a8424f5a81, type: 2}
+  projectileFireInfo:
+    spawnPoint: {fileID: 4034809319597035185}
+    delayBeforeFiring: 0
+    projectilePrefab: {fileID: 1693217534261386567, guid: b31033aa317bbfb44b1bc8fb8fb65408, type: 3}
+    fireCooldown: 12
+    poolSize: 1
+    numberOfProjectilesToFire: 25
+  FireProjectileThisFrame: 0
+  ExitStateThisFrame: 0

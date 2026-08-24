@@ -20,7 +20,21 @@ public class BaseProjectile : BaseEntity
     public event Action ProjectileDestroyed;
     public Action<HealthComponent> ProjectileLanded;
 
-    public Transform Target { get; private set; }
+    public event Action<Transform> TargetChanged;
+
+    Transform target;
+    public Transform Target 
+    { 
+        get
+        {
+            return target;
+        }
+        private set
+        {
+            target = value;
+            TargetChanged?.Invoke(value);
+        }
+    }
 
     public bool Active { set; get; } = false;
 
@@ -133,5 +147,7 @@ public struct ProjectileFireInformation
     public BaseProjectile projectilePrefab;
     public int fireCooldown;
     public int poolSize;
+
+    public int numberOfProjectilesToFire;
 }
 
