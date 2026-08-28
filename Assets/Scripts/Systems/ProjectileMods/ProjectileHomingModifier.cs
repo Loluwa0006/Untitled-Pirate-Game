@@ -19,6 +19,7 @@ public class ProjectileHomingModifier : BaseProjectileModifier
     }
     public override void UpdateModifier()
     {
+        if (Projectile.RigidBody.linearVelocity.magnitude < 0.001f) return;
 
         if (hasMaxDistanceForHoming) 
         {

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ public class LeviathanProjectileState : LeviathanBaseState
     [HideInInspector] public bool FireProjectileThisFrame;
     [HideInInspector] public bool ExitStateThisFrame;
 
+    [HideInInspector] public int NumberOfProjectilesToFireThisFrame = 1;
+
+    [HideInInspector] public float DelayBetweenSingleFrameProjectileFiring = 0.0f;
     protected bool firedProjectilePreviously = false;
 
     protected int cooldownRemaining;
@@ -49,7 +53,7 @@ public class LeviathanProjectileState : LeviathanBaseState
     {
         if (!firedProjectilePreviously && FireProjectileThisFrame)
         {
-            FireProjectile();        
+            FireProjectiles(DelayBetweenSingleFrameProjectileFiring, NumberOfProjectilesToFireThisFrame);        
         }
         if (ExitStateThisFrame)
         {
@@ -63,6 +67,21 @@ public class LeviathanProjectileState : LeviathanBaseState
         var newProjectile = projectilePool.Dequeue();
         newProjectile.EnableProjectile(projectileFireInfo.spawnPoint.position, Leviathan.Target.transform);
         projectilePool.Enqueue(newProjectile);
+    }
+
+    public void FireProjectiles(float delayBetweenShots, float numberOfShots)
+    {
+        Debug.Log("Firing " + numberOfShots + " projectiles with a " + delayBetweenShots + " sec delay per shot");
+        StartCoroutine(FireMultipleProjectiles(delayBetweenShots, numberOfShots));
+    }
+
+    IEnumerator FireMultipleProjectiles(float delay, float count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            yield return new WaitForSeconds(delay);
+            FireProjectile();
+        }
     }
     public void ExitState()
     {

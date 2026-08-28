@@ -8,7 +8,7 @@ public class BaseEnemy : BaseActor
 
     public List<HealthComponent> HealthFragments { get => healthFragments; }
 
-    public bool InDreamphase { get; private set; }
+    public bool InDreamphase { get; protected set; }
 
     public virtual void OnEntityDamaged(HitboxContactInfo info)
     {

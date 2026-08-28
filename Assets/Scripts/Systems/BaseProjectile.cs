@@ -143,7 +143,7 @@ public class BaseProjectile : BaseEntity
 public struct ProjectileFireInformation
 {
     public Transform spawnPoint;
-    public int delayBeforeFiring;
+    public int delayBetweenShots;
     public BaseProjectile projectilePrefab;
     public int fireCooldown;
     public int poolSize;

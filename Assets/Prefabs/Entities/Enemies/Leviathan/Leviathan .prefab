@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &732949330743658921
 Transform:
   m_ObjectHideFlags: 0
@@ -51,13 +51,15 @@ MonoBehaviour:
   cooldownStat: {fileID: 11400000, guid: 32da015e1e122e9428420c1a89b33a11, type: 2}
   projectileFireInfo:
     spawnPoint: {fileID: 4123819682710680348}
-    delayBeforeFiring: 0
+    delayBetweenShots: 0
     projectilePrefab: {fileID: 3756745552118015287, guid: 0143556e9342d35479d2880060f2acc9, type: 3}
     fireCooldown: 12
     poolSize: 2
     numberOfProjectilesToFire: 1
   FireProjectileThisFrame: 0
   ExitStateThisFrame: 0
+  NumberOfProjectilesToFireThisFrame: 1
+  DelayBetweenSingleFrameProjectileFiring: 0
 --- !u!1 &938986083315498909
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7298655232842654098
 Transform:
   m_ObjectHideFlags: 0
@@ -248,13 +250,15 @@ MonoBehaviour:
   cooldownStat: {fileID: 11400000, guid: b74c66579a759554dab82e6f23fc7325, type: 2}
   projectileFireInfo:
     spawnPoint: {fileID: 4034809319597035185}
-    delayBeforeFiring: 0
+    delayBetweenShots: 0
     projectilePrefab: {fileID: 3776733223040418089, guid: 9f85be4c28da19c41bf3c1d553fd7b86, type: 3}
     fireCooldown: 8
     poolSize: 3
     numberOfProjectilesToFire: 1
   FireProjectileThisFrame: 0
   ExitStateThisFrame: 0
+  NumberOfProjectilesToFireThisFrame: 1
+  DelayBetweenSingleFrameProjectileFiring: 0
 --- !u!1 &3000469249260179960
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,34 +633,10 @@ MonoBehaviour:
   hurtbox: {fileID: 4381427509788488829}
   entityKilled:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityKilled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   entityDamaged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityDamaged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3754520711300672358}
         m_TargetAssemblyTypeName: LeviathanEntity, Assembly-CSharp
         m_MethodName: OnEntityDamaged
@@ -671,19 +651,7 @@ MonoBehaviour:
         m_CallState: 2
   entityHealed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityHealed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   componentInitialized:
     m_PersistentCalls:
       m_Calls: []
@@ -703,7 +671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7320833414732098252
 Transform:
   m_ObjectHideFlags: 0
@@ -1432,7 +1400,7 @@ MonoBehaviour:
   entityKilled:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8944272891537366377}
+      - m_Target: {fileID: 2006131775249168120}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -1444,33 +1412,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityKilled
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   entityDamaged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityDamaged
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 3754520711300672358}
         m_TargetAssemblyTypeName: LeviathanEntity, Assembly-CSharp
         m_MethodName: OnEntityDamaged
@@ -1485,19 +1429,7 @@ MonoBehaviour:
         m_CallState: 2
   entityHealed:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: HealthBar, Assembly-CSharp
-        m_MethodName: OnEntityHealed
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   componentInitialized:
     m_PersistentCalls:
       m_Calls: []
@@ -1552,10 +1484,12 @@ MonoBehaviour:
   cooldownStat: {fileID: 11400000, guid: f40d1876085141146b6704a8424f5a81, type: 2}
   projectileFireInfo:
     spawnPoint: {fileID: 4034809319597035185}
-    delayBeforeFiring: 0
+    delayBetweenShots: 0
     projectilePrefab: {fileID: 1693217534261386567, guid: b31033aa317bbfb44b1bc8fb8fb65408, type: 3}
     fireCooldown: 12
-    poolSize: 1
-    numberOfProjectilesToFire: 25
+    poolSize: 200
+    numberOfProjectilesToFire: 50
   FireProjectileThisFrame: 0
   ExitStateThisFrame: 0
+  NumberOfProjectilesToFireThisFrame: 1
+  DelayBetweenSingleFrameProjectileFiring: 0

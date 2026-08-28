@@ -16,6 +16,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
     {
         DisableProjectile,
         DisableHitbox,
+        DisableHitboxAndStop,
     }
 
     bool checkForContacts = true;
@@ -76,6 +77,10 @@ public class ProjectileContactModifier : BaseProjectileModifier
                         break;
                     case PostContactLogic.DisableProjectile:
                         Projectile.DisableProjectile();
+                        break;
+                    case PostContactLogic.DisableHitboxAndStop:
+                        checkForContacts = false;
+                        Projectile.RigidBody.linearVelocity = Vector3.zero;
                         break;
                 }
             }

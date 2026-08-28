@@ -9,6 +9,14 @@ public class LeviathanEntity : BaseEnemy
         Trigger_IsAttacking,
         Bool_InDreamphase
     }
+    public override void Initialize()
+    {
+        base.Initialize();
+        for (int i = 0; i < HealthFragments.Count; i++)
+        {
+            HealthFragments[i].entityKilled.AddListener(OnFragmentDestroyed);
+        }
+    }
     public override void Process()
     {
         base.Process();
@@ -32,6 +40,25 @@ public class LeviathanEntity : BaseEnemy
     {
         if (info.DamageInfo.damage < 1) return;
         stateMachine.TransitionTo<LeviathanMoveState>();
+    }
+
+    public void OnFragmentDestroyed()
+    {
+        if (InDreamphase) return;
+        for (int i = 0; i < HealthFragments.Count; i++)
+        {
+           if (HealthFragments[i].Health > 0)
+            {
+                return;
+            }
+        }
+        for (int i = 0;i < HealthFragments.Count; i++)
+        {
+            HealthFragments[i].Heal(HealthFragments[i].MaxHealth);
+        }
+
+        InDreamphase = true;
+
     }
 
 

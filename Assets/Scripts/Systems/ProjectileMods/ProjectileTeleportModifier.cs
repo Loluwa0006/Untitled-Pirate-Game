@@ -35,11 +35,9 @@ public class ProjectileTeleportModifier : BaseProjectileModifier
     public override void OnProjectileFired()
     {
         base.OnProjectileFired();
-        Debug.Log("Teleport detected projectile fired");
         if (teleportStyle == TeleportStyle.OnFire)
         {
             var player = EntityManager.Instance.GetEntitiesOfType(IDComponent.IDType.Player, true)[0];
-            Debug.Log("Distance from projectile to player before == " + Vector3.Distance(player.transform.position, Projectile.RigidBody.position));
 
             Vector3 targetPosition = Projectile.Target.position;
             if (predictTargetMovement && targetRB != null)

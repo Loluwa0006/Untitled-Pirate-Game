@@ -55,7 +55,7 @@ public class TestEnemy : BaseActor
     {
         SetFireType();
         fireState = FireState.Preparing;
-        delayRemaining = projectileRegistry[queuedProjectileFire].fireInformation.delayBeforeFiring;
+        delayRemaining = projectileRegistry[queuedProjectileFire].fireInformation.delayBetweenShots;
     }
 
     void FireProjectile()
