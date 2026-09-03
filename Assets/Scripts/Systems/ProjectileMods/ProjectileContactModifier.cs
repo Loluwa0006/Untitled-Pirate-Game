@@ -1,25 +1,37 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Events;
 public class ProjectileContactModifier : BaseProjectileModifier
 {
     const int MAX_CONTACTS_PER_FRAME = 3;
 
+    [SerializeField] float delayBeforeActivation = 0.0f;
     [SerializeField] LayerMask projectileMask;
     [SerializeField] DamageInfo hitboxInfo;
+
+    //if false, will use a box cast instead
+    [SerializeField] bool useSphereCollision = true;
     [SerializeField] PostContactLogic postContactLogic;
 
     Collider[] hitboxResults = new Collider[MAX_CONTACTS_PER_FRAME];
 
     List<HealthComponent> permanentBlacklistedTargets = new();
     HashSet<HealthComponent> blacklistedTargets = new();
+
+    public UnityEvent hitboxEnabled = new();
     public enum PostContactLogic
     {
         DisableProjectile,
         DisableHitbox,
         DisableHitboxAndStop,
+
+        ContinueProcessing,
     }
 
     bool checkForContacts = true;
+    float delayTracker = 0.0f;
+
+    bool delayAlreadyOver = false;
     public override void InitializeModifier(BaseProjectile owner)
     {
         base.InitializeModifier(owner);
@@ -38,6 +50,7 @@ public class ProjectileContactModifier : BaseProjectileModifier
                 permanentBlacklistedTargets.AddRange(Projectile.ProjectileOwner.GetComponentsInChildren<HealthComponent>());
                 break;
         }
+        delayTracker = delayBeforeActivation;
     }
     public override void OnProjectileFired()
     {
@@ -48,10 +61,22 @@ public class ProjectileContactModifier : BaseProjectileModifier
             blacklistedTargets.Add(permanentBlacklistedTargets[i]);
         }
         checkForContacts = true;
+        delayAlreadyOver = false;
+    }
+
+    void DelayLogic()
+    {
+        delayTracker = Mathf.MoveTowards(delayTracker, 0.0f, Time.fixedDeltaTime);
+        if (delayTracker <= 0.001f && !delayAlreadyOver)
+        {
+            hitboxEnabled.Invoke();
+            delayAlreadyOver = true;
+        }
     }
     public override void UpdateModifier()
     {
-        if (!checkForContacts) return;
+        DelayLogic();
+        if (!checkForContacts || delayTracker > 0.001f) return;
         bool validContact = false;
         for (int x = 0; x < Projectile.ProjectileColliders.Count; x++)
         {
@@ -60,7 +85,15 @@ public class ProjectileContactModifier : BaseProjectileModifier
                 hitboxResults[i] = null;
             }
             var hitbox = Projectile.ProjectileColliders[x];
-            var overlap = Physics.OverlapSphereNonAlloc(hitbox.bounds.center, hitbox.bounds.extents.magnitude, hitboxResults, projectileMask, QueryTriggerInteraction.Collide);
+            int overlap;
+            if (useSphereCollision)
+            {
+                overlap = Physics.OverlapSphereNonAlloc(hitbox.bounds.center, hitbox.bounds.extents.magnitude, hitboxResults, projectileMask, QueryTriggerInteraction.Collide);
+            }
+            else
+            {
+                overlap = Physics.OverlapBoxNonAlloc(hitbox.bounds.center, hitbox.bounds.extents, hitboxResults, hitbox.transform.rotation, projectileMask, QueryTriggerInteraction.Collide);
+            }
             for (int y = 0; y < overlap; y++)
             {
                 if (DamageHealthComponent(hitboxResults[y], Projectile.ProjectileColliders[x]))
@@ -68,21 +101,29 @@ public class ProjectileContactModifier : BaseProjectileModifier
                     validContact = true;
                 }
             }
-            if (validContact)
+            PostHitboxCollisionCheckLogic(validContact);
+        }
+    }
+
+    void PostHitboxCollisionCheckLogic(bool validContact)
+    {
+        if (validContact)
+        {
+            switch (postContactLogic)
             {
-                switch (postContactLogic)
-                {
-                    case PostContactLogic.DisableHitbox:
-                        checkForContacts = false;
-                        break;
-                    case PostContactLogic.DisableProjectile:
-                        Projectile.DisableProjectile();
-                        break;
-                    case PostContactLogic.DisableHitboxAndStop:
-                        checkForContacts = false;
-                        Projectile.RigidBody.linearVelocity = Vector3.zero;
-                        break;
-                }
+                case PostContactLogic.DisableHitbox:
+                    checkForContacts = false;
+                    break;
+                case PostContactLogic.DisableProjectile:
+                    Projectile.DisableProjectile();
+                    break;
+                case PostContactLogic.DisableHitboxAndStop:
+                    checkForContacts = false;
+                    Projectile.RigidBody.linearVelocity = Vector3.zero;
+                    break;
+                case PostContactLogic.ContinueProcessing:
+                    //just keep doing stuff
+                    break;
             }
         }
     }

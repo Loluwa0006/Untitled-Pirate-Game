@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEngine.Events;
 
 public class BaseProjectile : BaseEntity
 {
@@ -16,8 +17,8 @@ public class BaseProjectile : BaseEntity
     public List<Collider> ProjectileColliders { get => projectileColliders; }
     BaseProjectileModifier[] projectileModifiers;
 
-    public event Action ProjectileFired;
-    public event Action ProjectileDestroyed;
+    public UnityEvent<BaseProjectile> ProjectileFired;
+    public UnityEvent<BaseProjectile> ProjectileDestroyed;
     public Action<HealthComponent> ProjectileLanded;
 
     public event Action<Transform> TargetChanged;
@@ -92,7 +93,7 @@ public class BaseProjectile : BaseEntity
         rigidBody.MovePosition(start);
         Target = target;
         foreach (var mesh in meshObjects) mesh.SetActive(true);
-        ProjectileFired?.Invoke();
+        ProjectileFired.Invoke(this);
         for (int i = 0; i < projectileColliders.Count; i++)
         {
             projectileColliders[i].enabled = true;
@@ -106,7 +107,7 @@ public class BaseProjectile : BaseEntity
     public void DisableProjectile()
     {
         foreach (var mesh in meshObjects) mesh.SetActive(false);
-        ProjectileDestroyed?.Invoke();
+        ProjectileDestroyed.Invoke(this);
         for (int i = 0; i < projectileColliders.Count; i++)
         {
             projectileColliders[i].enabled = false;

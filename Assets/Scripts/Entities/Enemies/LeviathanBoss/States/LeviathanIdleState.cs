@@ -16,6 +16,12 @@ public class LeviathanIdleState : LeviathanBaseState
         idleDuration--;
         if (idleDuration <= 0)
         {
+            
+            if (StateMachine.IsStateAvailable<LeviathanPlasmaPrisonState>())
+            {
+                StateMachine.TransitionTo<LeviathanPlasmaPrisonState>();
+                return;
+            }
 
             if (StateMachine.IsStateAvailable<LeviathanLightingRainState>())
             {

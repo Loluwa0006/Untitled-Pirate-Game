@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &732949330743658921
 Transform:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7298655232842654098
 Transform:
   m_ObjectHideFlags: 0
@@ -736,6 +736,7 @@ Transform:
   - {fileID: 732949330743658921}
   - {fileID: 7298655232842654098}
   - {fileID: 7740344070859351157}
+  - {fileID: 7949417064714996843}
   m_Father: {fileID: 4808646506579364738}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8299297381104378401
@@ -783,6 +784,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4982664754953213363}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7551317858004239039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7949417064714996843}
+  - component: {fileID: 3644932630147816537}
+  m_Layer: 0
+  m_Name: LeviathanPlasmaPrisonState
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7949417064714996843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7551317858004239039}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8699297847793595693}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3644932630147816537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7551317858004239039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 408fdeefb440fd442bad72e59f24f943, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LeviathanPlasmaPrisonState
+  hasInactiveProcess: 0
+  hasInactivePhysicsProcess: 0
+  animationClip: {fileID: 7400000, guid: 2ef3636f6ad32c242a75c661aa3f7419, type: 2}
+  attackSpeedStat: {fileID: 11400000, guid: 1e3cf39e02d3bdc4e916da2306d78643, type: 2}
+  cooldownStat: {fileID: 11400000, guid: 362a99c3700e56d45bd65527dd14f07e, type: 2}
+  projectileFireInfo:
+    spawnPoint: {fileID: 4034809319597035185}
+    delayBetweenShots: 0
+    projectilePrefab: {fileID: 2975451778853695101, guid: 085673ded055ac7458d26830dbf00275, type: 3}
+    fireCooldown: 15
+    poolSize: 5
+    numberOfProjectilesToFire: 1
+  FireProjectileThisFrame: 0
+  ExitStateThisFrame: 0
+  NumberOfProjectilesToFireThisFrame: 1
+  DelayBetweenSingleFrameProjectileFiring: 0
 --- !u!1 &7646166458516138389
 GameObject:
   m_ObjectHideFlags: 0
@@ -1449,7 +1510,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7740344070859351157
 Transform:
   m_ObjectHideFlags: 0
